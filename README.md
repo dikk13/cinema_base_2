@@ -1,92 +1,226 @@
-# cinema_base_2
+# cinema_base
+
+## Документация
+
+## 1. Запуск проекта
+
+В пропертях проекта для подключения к БД используются параметры типа: ${POSTGRESQL_SERVER}
+
+![img.png](src/main/resources/static/images/git_tutor/db_parameters.png)
+
+Для запуска Liquibase при старте проекта используется параметр: ${LIQUIBASE_ENABLED}
+
+![img.png](src/main/resources/static/images/git_tutor/liquibase_parameter.png)
+
+Их можно прописать в конфигурации проекта
+
+1 шаг  
+![img_1.png](src/main/resources/static/images/git_tutor/start_project_1.png)
+
+2 шаг  
+![img.png](src/main/resources/static/images/git_tutor/start_project_2.png)
+
+## 2. Создание merge request
+
+
+### 2.1. Создание merge request через карточку
+Открываем за асигненую за вами карточку  
+![img.png](src/main/resources/static/images/git_tutor/img.png)
+
+Перед созданием мердж реквеста необходимо задать осмысленное(!) название для ветки,
+для этого открой мердж реквест(1), пропишите имя для ветки(2) и убедитесь,
+что новая ветка будет создана от **main** ветки(3) (**в данном проекте вместо dev ветки используется main**)
+![img_2.png](src/main/resources/static/images/git_tutor/img_2.png)
+
+В мердж реквесте в разделе **Overview**(1) будут отображаться замечания к коду,
+свои изменения можно будет посмотреть в разделе **Changes**(2),
+созданная ветка и куда она будет мерджиться можно будет посмотреть в блоке (3),
+в случае если мердж реквест нужно изменить, это можно сделать в кнопке **Edit**(4),
+после выполнения задания обязательно нажимайте кнопку **Mark as ready**(5),
+в гитлабе за асигненые за вами карточки можно просмотреть по кнопке справа в виде
+карточек(6), а ваши мердж реквесты в кнопке в виде веток(7)
+![img_3.png](src/main/resources/static/images/git_tutor/img_3.png)
 
 
 
-## Getting started
+### 2.2. Создание merge request если уже создана ветка
+Нажмите на вкладку **Merge request** слева (1), нажмите на кнопку **New merge request** (2)
+![](src/main/resources/static/images/git_tutor/img_1.png)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+На открывшейся странице выберите в сурса свою ветку (1), проверьте, что в ветке куда вы собрались мерджить свои изменения стоит **main** (2)  ,
+нажмите кнопку **Compare branches and continue** (3)
+![](src/main/resources/static/images/git_tutor/img.png)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+На новой странице в селекторе **Assignee** выберите себя (1), в селекторе **Reviewer** выберите проверяющего (2). Проверьте, что стоит чекбокс на удаление после мерджа (3), нажмите кнопку **Create merge request** (4).
 
-## Add your files
+### **После создания реквеста приложите ссылку на него в карточку в комментариях**!!!!!!!!!!!!!!
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+![](src/main/resources/static/images/git_tutor/img_5.png)
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/f4367/cinema_base_2.git
-git branch -M main
-git push -uf origin main
-```
+## 3. Подготовка к пушу своей ветки
+Прежде чем запушить свои изменения, необходимо подготовить ветку к отправке.
 
-## Integrate with your tools
+Чтобы иметь на руках актуальную версию проекта, необходимо обновить мастер-ветку,
+это нужно делать каждый раз перед отправкой задачи на проверку
+Для этого нажмите на текущую ветку в правом нижнем углу. Выберите опцию **main | update**.
+![img_6.png](src/main/resources/static/images/git_tutor/img_6.png)
 
-- [ ] [Set up project integrations](https://gitlab.com/f4367/cinema_base_2/-/settings/integrations)
+Чтобы подтянуть все смерженные коммиты в локальную ветку, в которой вы работаете, нужно:
+![img_7.png](src/main/resources/static/images/git_tutor/img_7.png)
 
-## Collaborate with your team
+## 4. Получение JWT токена.
+/api/registration - регистрируем нового пользователя (по умолчанию получает роль ENROLLEE)
+![5_token_1.png](src/main/resources/static/images/git_tutor/5_token_1.png)
+/api/authentication - отправлеям логин и пароль только что зарегистрированного
+пользователя или существующего из БД. В ответе получаем JWT - токен.
+![5_token_2.png](src/main/resources/static/images/git_tutor/5_token_2.png)
+Копируем полученный токен и вставляем вкладка Authorization Type: Bearer Token
+![5_token_3.png](src/main/resources/static/images/git_tutor/5_token_3.png)
+Авторизованные реквесты:
+![5_token_4.png](src/main/resources/static/images/git_tutor/5_token_4.png)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## 6. JPA Buddy
+Для внесения изменений в БД при изменении сущностей.
+На вкладке JPA Structure (1), выбираем Liquibase (2) и Diff Changelog (3)
+![6_jpa_1.png](src/main/resources/static/images/git_tutor/6_jpa_1.png)
+В следующем диалоговом окне должна быть выбрана наша модель (4) и соединение с БД (5)
+![6_jpa_2.png](src/main/resources/static/images/git_tutor/6_jpa_2.png)
+Дирректорию выбираем: следующая свободная версия вида vXXX (6)
+Имя файла (7)
+Тип файла миграции SQL (8)
+![6_jpa_3.png](src/main/resources/static/images/git_tutor/6_jpa_3.png)
+В файл db.changelog-master.yaml (10) добавляем нашу новую дирректорию с миграцией
+![6_jpa_4.png](src/main/resources/static/images/git_tutor/6_jpa_4.png)
 
-## Test and Deploy
+## Описание сущностей
+(ссылка на диаграмму - https://dbdiagram.io/d/61f1b1147cf3fc0e7c6dce0e)
 
-Use the built-in continuous integration in GitLab.
+### users - `таблица обозначающая пользователя в система`
+- id - уникальный идентификатор
+- email - почта
+- first_name - имя
+- last_name - фамилия
+- password - пароль
+- birthday - дата рождения
+- role_id - идентификатор роли
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-***
+### roles - `определяет права пользователя в системе`
+- id - уникальный идентификатор
+- name - наименованеи роли
 
-# Editing this README
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### user_avatar - `таблица для сохранения пути к аватарке пользователя`
+- user_id - идентификатор пользователя
+- avatar_url - путь к аватару пользователя
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-## Name
-Choose a self-explaining name for your project.
+### news - `определяет медия новости`
+- id - уникальный идентификатор
+- rubric - рубрики для статей, может принимать следующие значения NEWS, TESTS, TRAILERS, SERIALS, INTERVIEW, VIDEO, ARTICLE, PODCASTS
+- date - дата публикации
+- title - заголовок
+- html_body - содержание статьи
+- user_id - идентификатор пользователя
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### score - `таблица отвечающая за оценку пользователей на фильм`
+- id - уникальный идентификатор
+- movie_id - уникальный идентификатор фильма
+- user_id - уникальный идентификатор пользователя
+- score - оценка
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### movies - `таблица отвечающая за фильмы/сериалы`
+- id - уникальный идентификатор
+- name - наименование
+- countries - страны производства
+- date_release - дата выхода
+- rars - возрастная классификация информационной продукции в России
+- mpaa - система рейтингов Американской киноассоциации
+- time - продолжительность фильма
+- desciption - описание фильма
+- type - тип сериал/фильм, принимает следующее значение MOVIES, SERIALS
+- origin_name - оригинальное наименование фильма
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### content - `таблица отвечающая за хранение путей к превьюшкам, кадрам, трейлерам фильмов`
+- id - уникальный идентификатор
+- movie_id - идентификатор фильма
+- content_url - путь к контенут
+- type - тип, может принимать следующие значения MOVIES, SERIALS, PREVIEW, FRAME, TRAILER
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### genres - `таблица отвечающая за жанры фильмов`
+- id - уникальный идентификатор
+- name - имя жанра
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### collections - `подборки фильмов`
+- id - уникальный идентификатор
+- name - наименование подборки
+- enable - отвечает за отображение подборки
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
+### awards_ceremony_result - `результаты церемонии награждения`
+- id - уникальный идентификатор
+- person_id - уникальный идентификатор пользователя
+- movie_id - уникальный идентификатор фильма
+- nomination_id - уникальный идентификатор номинации
+- awards_ceremony_id - уникальный идентификатор церемонии награждения
+- nomination_status - статус номинации, может принимать следующие параметры: NOMINATED, WINNER
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+### awards_ceremony - `церемония награждения`
+- id - уникальный идентификатор
+- date_event - дата проведения
+- place_event - место проведение
+- award_id - уникальный идентификатор награды
+
+
+### awards - `награда`
+- id - уникальный идентификатор
+- name - название (к примеру, золотой глобус, оскар, сезар и т.д.)
+- place_event - место проведение
+- award_id - уникальный идентификатор награды
+
+
+### nomination - `номинация`
+- id - уникальный идентификатор
+- name - название номинации
+
+
+### professions - `деятельность в кино`
+- id - уникальный идентификатор
+- name - наименование
+
+### movie_person - `связующая таблица для обозначение ролей в фильме/сериале`
+- movie_id - уникальный идентификатор фильма
+- profession_id - уникальный идентификатор професии
+- person_id - уникальный идентификатор персоны
+- type_character - тип персонажа в фильме/сериале, может принимать следующие значения MAIN_CHARACTER, MINOR_CHARACTER, NO_CHARACTER_MOVIE
+- name_role - наименование роли в фильме, может быть null
+
+### persons - `знаменитости разной деятельности в кино`
+- id - уникальный идентификатор
+- first_name - имя
+- last_name - фамилия
+- height - рост
+- date_birth - дата рождения
+- место рождения
+
+### folders_movies - `пользовательские папки для отслеживание фильмов`
+- id - уникальный идентификатор
+- category - категории, могут принимать следующие значения WAITING_MOVIES("Буду смотреть" ), FAVORITE_MOVIES("Любимые фильмы" ), VIEWED_MOVIES("Просмотренные" ), CUSTOM("Новый список" )
+- user_id - уникальный идентификатор пользователя
+- privacy - доступность папки для других пользователей, может принимать следующие параметры PRIVATE, PUBLIC
+- name - имя для собственных папок
+- description - описание
+
+### folders_persons - `пользовательские папки для отслеживание персон`
+- id - уникальный идентификатор
+- favourites - флаг для избранного фолдера поумолчанию
+- user_id - идентификатор пользователя
+- privacy - доступность папки для других пользователей, может принимать следующие параметры PRIVATE, PUBLIC
+- name - имя для собственных папок
+- description - описание
