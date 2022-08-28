@@ -62,5 +62,11 @@ public class AwardsCeremonyResult {
         return Objects.hash(id, nominationStatus);
     }
 
-
+    @Override
+    public String toString() {
+        return "AwardsCeremonyResult{" +
+                "id=" + id +
+                ", nominationStatus='" + nominationStatus + '\'' +
+                '}';
+    }
 }

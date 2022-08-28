@@ -26,6 +26,10 @@ public class Nomination {
     @JoinColumn(name = "nomination_id")
     private List<AwardsCeremonyResult> awardsCeremonyResult;
 
+    public Nomination() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,5 +43,14 @@ public class Nomination {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Nomination{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", awardsCeremonyResult=" + awardsCeremonyResult +
+                '}';
     }
 }

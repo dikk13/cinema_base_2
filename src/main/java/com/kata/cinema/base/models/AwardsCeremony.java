@@ -43,5 +43,16 @@ public class AwardsCeremony {
     @Override
     public int hashCode() {
         return Objects.hash(id, dateEvent, placeEvent);
+
+    }
+
+    @Override
+    public String toString() {
+        return "AwardsCeremony{" +
+                "id=" + id +
+                ", dateEvent='" + dateEvent + '\'' +
+                ", placeEvent='" + placeEvent + '\'' +
+                ", awardsCeremonyResult=" + awardsCeremonyResult +
+                '}';
     }
 }
