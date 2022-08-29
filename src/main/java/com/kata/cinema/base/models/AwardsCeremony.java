@@ -7,12 +7,11 @@ import java.util.*;
 
 @Table
 @Entity
-@Data
 public class AwardsCeremony {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private String dateEvent;
@@ -20,13 +19,44 @@ public class AwardsCeremony {
     @Column
     private String placeEvent;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "awards_ceremony_id")
-    private List<AwardsCeremonyResult> awardsCeremonyResult;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "awards_id")
+    private Awards awards;
 
 
     public AwardsCeremony() {
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDateEvent() {
+        return dateEvent;
+    }
+
+    public void setDateEvent(String dateEvent) {
+        this.dateEvent = dateEvent;
+    }
+
+    public String getPlaceEvent() {
+        return placeEvent;
+    }
+
+    public void setPlaceEvent(String placeEvent) {
+        this.placeEvent = placeEvent;
+    }
+
+    public Awards getAwards() {
+        return awards;
+    }
+
+    public void setAwards(Awards awards) {
+        this.awards = awards;
     }
 
     @Override
@@ -36,7 +66,7 @@ public class AwardsCeremony {
 
         AwardsCeremony awardsCeremony = (AwardsCeremony) o;
 
-        return (id == awardsCeremony.id) && Objects.equals(dateEvent, awardsCeremony.dateEvent)
+        return (Objects.equals(id, awardsCeremony.id)) && Objects.equals(dateEvent, awardsCeremony.dateEvent)
                 && Objects.equals(placeEvent, awardsCeremony.placeEvent);
     }
 
@@ -52,7 +82,7 @@ public class AwardsCeremony {
                 "id=" + id +
                 ", dateEvent='" + dateEvent + '\'' +
                 ", placeEvent='" + placeEvent + '\'' +
-                ", awardsCeremonyResult=" + awardsCeremonyResult +
+                ", awards=" + awards +
                 '}';
     }
 }

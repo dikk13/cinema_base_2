@@ -11,41 +11,65 @@ import java.util.Set;
 
 @Table
 @Entity
-@Data
 public class AwardsCeremonyResult {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private String nominationStatus;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "awards_ceremony_id")
-//    private Set<AwardsCeremony> ceremonySet = new HashSet<>();
-//
-//
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "nomination_id")
-//    private Set<Nomination> nominationSet = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "awards_ceremony_id")
+    private AwardsCeremony ceremony;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "person_id")
-//    private Set<Nomination> nominationSet = new HashSet<>();
-//
-//
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "movie_id")
-//    private Set<Nomination> nominationSet = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nomination_id")
+    private Nomination nomination;
+
+
 
 
     public AwardsCeremonyResult() {
 
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNominationStatus() {
+        return nominationStatus;
+    }
+
+    public void setNominationStatus(String nominationStatus) {
+        this.nominationStatus = nominationStatus;
+    }
+
+    public AwardsCeremony getCeremony() {
+        return ceremony;
+    }
+
+    public void setCeremony(AwardsCeremony ceremony) {
+        this.ceremony = ceremony;
+    }
+
+    public Nomination getNomination() {
+        return nomination;
+    }
+
+    public void setNomination(Nomination nomination) {
+        this.nomination = nomination;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,7 +78,7 @@ public class AwardsCeremonyResult {
 
         AwardsCeremonyResult awardsCeremonyResult = (AwardsCeremonyResult) o;
 
-        return (id == awardsCeremonyResult.id) && Objects.equals(nominationStatus, awardsCeremonyResult.nominationStatus);
+        return (Objects.equals(id, awardsCeremonyResult.id)) && Objects.equals(nominationStatus, awardsCeremonyResult.nominationStatus);
     }
 
     @Override

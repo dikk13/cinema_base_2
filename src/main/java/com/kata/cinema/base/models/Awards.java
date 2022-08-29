@@ -9,12 +9,11 @@ import java.util.Objects;
 
 @Table
 @Entity
-@Data
 public class Awards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Long id;
 
     @Column
     private String name;
@@ -22,13 +21,36 @@ public class Awards {
     @Column
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "awards_id", nullable = false)
-    private List<AwardsCeremony> awardsCeremony;
 
     public Awards() {
 
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -37,7 +59,7 @@ public class Awards {
 
         Awards awards = (Awards) o;
 
-       return (id == awards.id) && Objects.equals(name, awards.name) && Objects.equals(description, awards.description);
+       return (Objects.equals(id, awards.id)) && Objects.equals(name, awards.name) && Objects.equals(description, awards.description);
     }
 
     @Override
