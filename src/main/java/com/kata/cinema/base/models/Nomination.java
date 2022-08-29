@@ -17,6 +17,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
+@Data
 public class Nomination {
 
     @Id
@@ -26,11 +27,6 @@ public class Nomination {
 
     @Column
     private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "nomination_id")
-    private List<AwardsCeremonyResult> awardsCeremonyResult;
-
 
 
     public Nomination(Long id, String name) {
@@ -58,7 +54,6 @@ public class Nomination {
         return "Nomination{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", awardsCeremonyResult=" + awardsCeremonyResult +
                 '}';
     }
 }
