@@ -1,6 +1,8 @@
 package com.kata.cinema.base.models;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,9 +11,11 @@ import java.util.Objects;
 
 @Table
 @Entity
+@Getter
+@Setter
 public class Awards {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     private Long id;
 
@@ -26,31 +30,11 @@ public class Awards {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Awards(Long id, String name, String description) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

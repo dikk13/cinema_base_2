@@ -2,6 +2,8 @@ package com.kata.cinema.base.models;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,11 +13,13 @@ import java.util.Set;
 
 @Table
 @Entity
+@Getter
+@Setter
 public class AwardsCeremonyResult {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     private Long id;
 
@@ -32,43 +36,13 @@ public class AwardsCeremonyResult {
     private Nomination nomination;
 
 
-
-
     public AwardsCeremonyResult() {
 
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public AwardsCeremonyResult(Long id, String nominationStatus) {
         this.id = id;
-    }
-
-    public String getNominationStatus() {
-        return nominationStatus;
-    }
-
-    public void setNominationStatus(String nominationStatus) {
         this.nominationStatus = nominationStatus;
-    }
-
-    public AwardsCeremony getCeremony() {
-        return ceremony;
-    }
-
-    public void setCeremony(AwardsCeremony ceremony) {
-        this.ceremony = ceremony;
-    }
-
-    public Nomination getNomination() {
-        return nomination;
-    }
-
-    public void setNomination(Nomination nomination) {
-        this.nomination = nomination;
     }
 
     @Override

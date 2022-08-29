@@ -1,19 +1,23 @@
 package com.kata.cinema.base.models;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Table
 @Entity
+@Setter
+@Getter
 public class AwardsCeremony {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String dateEvent;
 
     @Column
@@ -27,36 +31,10 @@ public class AwardsCeremony {
     public AwardsCeremony() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public AwardsCeremony(Long id, String dateEvent, String placeEvent) {
         this.id = id;
-    }
-
-    public String getDateEvent() {
-        return dateEvent;
-    }
-
-    public void setDateEvent(String dateEvent) {
         this.dateEvent = dateEvent;
-    }
-
-    public String getPlaceEvent() {
-        return placeEvent;
-    }
-
-    public void setPlaceEvent(String placeEvent) {
         this.placeEvent = placeEvent;
-    }
-
-    public Awards getAwards() {
-        return awards;
-    }
-
-    public void setAwards(Awards awards) {
-        this.awards = awards;
     }
 
     @Override
