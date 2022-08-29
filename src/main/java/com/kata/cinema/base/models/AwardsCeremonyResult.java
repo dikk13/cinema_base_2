@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class AwardsCeremonyResult {
 
 
@@ -36,9 +38,7 @@ public class AwardsCeremonyResult {
     private Nomination nomination;
 
 
-    public AwardsCeremonyResult() {
 
-    }
 
     public AwardsCeremonyResult(Long id, String nominationStatus) {
         this.id = id;

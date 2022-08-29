@@ -1,18 +1,17 @@
 package com.kata.cinema.base.models;
 
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Table
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Awards {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,10 +24,6 @@ public class Awards {
     @Column
     private String description;
 
-
-    public Awards() {
-
-    }
 
     public Awards(Long id, String name, String description) {
         this.id = id;

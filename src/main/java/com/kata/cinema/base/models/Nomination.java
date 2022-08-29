@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -15,6 +16,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class Nomination {
 
     @Id
@@ -29,9 +31,7 @@ public class Nomination {
     @JoinColumn(name = "nomination_id")
     private List<AwardsCeremonyResult> awardsCeremonyResult;
 
-    public Nomination() {
 
-    }
 
     public Nomination(Long id, String name) {
         this.id = id;

@@ -2,6 +2,7 @@ package com.kata.cinema.base.models;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.*;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class AwardsCeremony {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,8 +30,7 @@ public class AwardsCeremony {
     private Awards awards;
 
 
-    public AwardsCeremony() {
-    }
+
 
     public AwardsCeremony(Long id, String dateEvent, String placeEvent) {
         this.id = id;
