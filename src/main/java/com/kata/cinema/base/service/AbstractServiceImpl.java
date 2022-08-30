@@ -2,10 +2,11 @@ package com.kata.cinema.base.service;
 
 import com.kata.cinema.base.dao.AbstractDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class AbstractServiceImpl<PK, E>  implements AbstractService{
 
     private final AbstractDao abstractDao;
