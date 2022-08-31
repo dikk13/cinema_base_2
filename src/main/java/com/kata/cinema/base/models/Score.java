@@ -1,31 +1,33 @@
 package com.kata.cinema.base.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
-@Data
 @Table
+@Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    private Movies movies;
+    private Movie movie;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private List <User> user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    privae List <User> users;
 
     @Column(name = "score")
     private int score;
 
-    public Score() {
-    }
 
 
 }

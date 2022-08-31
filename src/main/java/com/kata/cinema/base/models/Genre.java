@@ -1,19 +1,23 @@
 package com.kata.cinema.base.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Table
 @Entity
-@Data
-public class Genres {
+@Setter
+@Getter
+@NoArgsConstructor
+public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -24,11 +28,9 @@ public class Genres {
             joinColumns = @JoinColumn(name = "genre_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
-    private List<Movies> movies;
+    private List<Movie> movies;
 
-    public Genres() {
 
-    }
 
 
 }

@@ -1,21 +1,24 @@
 package com.kata.cinema.base.models;
 
-import lombok.Data;
-import org.hibernate.annotations.Cascade;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 @Table
-@Data
-public class Movies {
+@Entity
+@Setter
+@Getter
+@NoArgsConstructor
+public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -41,29 +44,20 @@ public class Movies {
     @Column(name = "type")
     private String type;
 
-    @OneToOne(mappedBy = "movies")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @OneToOne(mappedBy = "movie")
     private Score scores;
 
-    @OneToOne(mappedBy = "movies")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @OneToOne(mappedBy = "movie")
     private Content content;
 
-    @ManyToMany(mappedBy = "movies")
-    private List<Genres> genres;
 
-    @ManyToMany(mappedBy = "movies")
-    private List<Collections> collections;
-
-    public Movies() {
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Movies movies = (Movies) o;
-        return id == movies.id && Objects.equals(name, movies.name) && Objects.equals(countries, movies.countries) && Objects.equals(date_release, movies.date_release) && Objects.equals(rars, movies.rars) && Objects.equals(mpaa, movies.mpaa) && Objects.equals(time, movies.time) && Objects.equals(description, movies.description) && Objects.equals(type, movies.type) ;
+        Movie movie = (Movie) o;
+        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(date_release, movie.date_release) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type) ;
     }
 
     @Override
@@ -73,7 +67,7 @@ public class Movies {
 
     @Override
     public String toString() {
-        return "Movies{" +
+        return "Movie{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", countries='" + countries + '\'' +

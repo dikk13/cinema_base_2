@@ -1,23 +1,27 @@
 package com.kata.cinema.base.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
-@Entity
 @Table
+@Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class Content {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
 
     @OneToOne
     @JoinColumn(name = "movies_id")
-    private Movies movies;
+    private Movie movie;
 
     @Column(name = "content_url")
     private String content_url;
@@ -27,8 +31,6 @@ public class Content {
     @Column(name = "type")
     private String type;
 
-    public Content() {
-    }
 
 }
 
