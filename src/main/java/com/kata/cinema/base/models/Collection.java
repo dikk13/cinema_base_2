@@ -23,7 +23,7 @@ public class Collection {
     private String name;
 
     @Column(name = "enable")
-    private byte enable;
+    private boolean enable;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

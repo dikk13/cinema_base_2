@@ -44,14 +44,6 @@ public class Movie {
     @Column(name = "type")
     private String type;
 
-    @OneToOne(mappedBy = "movie")
-    private Score scores;
-
-    @OneToOne(mappedBy = "movie")
-    private Content content;
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
