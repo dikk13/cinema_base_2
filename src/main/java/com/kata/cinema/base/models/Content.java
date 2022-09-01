@@ -15,7 +15,7 @@ public class Content {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_content_id")
     private Long id;
 
 

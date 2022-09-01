@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Nomination {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_nomination_id")
     @Column
     private Long id;
 

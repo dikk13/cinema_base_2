@@ -15,7 +15,7 @@ import java.util.List;
 public class Collection {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_collection_id")
     @Column(name = "id")
     private Long id;
 

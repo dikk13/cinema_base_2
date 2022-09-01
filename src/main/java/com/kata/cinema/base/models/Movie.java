@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_movie_id")
     @Column(name = "id")
     private Long id;
 

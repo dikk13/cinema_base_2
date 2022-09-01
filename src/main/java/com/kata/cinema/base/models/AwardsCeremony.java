@@ -15,7 +15,7 @@ import java.util.*;
 @NoArgsConstructor
 public class AwardsCeremony {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_awardsCeremony_id")
     @Column
     private Long id;
 

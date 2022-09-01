@@ -21,7 +21,7 @@ public class AwardsCeremonyResult {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_awardsCeremonyResult_id")
     @Column
     private Long id;
 

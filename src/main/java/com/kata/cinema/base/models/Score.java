@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_score_id")
     @Column(name = "id")
     private Long id;
 
