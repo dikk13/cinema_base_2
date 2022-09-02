@@ -32,7 +32,6 @@ public class Person {
     @Setter
     protected Double height;
 
-    //    @Temporal(TemporalType.DATE)  Если использовать дату в формате Calendar, то эта аннотация усекает Calendar объект только до даты
     @Column(name = "date_birth", nullable = true, length = 20)
     @Getter
     @Setter

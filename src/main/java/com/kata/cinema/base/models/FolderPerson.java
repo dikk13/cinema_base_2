@@ -18,7 +18,7 @@ public class FolderPerson {
     @Getter
     private Long id;
 
-    @Column(name = "favourites", nullable = false)    // УЗНАТЬ ПОДРОБНЕЕ, ЧТО ЕСТЬ флаг для избранного фолдера поумолчанию :))
+    @Column(name = "favourites", nullable = false)
     @Getter
     @Setter
     protected Boolean favourites;
@@ -38,14 +38,12 @@ public class FolderPerson {
     @Setter
     protected String description;
 
-    //  Связь между папками пользователя и персонами, в каждой папке пользователя может быть много персон
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)   // ВОТ ЭТО НАДО РЕШИТЬ LAZY НЕ РАБОТАЕТ
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (name = "folder_persons_to_person", joinColumns = @JoinColumn(name = "folder_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Set <Person> folderPersonsSet = new HashSet<>();
 
 
-    // Связь между пользователем и папкой у одного пользователя может быть много папок
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @Getter
     @Setter
