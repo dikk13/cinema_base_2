@@ -22,6 +22,7 @@ public class Nomination {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_nomination_id")
+    @SequenceGenerator(name="seq_nomination_id",sequenceName="SEQ_NOMINATION_ID", allocationSize=1)
     @Column
     private Long id;
 

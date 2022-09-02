@@ -16,6 +16,7 @@ public class Collection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_collection_id")
+    @SequenceGenerator(name="seq_collection_id",sequenceName="SEQ_COLLECTION_ID", allocationSize=1)
     @Column(name = "id")
     private Long id;
 

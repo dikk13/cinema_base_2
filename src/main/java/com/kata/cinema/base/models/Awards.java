@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Awards {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_awards_id")
+    @SequenceGenerator(name="seq_awards_id",sequenceName="SEQ_AWARDS_ID", allocationSize=1)
     @Column
     private Long id;
 

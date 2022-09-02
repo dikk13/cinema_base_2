@@ -22,6 +22,7 @@ public class AwardsCeremonyResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_awardsCeremonyResult_id")
+    @SequenceGenerator(name="seq_awardsCeremonyResult_id",sequenceName="SEQ_AWARDSCEREMONYRESULT_ID", allocationSize=1)
     @Column
     private Long id;
 
