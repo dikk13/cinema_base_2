@@ -13,8 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_score_id")
-    @SequenceGenerator(name="seq_score_id",sequenceName="SEQ_SCORE_ID", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_score_id")
+    @SequenceGenerator(name = "seq_score_id", sequenceName = "SEQ_SCORE_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -28,7 +28,6 @@ public class Score {
 
     @Column(name = "score")
     private int score;
-
 
 
 }

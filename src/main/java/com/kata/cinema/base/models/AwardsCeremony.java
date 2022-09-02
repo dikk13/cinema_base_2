@@ -15,8 +15,8 @@ import java.util.*;
 @NoArgsConstructor
 public class AwardsCeremony {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_awardsCeremony_id")
-    @SequenceGenerator(name="seq_awardsCeremony_id",sequenceName="SEQ_AWARDSCEREMONY_ID", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_awardsCeremony_id")
+    @SequenceGenerator(name = "seq_awardsCeremony_id", sequenceName = "SEQ_AWARDSCEREMONY_ID", allocationSize = 1)
     @Column
     private Long id;
 
@@ -29,8 +29,6 @@ public class AwardsCeremony {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "awards_id")
     private Awards awards;
-
-
 
 
     public AwardsCeremony(Long id, String dateEvent, String placeEvent) {

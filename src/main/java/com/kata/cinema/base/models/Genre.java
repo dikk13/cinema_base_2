@@ -15,8 +15,8 @@ import java.util.List;
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_genre_id")
-    @SequenceGenerator(name="seq_genre_id",sequenceName="SEQ_GENRE_ID", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_genre_id")
+    @SequenceGenerator(name = "seq_genre_id", sequenceName = "SEQ_GENRE_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -30,8 +30,6 @@ public class Genre {
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
     private List<Movie> movies;
-
-
 
 
 }
