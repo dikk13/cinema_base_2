@@ -1,10 +1,10 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
-import com.kata.cinema.base.converter.GenreResponseDto;
+import com.kata.cinema.base.models.dto.GenreResponseDto;
 import com.kata.cinema.base.service.abstracts.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

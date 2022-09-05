@@ -1,4 +1,4 @@
-package com.kata.cinema.base.converter;
+package com.kata.cinema.base.models.dto;
 
 import lombok.Getter;
 import lombok.Setter;
