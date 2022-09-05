@@ -14,7 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Awards {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_awards_id")
+    @SequenceGenerator(name = "seq_awards_id", sequenceName = "SEQ_AWARDS_ID", allocationSize = 1)
     @Column
     private Long id;
 
@@ -38,7 +39,7 @@ public class Awards {
 
         Awards awards = (Awards) o;
 
-       return (Objects.equals(id, awards.id)) && Objects.equals(name, awards.name) && Objects.equals(description, awards.description);
+        return (Objects.equals(id, awards.id)) && Objects.equals(name, awards.name) && Objects.equals(description, awards.description);
     }
 
     @Override

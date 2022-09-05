@@ -21,7 +21,8 @@ public class AwardsCeremonyResult {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_awardsCeremonyResult_id")
+    @SequenceGenerator(name = "seq_awardsCeremonyResult_id", sequenceName = "SEQ_AWARDSCEREMONYRESULT_ID", allocationSize = 1)
     @Column
     private Long id;
 
@@ -36,8 +37,6 @@ public class AwardsCeremonyResult {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nomination_id")
     private Nomination nomination;
-
-
 
 
     public AwardsCeremonyResult(Long id, String nominationStatus) {

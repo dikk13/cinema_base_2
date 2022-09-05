@@ -16,7 +16,8 @@ import java.util.Objects;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_movie_id")
+    @SequenceGenerator(name = "seq_movie_id", sequenceName = "SEQ_MOVIE_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -49,7 +50,7 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(date_release, movie.date_release) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type) ;
+        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(date_release, movie.date_release) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type);
     }
 
     @Override

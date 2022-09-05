@@ -15,7 +15,8 @@ public class Content {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_content_id")
+    @SequenceGenerator(name = "seq_content_id", sequenceName = "SEQ_CONTENT_ID", allocationSize = 1)
     private Long id;
 
 
@@ -25,7 +26,6 @@ public class Content {
 
     @Column(name = "content_url")
     private String content_url;
-
 
 
     @Column(name = "type")
