@@ -1,0 +1,19 @@
+
+version: '3.8'
+services:
+  application:
+    build: ./
+    container_name: 'cinema_base'
+    ports: ['8080:8080']
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres'
+      - 'SPRING_DATASOURCE_USERNAME=postgres'
+      - 'SPRING_DATASOURCE_PASSWORD=axweil'
+  db:
+    container_name: "postgres-app"
+    image: 'postgres:14'
+    ports: ['5432:5432']
+    environment:
+      - 'POSTGRES_DB=localhost:8080/postgres'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=axweil'
