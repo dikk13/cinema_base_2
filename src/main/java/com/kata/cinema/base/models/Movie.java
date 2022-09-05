@@ -28,7 +28,7 @@ public class Movie {
     private String countries;
 
     @Column(name = "date_release")
-    private String date_release;
+    private String dateRelease;
 
     @Column(name = "rars")
     private String rars;
@@ -50,12 +50,12 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(date_release, movie.date_release) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type);
+        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(dateRelease, movie.dateRelease) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, countries, date_release, rars, mpaa, time, description, type);
+        return Objects.hash(id, name, countries, dateRelease, rars, mpaa, time, description, type);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Movie {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", countries='" + countries + '\'' +
-                ", date_release='" + date_release + '\'' +
+                ", date_release='" + dateRelease + '\'' +
                 ", rars='" + rars + '\'' +
                 ", mpaa='" + mpaa + '\'' +
                 ", time='" + time + '\'' +
