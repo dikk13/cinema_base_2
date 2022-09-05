@@ -1,6 +1,7 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.models.dto.GenreResponseDto;
 import com.kata.cinema.base.service.abstracts.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,39 +10,50 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class AdminGenreRestController {
-    private final AbstractService<Long, GenreResponseDto> abstractService;
+    private final AbstractService<Long, Genre> abstractService;
 
 
     @Autowired
-    public AdminGenreRestController(AbstractService<Long, GenreResponseDto> abstractService) {
+    public AdminGenreRestController(AbstractService<Long, Genre> abstractService) {
         this.abstractService = abstractService;
     }
-
-
+    
     @GetMapping("/api/moderator/genres")
     public ResponseEntity<List<GenreResponseDto>> getAllGenre() {
-        List<GenreResponseDto> genres = abstractService.getAll();
-        return ResponseEntity.ok(genres);
+        return ResponseEntity.ok( abstractService.getAll().stream().
+                map(GenreResponseDto :: new).
+                collect(Collectors.toList()));
     }
 
     @DeleteMapping("/api/moderator/genres/{id}")
-    public ResponseEntity<List<GenreResponseDto>> deleteGenre(@PathVariable("id") long id) {
+    public ResponseEntity<List<GenreResponseDto>> deleteGenre(@PathVariable long id) {
         abstractService.deleteById(id);
-        return ResponseEntity.ok(abstractService.getAll());
+        return ResponseEntity.ok(abstractService.getAll().stream().
+                map(GenreResponseDto :: new).
+                collect(Collectors.toList()));
     }
-
     @PutMapping("/api/moderator/genres/{id}?name=")
     public ResponseEntity<List<GenreResponseDto>> updateGenre(@RequestBody GenreResponseDto genreDto) {
-        abstractService.update(genreDto);
-        return ResponseEntity.ok(abstractService.getAll());
+        Genre genre = new Genre();
+        genre.setName(genreDto.getName());
+        genre.setId(genreDto.getId());
+        abstractService.update(genre);
+        return ResponseEntity.ok(abstractService.getAll().stream().
+                map(GenreResponseDto :: new).
+                collect(Collectors.toList()));
     }
-
     @PostMapping("/api/moderator/genres?name=")
     public ResponseEntity<List<GenreResponseDto>> addNewGenre(@RequestBody GenreResponseDto genreDto) {
-        abstractService.create(genreDto);
-        return ResponseEntity.ok(abstractService.getAll());
+        Genre genre = new Genre();
+        genre.setId(genreDto.getId());
+        genre.setName(genreDto.getName());
+        abstractService.create(genre);
+        return ResponseEntity.ok(abstractService.getAll().stream().
+                map(GenreResponseDto :: new).
+                collect(Collectors.toList()));
     }
 }

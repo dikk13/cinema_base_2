@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public abstract class AbstractServiceImpl<PK, E> implements AbstractService<PK, E> {
 
     private final AbstractDao<PK, E> abstractDao;

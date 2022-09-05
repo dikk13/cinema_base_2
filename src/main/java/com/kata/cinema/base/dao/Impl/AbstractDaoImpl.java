@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public abstract class AbstractDaoImpl<PK, E>  implements AbstractDao <PK, E>{
 
 
