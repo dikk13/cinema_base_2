@@ -11,7 +11,7 @@ import java.util.Map;
 public class PaginationDtoServiceImpl<T> implements PaginationDtoService<T> {
 
 
-    PaginationDtoDao<T> paginationDtoDao;
+    private final PaginationDtoDao<T> paginationDtoDao;
 
     @Autowired
     public PaginationDtoServiceImpl(PaginationDtoDao<T> paginationDtoDao) {

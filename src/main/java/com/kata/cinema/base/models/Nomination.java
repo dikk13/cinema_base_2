@@ -17,7 +17,6 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
-@Data
 public class Nomination {
 
     @Id
