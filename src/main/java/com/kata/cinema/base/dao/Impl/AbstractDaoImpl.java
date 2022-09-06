@@ -1,14 +1,13 @@
 package com.kata.cinema.base.dao.Impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.Collection;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 public abstract class AbstractDaoImpl<PK, E> {
@@ -34,14 +33,17 @@ public abstract class AbstractDaoImpl<PK, E> {
     }
 
     void deleteById(PK id) {
-        int hqlRequest = entityManager.createQuery("DELETE " + getClass() + " WHERE id = :id")
+        entityManager.createQuery("DELETE " + getClass() + " WHERE id = :id")
                 .setParameter("id", id).executeUpdate();
 
     }
 
     Optional<E> getById(PK id) {
-       return (Optional<E>) entityManager.createQuery("FROM " + getClass() + " WHERE id: id")
-                .setParameter("id", id).getResultStream().findFirst();
+        try {
+            return (Optional<E>) Optional.of(entityManager.find(getClass(), id));
+        } catch (Exception ex) {
+            return Optional.empty();
+        }
     }
 
     boolean existById(PK id) {
