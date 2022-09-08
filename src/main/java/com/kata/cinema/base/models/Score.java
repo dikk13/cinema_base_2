@@ -22,9 +22,10 @@ public class Score {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    privae List <User> users;
+    // Закомменчено ниже три строки было, так видимо правильно?
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "score")
     private int score;
