@@ -49,20 +49,8 @@ public class User {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column(name = "roleId")
-    private int roleId;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserAvatar> userAvatars;
-
-    @OneToMany(mappedBy = "user")
-    private List<FolderMovie> folderMovies;
-
-    @OneToMany(mappedBy = "user")
-    private List<News> news;
-
-    @OneToMany(mappedBy = "user")
-    private List<Score> scores;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -77,13 +65,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && roleId == user.roleId && Objects.equals(email, user.email) && Objects.equals(first_name, user.first_name)
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(first_name, user.first_name)
                 && Objects.equals(last_name, user.last_name) && Objects.equals(password, user.password) && Objects.equals(birthday, user.birthday)
-                && Objects.equals(userAvatars, user.userAvatars) && Objects.equals(folderMovies, user.folderMovies) && Objects.equals(news, user.news) && Objects.equals(role, user.role);
+                && Objects.equals(userAvatars, user.userAvatars) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, first_name, last_name, password, birthday, roleId, userAvatars, folderMovies, news, role);
+        return Objects.hash(id, email, first_name, last_name, password, birthday, userAvatars, role);
     }
 }
