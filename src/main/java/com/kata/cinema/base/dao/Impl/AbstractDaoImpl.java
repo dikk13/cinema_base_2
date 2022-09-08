@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public abstract class AbstractDaoImpl<PK, E>  implements AbstractDao <PK, E>{
 
-
     @PersistenceContext
     private EntityManager entityManager;
 
