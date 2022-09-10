@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class FolderPerson {
     @Column(name = "privacy", nullable = false, length = 7)
     @Getter
     @Setter
-    protected String privacy;
+    protected Privacy privacy;
 
     @Column(name = "name", nullable = false, length = 30)
     @Getter
@@ -50,7 +51,7 @@ public class FolderPerson {
     private User user;
 
 
-    public FolderPerson(Boolean favourites, String privacy, String name, String description, User user) {
+    public FolderPerson(Boolean favourites, Privacy privacy, String name, String description, User user) {
         this.favourites = favourites;
         this.privacy = privacy;
         this.name = name;

@@ -30,14 +30,8 @@ public class Role {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(name = "name")
     private String role;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> user;
 
     @Override
     public boolean equals(Object o) {

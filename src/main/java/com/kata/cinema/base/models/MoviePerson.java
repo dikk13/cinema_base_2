@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.enums.CharacterType;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class MoviePerson {
     protected Id id = new Id();
 
     @Column (name = "type_character", nullable = false, length = 20)
-    protected String typeCharacter;
+    protected CharacterType typeCharacter;
 
     @Column (name = "name_role", nullable = true, length = 100)
     protected String nameRole;
@@ -48,7 +49,7 @@ public class MoviePerson {
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
     protected Person person;
 
-    public MoviePerson (Movie movie, Profession profession, Person person, String typeCharacter, String nameRole) {
+    public MoviePerson (Movie movie, Profession profession, Person person, CharacterType typeCharacter, String nameRole) {
         this.id.movieId = movie.getId();
         this.id.professionId = profession.getId();
         this.id.personId = person.getId();
@@ -56,4 +57,6 @@ public class MoviePerson {
         this.nameRole = nameRole;
 
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.enums.MovieType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +44,7 @@ public class Movie {
     private String description;
 
     @Column(name = "type")
-    private String type;
+    private MovieType type;
 
     @Override
     public boolean equals(Object o) {

@@ -14,10 +14,16 @@ import java.util.List;
 @Service
 public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoService {
 
+
+    private final FolderMovieResponsDtoMapper folderMovieResponsDtoMapper;
     private final FolderMovieService folderMovieService;
     private final FolderMovieResponsDtoDao folderMovieResponsDtoDao;
 
-    public FolderMovieResponsDtoServiceImpl(FolderMovieService folderMovieService, FolderMovieResponsDtoDao folderMovieResponsDtoDao) {
+    public FolderMovieResponsDtoServiceImpl(
+            FolderMovieResponsDtoMapper folderMovieResponsDtoMapper,
+            FolderMovieService folderMovieService,
+            FolderMovieResponsDtoDao folderMovieResponsDtoDao) {
+        this.folderMovieResponsDtoMapper = folderMovieResponsDtoMapper;
         this.folderMovieService = folderMovieService;
         this.folderMovieResponsDtoDao = folderMovieResponsDtoDao;
     }
@@ -25,7 +31,8 @@ public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoSe
     @Override
     public List<FolderMovieResponsDto> getFolderMovieResponsDtoListByUserId(Long userId) {
         List<FolderMovie> folderMovieList = folderMovieService.getFolderMovieListByUserId(userId);
-        return FolderMovieResponsDtoMapper.instance.mapMovieFoldersListToDto(folderMovieList);
+//        return FolderMovieResponsDtoMapper.instance.mapMovieFoldersListToDto(folderMovieList);
+        return folderMovieResponsDtoMapper.mapMovieFoldersListToDto(folderMovieList);
     }
 
     @Transactional

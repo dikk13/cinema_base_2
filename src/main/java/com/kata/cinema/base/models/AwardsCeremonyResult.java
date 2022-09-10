@@ -1,6 +1,7 @@
 package com.kata.cinema.base.models;
 
 
+import com.kata.cinema.base.enums.NominationStatus;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class AwardsCeremonyResult {
     private Long id;
 
     @Column
-    private String nominationStatus;
+    private NominationStatus nominationStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "awards_ceremony_id")
@@ -39,7 +40,7 @@ public class AwardsCeremonyResult {
     private Nomination nomination;
 
 
-    public AwardsCeremonyResult(Long id, String nominationStatus) {
+    public AwardsCeremonyResult(Long id, NominationStatus nominationStatus) {
         this.id = id;
         this.nominationStatus = nominationStatus;
     }

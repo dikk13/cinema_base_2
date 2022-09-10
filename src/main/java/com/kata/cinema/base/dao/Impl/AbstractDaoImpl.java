@@ -1,5 +1,6 @@
 package com.kata.cinema.base.dao.Impl;
 
+import com.kata.cinema.base.dao.abstracts.AbstractDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,35 +11,44 @@ import java.util.Optional;
 
 
 @Repository
-public abstract class AbstractDaoImpl<PK, E> {
+public abstract class AbstractDaoImpl<PK, E> implements AbstractDao<PK, E> {
 
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    List<E> getAll() {
-        return entityManager.createQuery("FROM " + getClass()).getResultList();
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<E> getAll() {
+        return (List<E>) entityManager.createQuery("FROM " + getClass()).getResultList();
     }
 
-    void create(E entity) {
+
+    @Override
+    public void create (E entity) {
         entityManager.persist(entity);
     }
 
-    void update(E entity) {
+    @Override
+    public void update(E entity) {
         entityManager.merge(entity);
     }
 
-    void delete(E entity) {
+    @Override
+    public void delete(E entity) {
         entityManager.remove(entity);
     }
 
-    void deleteById(PK id) {
+    @Override
+    public void deleteById(PK id) {
         entityManager.createQuery("DELETE " + getClass() + " WHERE id = :id")
                 .setParameter("id", id).executeUpdate();
 
     }
 
-    Optional<E> getById(PK id) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public Optional<E> getById(PK id) {
         try {
             return (Optional<E>) Optional.of(entityManager.find(getClass(), id));
         } catch (Exception ex) {
@@ -46,11 +56,10 @@ public abstract class AbstractDaoImpl<PK, E> {
         }
     }
 
-    boolean existById(PK id) {
+    @Override
+    public boolean existById(PK id) {
         long count = (long) entityManager.createQuery("SELECT count(e) FROM " + getClass() + " e WHERE e.id = : id")
                 .setParameter("id", id).getSingleResult();
         return count > 0;
     }
-
-
 }

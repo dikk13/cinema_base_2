@@ -4,19 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -25,7 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table
+@Table (name = "users")
 @NoArgsConstructor
 public class User {
 
@@ -49,11 +39,10 @@ public class User {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column(name = "roleId")
-    private int roleId;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserAvatar> userAvatars;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user")
+    private UserAvatar userAvatars;
 
     @OneToMany(mappedBy = "user")
     private List<FolderMovie> folderMovies;
@@ -69,7 +58,7 @@ public class User {
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> role;
+    private List<Role> role = new ArrayList<>();
 
 
     @Override
@@ -77,13 +66,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && roleId == user.roleId && Objects.equals(email, user.email) && Objects.equals(first_name, user.first_name)
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(first_name, user.first_name)
                 && Objects.equals(last_name, user.last_name) && Objects.equals(password, user.password) && Objects.equals(birthday, user.birthday)
                 && Objects.equals(userAvatars, user.userAvatars) && Objects.equals(folderMovies, user.folderMovies) && Objects.equals(news, user.news) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, first_name, last_name, password, birthday, roleId, userAvatars, folderMovies, news, role);
+        return Objects.hash(id, email, first_name, last_name, password, birthday, userAvatars, folderMovies, news, role);
     }
 }

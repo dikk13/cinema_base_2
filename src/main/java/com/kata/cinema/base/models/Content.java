@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.enums.ContentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,8 +30,6 @@ public class Content {
 
 
     @Column(name = "type")
-    private String type;
-
-
+    private ContentType type;
 }
 

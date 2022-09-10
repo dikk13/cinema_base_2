@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 
-@Mapper
+@Mapper (componentModel = "spring")
 public interface FolderMovieResponsDtoMapper {
-    FolderMovieResponsDtoMapper instance = Mappers.getMapper(FolderMovieResponsDtoMapper.class);
+//    FolderMovieResponsDtoMapper instance = Mappers.getMapper(FolderMovieResponsDtoMapper.class);
     @Mapping(source = "id", target = "id")
     @Mapping(source = "category", target = "category")
     @Mapping(source = "privacy", target = "privacy")
