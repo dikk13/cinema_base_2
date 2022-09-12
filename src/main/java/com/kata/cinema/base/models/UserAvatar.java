@@ -8,9 +8,8 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -19,14 +18,11 @@ import java.util.Objects;
 @Setter
 @Table(name = "user_avatar")
 @NoArgsConstructor
-public class UserAvatar {
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class UserAvatar extends User {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserAvatar user;
+    private UserAvatar userAvatar;
 
     @Column(name = "avatar_url")
     private String avatarUrl;
@@ -36,12 +32,21 @@ public class UserAvatar {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         UserAvatar that = (UserAvatar) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(avatarUrl, that.avatarUrl);
+        return Objects.equals(userAvatar, that.userAvatar) && Objects.equals(avatarUrl, that.avatarUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, avatarUrl);
+        return Objects.hash(super.hashCode(), userAvatar, avatarUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "UserAvatar{" +
+                "user=" + userAvatar +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                '}';
     }
 }
