@@ -23,7 +23,6 @@ public class GenreServiceImpl extends AbstractServiceImpl<Long, Genre> implement
     }
 
     @Override
-    @Transactional
     public List<GenreResponseDto> getAllGenreResponseDto() {
         return genreDao.getAllGenreResponseDto();
     }

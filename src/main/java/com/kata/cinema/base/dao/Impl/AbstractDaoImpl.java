@@ -13,7 +13,7 @@ import java.util.Optional;
 public abstract class AbstractDaoImpl<PK, E>  implements AbstractDao <PK, E>{
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public List<E> getAll() {
         return entityManager.createQuery("FROM " + getClass()).getResultList();

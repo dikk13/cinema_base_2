@@ -11,8 +11,7 @@ import java.util.List;
 
 @Repository
 public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreDao{
-    @PersistenceContext
-    EntityManager entityManager;
+
     @Override
     public List<GenreResponseDto> getAllGenreResponseDto() {
         return entityManager.
