@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreDao{
+public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreDao {
 
     @Override
     public List<GenreResponseDto> getAllGenreResponseDto() {
