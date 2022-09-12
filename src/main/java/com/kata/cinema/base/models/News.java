@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,7 +30,8 @@ public class News {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_news_id")
+    @SequenceGenerator(name = "seq_news_id", sequenceName = "SEQ_NEWS_ID", allocationSize = 1)
     private Long id;
 
     @Column(name = "rubric")

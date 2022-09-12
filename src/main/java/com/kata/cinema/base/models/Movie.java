@@ -7,6 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 
 @Table
@@ -47,6 +60,43 @@ public class Movie {
 
     @Column(name = "type")
     private String type;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Content> contents;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MoviePerson> moviePerson;
+
+    @OneToMany(mappedBy = "movie")
+    private List<AwardCeremonyResult> awardCeremonyResults;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "news_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "news_id"))
+    private List<News> news;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "folder_movie_to_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "folder_id"))
+    private List<FolderMovie> folderMovies ;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "collection_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "collection_id"))
+    private List<Collection> collections;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genres;
 
     @Override
     public boolean equals(Object o) {

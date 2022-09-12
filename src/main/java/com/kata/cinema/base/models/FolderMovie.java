@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +30,8 @@ public class FolderMovie {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_folders_movies_id")
+    @SequenceGenerator(name = "seq_folders_movies_id", sequenceName = "SEQ_FOLDERMOVIES_ID", allocationSize = 1)
     private Long id;
 
     @Column(name = "category")
@@ -52,7 +54,7 @@ public class FolderMovie {
     @JoinTable(
             name = "folder_movies_to_movie",
             joinColumns = @JoinColumn(name = "folder_id"),
-            inverseJoinColumns = @JoinColumn(name = "movies_id"))
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies;
 
 
