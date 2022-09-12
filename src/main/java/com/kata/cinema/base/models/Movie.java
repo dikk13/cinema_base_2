@@ -4,7 +4,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +27,8 @@ import java.util.Objects;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_movie_id")
+    @SequenceGenerator(name = "seq_movie_id", sequenceName = "SEQ_MOVIE_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -27,7 +39,7 @@ public class Movie {
     private String countries;
 
     @Column(name = "date_release")
-    private String date_release;
+    private String dateRelease;
 
     @Column(name = "rars")
     private String rars;
@@ -44,17 +56,54 @@ public class Movie {
     @Column(name = "type")
     private String type;
 
+    @OneToMany(mappedBy = "movie")
+    private List<Content> contents;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MoviePerson> moviePerson;
+
+    @OneToMany(mappedBy = "movie")
+    private List<AwardCeremonyResult> awardCeremonyResults;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "news_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "news_id"))
+    private List<News> news;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "folder_movie_to_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "folder_id"))
+    private List<FolderMovie> folderMovies ;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "collection_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "collection_id"))
+    private List<Collection> collections;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genres;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(date_release, movie.date_release) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type) ;
+        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(dateRelease, movie.dateRelease) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, countries, date_release, rars, mpaa, time, description, type);
+        return Objects.hash(id, name, countries, dateRelease, rars, mpaa, time, description, type);
     }
 
     @Override
@@ -63,7 +112,7 @@ public class Movie {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", countries='" + countries + '\'' +
-                ", date_release='" + date_release + '\'' +
+                ", date_release='" + dateRelease + '\'' +
                 ", rars='" + rars + '\'' +
                 ", mpaa='" + mpaa + '\'' +
                 ", time='" + time + '\'' +

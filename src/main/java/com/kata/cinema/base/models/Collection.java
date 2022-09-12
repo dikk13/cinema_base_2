@@ -4,8 +4,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Table
 @Entity
@@ -15,7 +26,8 @@ import java.util.List;
 public class Collection {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_collection_id")
+    @SequenceGenerator(name = "seq_collection_id", sequenceName = "SEQ_COLLECTION_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -33,6 +45,26 @@ public class Collection {
     )
     private List<Movie> movies;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Collection that = (Collection) o;
+        return enable == that.enable && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(movies, that.movies);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, enable, movies);
+    }
 
+    @Override
+    public String toString() {
+        return "Collection{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", enable=" + enable +
+                ", movies=" + movies +
+                '}';
+    }
 }

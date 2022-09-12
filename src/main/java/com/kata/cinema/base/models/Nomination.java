@@ -1,15 +1,17 @@
 package com.kata.cinema.base.models;
 
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Table
@@ -17,22 +19,16 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
-@Data
 public class Nomination {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_nomination_id")
+    @SequenceGenerator(name = "seq_nomination_id", sequenceName = "SEQ_NOMINATION_ID", allocationSize = 1)
     @Column
     private Long id;
 
     @Column
     private String name;
-
-
-    public Nomination(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {

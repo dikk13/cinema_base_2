@@ -18,49 +18,41 @@ import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
-@Table
+
+
 @Entity
-@Setter
 @Getter
+@Setter
+@Table
 @NoArgsConstructor
-public class Genre {
+public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_genre_id")
-    @SequenceGenerator(name = "seq_genre_id", sequenceName = "SEQ_GENRE_ID", allocationSize = 1)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_role_id")
+    @SequenceGenerator(name = "seq_role_id", sequenceName = "SEQ_ROLE_ID", allocationSize = 1)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "movie_genre",
-            joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
-    )
-    private List<Movie> movies;
+    private String role;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Genre genre = (Genre) o;
-        return Objects.equals(id, genre.id) && Objects.equals(name, genre.name) && Objects.equals(movies, genre.movies);
+        Role role1 = (Role) o;
+        return Objects.equals(id, role1.id) && Objects.equals(role, role1.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, movies);
+        return Objects.hash(id, role);
     }
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "Role{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", movies=" + movies +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
