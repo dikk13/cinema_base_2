@@ -5,7 +5,7 @@ import com.kata.cinema.base.converter.GenreMapper;
 
 import com.kata.cinema.base.exception.GenreIdNotFoundException;
 import com.kata.cinema.base.models.Genre;
-import com.kata.cinema.base.models.dto.GenreResponseDto;
+import com.kata.cinema.base.dto.GenreResponseDto;
 import com.kata.cinema.base.service.abstracts.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 
