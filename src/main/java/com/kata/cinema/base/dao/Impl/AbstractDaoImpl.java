@@ -1,21 +1,15 @@
 package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-
-@Repository
-public abstract class AbstractDaoImpl<PK, E> implements AbstractDao<PK, E> {
-
+public abstract class AbstractDaoImpl<PK, E>  implements AbstractDao <PK, E> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public List<E> getAll() {
         return entityManager.createQuery("FROM " + getClass()).getResultList();
@@ -52,6 +46,4 @@ public abstract class AbstractDaoImpl<PK, E> implements AbstractDao<PK, E> {
                 .setParameter("id", id).getSingleResult();
         return count > 0;
     }
-
-
 }
