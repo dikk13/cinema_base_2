@@ -18,6 +18,7 @@ import java.util.Objects;
 @Setter
 @Table(name = "user_avatar")
 @NoArgsConstructor
+//TODO без наследования
 public class UserAvatar extends User {
 
     @OneToOne(fetch = FetchType.LAZY)

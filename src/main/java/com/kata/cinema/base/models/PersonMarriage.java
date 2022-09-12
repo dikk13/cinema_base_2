@@ -18,6 +18,7 @@ import java.util.Objects;
 @Setter
 @Table(name = "persons_marriage")
 @NoArgsConstructor
+//TODO без наследования
 public class PersonMarriage extends Person {
 
     @ManyToOne(fetch = FetchType.LAZY)
