@@ -1,41 +1,24 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.enums.CharacterType;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
-import java.io.Serializable;
+import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "movie_person")
 @NoArgsConstructor
-public class MoviePerson {
-    @Embeddable
-    @NoArgsConstructor
-    public static class Id implements Serializable {
-        @Column(name = "movie_id")
-        protected Long movieId;
-
-        @Column(name = "profession_id")
-        protected Long professionId;
-
-        @Column(name = "person_id")
-        protected Long personId;
-
-        public Id (Long movieId, Long professionId, Long personId) {
-            this.movieId = movieId;
-            this.professionId = professionId;
-            this.personId = personId;
-        }
-    }
-
-    @EmbeddedId
-    protected Id id = new Id();
-
-    @Column (name = "type_character", nullable = false, length = 20)
-    protected CharacterType typeCharacter;
-
-    @Column (name = "name_role", nullable = true, length = 100)
-    protected String nameRole;
+//TODO без наследования
+public class MoviePerson extends Movie {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "movie_id", insertable = false, updatable = false)
@@ -49,14 +32,35 @@ public class MoviePerson {
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
     protected Person person;
 
-    public MoviePerson (Movie movie, Profession profession, Person person, CharacterType typeCharacter, String nameRole) {
-        this.id.movieId = movie.getId();
-        this.id.professionId = profession.getId();
-        this.id.personId = person.getId();
-        this.typeCharacter = typeCharacter;
-        this.nameRole = nameRole;
+    @Column (name = "type_character", nullable = false, length = 20)
+    protected String typeCharacter;
 
+    @Column (name = "name_role", nullable = true, length = 100)
+    protected String nameRole;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        MoviePerson that = (MoviePerson) o;
+        return Objects.equals(movie, that.movie) && Objects.equals(profession, that.profession) && Objects.equals(person, that.person) && Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), movie, profession, person, typeCharacter, nameRole);
+    }
 
+    @Override
+    public String toString() {
+        return "MoviePerson{" +
+                "movie=" + movie +
+                ", profession=" + profession +
+                ", person=" + person +
+                ", typeCharacter='" + typeCharacter + '\'' +
+                ", nameRole='" + nameRole + '\'' +
+                '}';
+    }
 }

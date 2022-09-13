@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class AbstractServiceImpl<PK, E> implements AbstractService <PK, E> {
+public abstract class AbstractServiceImpl<PK, E> implements AbstractService<PK, E> {
 
     private final AbstractDao<PK, E> abstractDao;
 
-    @Autowired
+
     protected AbstractServiceImpl(AbstractDao<PK, E> abstractDao) {
         this.abstractDao = abstractDao;
     }
@@ -43,6 +43,7 @@ public abstract class AbstractServiceImpl<PK, E> implements AbstractService <PK,
     public void deleteById(PK id) {
         abstractDao.deleteById(id);
     }
+
     @Transactional
     public Optional<E> getById(PK id) {
         return abstractDao.getById(id);
@@ -52,5 +53,4 @@ public abstract class AbstractServiceImpl<PK, E> implements AbstractService <PK,
     public boolean existById(PK id) {
         return abstractDao.existById(id);
     }
-
 }
