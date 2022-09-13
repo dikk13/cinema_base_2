@@ -38,14 +38,20 @@ public class EntityInit {
 
 
     public void MovieInit(Movie movie) {
+
+        int countMovieList = 100;
         Random random = new Random();
         List<Integer> movieList;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < countMovieList; i++) {
             movieList = Collections.singletonList(i);
             movie.setName(String.valueOf(movieList));
         }
+        String descript = "'описание описание описание описание описание описание описание описание описание описание описание описание'";
+        movie.setDescription(descript);
+
         List<String> genreListmovie =new ArrayList<>(100);
         genreListmovie = (List<String>) random.ints(1, 4);
+
 
         movie.setDateRelease(String.valueOf(random.ints(1990, 2023)));
         movie.setTime(String.valueOf(random.ints(100, 181)));
@@ -57,8 +63,9 @@ public class EntityInit {
     }
 
     public void GenreInit(Genre genre) {
+        int  countGenre = 10;
         List<String> genreList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < countGenre; i++) {
             genre.setName(String.valueOf(genreList));
         }
         entityManager.persist(genre);
@@ -67,10 +74,11 @@ public class EntityInit {
     public void CollectionInit(Collection collection) {
         Random random = new Random();
         List<Boolean> collectionList;
-        for (int i = 0; i < 20; i++) {
+        int countCollection = 20;
+        for (int i = 0; i < countCollection; i++) {
             if (i < 5) {
                 collectionList = Collections.singletonList(false);
-            } else if (i >= 5) {
+            } else {
                 collectionList = Collections.singletonList(true);
             }
         }
