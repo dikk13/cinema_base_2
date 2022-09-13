@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Table
 @Entity
@@ -35,9 +36,36 @@ public class Review {
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "movies_id")
     private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "users_id")
     private User user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Review review = (Review) o;
+        return Objects.equals(id, review.id) && typeReview == review.typeReview && Objects.equals(title, review.title) && Objects.equals(description, review.description) && Objects.equals(date, review.date) && Objects.equals(movie, review.movie) && Objects.equals(user, review.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, typeReview, title, description, date, movie, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", typeReview=" + typeReview +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", movie=" + movie +
+                ", user=" + user +
+                '}';
+    }
 }

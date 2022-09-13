@@ -43,7 +43,7 @@ public class News {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "html body")
+    @Column(name = "html_body")
     private String htmlBody;
 
     @ManyToOne(fetch = FetchType.LAZY)

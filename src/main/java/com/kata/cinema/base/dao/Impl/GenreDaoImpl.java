@@ -16,7 +16,7 @@ public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreD
     public List<GenreResponseDto> getAllGenreResponseDto() {
         return entityManager.
                 createQuery("select new com.kata.cinema.base." +
-                        "models.dto.GenreResponseDto(g.id, g.name)" +
+                        "dto.GenreResponseDto(g.id, g.name)" +
                         " from Genre g ", GenreResponseDto.class).getResultList();
     }
 
