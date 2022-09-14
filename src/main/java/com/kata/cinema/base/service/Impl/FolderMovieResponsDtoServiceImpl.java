@@ -34,7 +34,6 @@ public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoSe
         return folderMovieResponsDtoMapper.mapMovieFoldersListToDto(folderMovieList);
     }
 
-    @Transactional
     @Override
     public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
         return folderMovieResponsDtoDao.getFolderMovieResponsDtoById(folderMovieId);

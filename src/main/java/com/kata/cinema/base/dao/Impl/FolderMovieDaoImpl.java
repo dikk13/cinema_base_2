@@ -3,15 +3,10 @@ package com.kata.cinema.base.dao.Impl;
 import com.kata.cinema.base.dao.abstracts.FolderMovieDao;
 import com.kata.cinema.base.models.FolderMovie;
 import org.springframework.stereotype.Repository;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class FolderMovieDaoImpl extends AbstractDaoImpl <Long, FolderMovie> implements FolderMovieDao {
-
-    EntityManager entityManager;
 
 
     @Override

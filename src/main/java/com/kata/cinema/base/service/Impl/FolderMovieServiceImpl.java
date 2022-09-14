@@ -15,14 +15,11 @@ public class FolderMovieServiceImpl implements FolderMovieService {
     public FolderMovieServiceImpl(FolderMovieDao folderMovieDao) {
         this.folderMovieDao = folderMovieDao;
     }
-
-    @Transactional
     @Override
     public List<FolderMovie> getFolderMovieListByUserId(Long userId) {
         return folderMovieDao.getFolderMovieListByUserId(userId);
     }
 
-    @Transactional
     @Override
     public FolderMovie getFolderMovieById(Long folderMovieId) {
         return folderMovieDao.getFolderMovieById(folderMovieId);
