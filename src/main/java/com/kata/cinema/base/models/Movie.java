@@ -125,5 +125,8 @@ public class Movie {
                 '}';
     }
 
+    public Integer timeToInt(String time) {
+        return Integer.getInteger(time);
+    }
 
 }
