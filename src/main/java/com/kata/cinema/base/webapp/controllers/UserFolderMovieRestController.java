@@ -5,6 +5,7 @@ import com.kata.cinema.base.dto.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.abstracts.FolderMovieResponsDtoService;
+import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserFolderMovieRestController {
 
     private final FolderMovieResponsDtoService folderMovieResponsDtoService;
+    private final MovieResponseDtoService movieResponseDtoService;
 
-    public UserFolderMovieRestController(FolderMovieResponsDtoService folderMovieResponsDtoService) {
+    public UserFolderMovieRestController(FolderMovieResponsDtoService folderMovieResponsDtoService, MovieResponseDtoService movieResponseDtoService) {
         this.folderMovieResponsDtoService = folderMovieResponsDtoService;
+        this.movieResponseDtoService = movieResponseDtoService;
     }
 
 
@@ -29,7 +32,6 @@ public class UserFolderMovieRestController {
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById (@PathVariable("id") Long id) {
-        System.out.println("GET TEST");
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id), HttpStatus.OK);
     }
 
@@ -50,8 +52,8 @@ public class UserFolderMovieRestController {
 
         /* --- Будет возвращать list<MovieResponseDTO> из нескольких страниц  --- */
 
-//        System.out.println("получаем фильмы с folder_id - 4");
-//        movieResponseDtoService.getMovieListByFolderMovieId(4L);
+        System.out.println("получаем фильмы с folder_id - 4");
+        movieResponseDtoService.getMovieListByFolderMovieId(4L);
 //        System.out.println("получаем фильмы с folder_id - 1");
 //        movieResponseDtoService.getMovieListByFolderMovieId(1L);
 //        System.out.println("получаем фильмы с folder_id - 2");
