@@ -45,7 +45,7 @@ public class FolderPerson {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (
-            name = "folder_persons_to_person",
+            name = "folders_persons_to_person",
             joinColumns = @JoinColumn(name = "folder_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Set <Person> folderPersonsSet = new HashSet<>();

@@ -25,7 +25,7 @@ public class PersonMarriage extends Person {
     @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
 
-    @Column(name = "marriageStatus")
+    @Column(name = "marriage_status")
     protected String marriageStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
