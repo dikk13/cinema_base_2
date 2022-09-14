@@ -43,10 +43,12 @@ public class Movie {
     private String dateRelease;
 
     @Column(name = "rars")
-    private String rars;
+    @Enumerated(EnumType.STRING)
+    private RARS rars;
 
     @Column(name = "mpaa")
-    private String mpaa;
+    @Enumerated(EnumType.STRING)
+    private MPAA mpaa;
 
     @Column(name = "time")
     private String time;
