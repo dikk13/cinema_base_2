@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class FolderMovieServiceImpl implements FolderMovieService {
 
-    private final FolderMovieDao <Long, FolderMovie> folderMovieDao;
+    private final FolderMovieDao folderMovieDao;
 
-    public FolderMovieServiceImpl(FolderMovieDao <Long, FolderMovie> folderMovieDao) {
+    public FolderMovieServiceImpl(FolderMovieDao folderMovieDao) {
         this.folderMovieDao = folderMovieDao;
     }
 
