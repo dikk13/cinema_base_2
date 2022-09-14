@@ -1,9 +1,12 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.models.enums.MPAA;
+import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,10 +45,12 @@ public class Movie {
     private String dateRelease;
 
     @Column(name = "rars")
-    private String rars;
+    @Enumerated(EnumType.STRING)
+    private RARS rars;
 
     @Column(name = "mpaa")
-    private String mpaa;
+    @Enumerated(EnumType.STRING)
+    private MPAA mpaa;
 
     @Column(name = "time")
     private String time;
@@ -120,4 +125,7 @@ public class Movie {
                 ", type='" + type + '\'' +
                 '}';
     }
+
+
+
 }
