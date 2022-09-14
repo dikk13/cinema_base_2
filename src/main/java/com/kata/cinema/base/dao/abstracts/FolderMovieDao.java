@@ -4,7 +4,7 @@ import com.kata.cinema.base.models.FolderMovie;
 
 import java.util.List;
 
-public interface FolderMovieDao <PK, E> extends AbstractDao <PK, E> {
-    public List <E> getFolderMovieListByUserId (PK UserId);
-    public E getFolderMovieById (PK folderMovieId);
+public interface FolderMovieDao extends AbstractDao <Long, FolderMovie> {
+    List <FolderMovie> getFolderMovieListByUserId (Long userId);
+    FolderMovie getFolderMovieById (Long folderMovieId);
 }

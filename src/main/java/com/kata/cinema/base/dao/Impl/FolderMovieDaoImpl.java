@@ -9,22 +9,23 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class FolderMovieDaoImpl <PK, E> extends AbstractDaoImpl <PK, E> implements FolderMovieDao <PK, E> {
+public class FolderMovieDaoImpl extends AbstractDaoImpl <Long, FolderMovie> implements FolderMovieDao {
 
-    @PersistenceContext
     EntityManager entityManager;
 
-    @SuppressWarnings("unchecked")
-    public List<E> getFolderMovieListByUserId(PK UserId) {
-        TypedQuery <FolderMovie> query = entityManager.createQuery("select fm from FolderMovie fm where fm.user.id =: id", FolderMovie.class);
-        query.setParameter("id", UserId);
-        return (List<E>) query.getResultList();
+
+    @Override
+    public List<FolderMovie> getFolderMovieListByUserId(Long userId) {
+        return entityManager.createQuery("select fm from FolderMovie fm where fm.user.id =: id", FolderMovie.class)
+                .setParameter("id", userId)
+                .getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    public E getFolderMovieById(PK folderMovieId) {
-        TypedQuery <FolderMovie> query = entityManager.createQuery("select fm from FolderMovie fm where fm.id =: id", FolderMovie.class);
-        query.setParameter("id", folderMovieId);
-        return (E) query.getSingleResult();
+    @Override
+    public FolderMovie getFolderMovieById(Long folderMovieId) {
+        return entityManager.createQuery("select fm from FolderMovie fm where fm.user.id =: id", FolderMovie.class)
+                .setParameter("id", folderMovieId)
+                .getSingleResult();
     }
+
 }
