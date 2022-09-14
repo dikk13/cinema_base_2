@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Table
+@Table (name = "movies")
 @Entity
 @Setter
 @Getter
@@ -68,13 +68,6 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "news_id"))
     private List<News> news;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "folder_movie_to_movie",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "folder_id"))
-    private List<FolderMovie> folderMovies ;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
