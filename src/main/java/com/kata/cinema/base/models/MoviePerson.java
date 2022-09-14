@@ -4,12 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -18,19 +14,29 @@ import java.util.Objects;
 @Table(name = "movie_person")
 @NoArgsConstructor
 //TODO без наследования
-public class MoviePerson extends Movie {
+public class MoviePerson {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "movie_id", insertable = false, updatable = false)
-    protected Movie movie;
+    @Embeddable
+    @NoArgsConstructor
+    public static class Id implements Serializable {
+        @Column(name = "movie_id")
+        protected Long movieId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "profession_id", insertable = false, updatable = false)
-    protected Profession profession;
+        @Column(name = "profession_id")
+        protected Long professionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "person_id", insertable = false, updatable = false)
-    protected Person person;
+        @Column(name = "person_id")
+        protected Long personId;
+
+        public Id (Long movieId, Long professionId, Long personId) {
+            this.movieId = movieId;
+            this.professionId = professionId;
+            this.personId = personId;
+        }
+    }
+
+    @EmbeddedId
+    private Id id = new Id();
 
     @Column (name = "type_character", nullable = false, length = 20)
     protected String typeCharacter;
@@ -38,29 +44,17 @@ public class MoviePerson extends Movie {
     @Column (name = "name_role", nullable = true, length = 100)
     protected String nameRole;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "movie_id", insertable = false, updatable = false)
+    protected Movie movie;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        MoviePerson that = (MoviePerson) o;
-        return Objects.equals(movie, that.movie) && Objects.equals(profession, that.profession) && Objects.equals(person, that.person) && Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "profession_id", insertable = false, updatable = false)
+    protected Profession profession;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), movie, profession, person, typeCharacter, nameRole);
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "person_id", insertable = false, updatable = false)
+    protected Person person;
 
-    @Override
-    public String toString() {
-        return "MoviePerson{" +
-                "movie=" + movie +
-                ", profession=" + profession +
-                ", person=" + person +
-                ", typeCharacter='" + typeCharacter + '\'' +
-                ", nameRole='" + nameRole + '\'' +
-                '}';
-    }
+
 }
