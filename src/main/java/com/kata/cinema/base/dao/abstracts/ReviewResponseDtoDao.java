@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ReviewResponseDtoDao {
 
-    PageDto<List<ReviewResponseDto>> getReviewResponseDto();
+    PageDto<ReviewResponseDto> getReviewResponseDto(Long movieID,Long count);
 }

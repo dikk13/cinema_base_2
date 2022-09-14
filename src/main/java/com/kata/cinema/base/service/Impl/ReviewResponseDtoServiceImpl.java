@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 
+
 @Service
 public class ReviewResponseDtoServiceImpl implements ReviewResponseDtoService {
 
@@ -21,8 +22,7 @@ public class ReviewResponseDtoServiceImpl implements ReviewResponseDtoService {
 
 
     @Override
-    public PageDto<ReviewResponseDto> getReviewResponseDto() {
-//        return responseDtoDao.getReviewResponseDto();
-        return null;
+    public PageDto<ReviewResponseDto> getReviewResponseDto(Long movieID,Long count) {
+               return responseDtoDao.getReviewResponseDto(movieID,count);
     }
 }

@@ -24,6 +24,6 @@ public class MovieRestController {
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
     public PageDto<ReviewResponseDto> getReviewResponseDtoPageDto(@PathVariable("id") Long id, @PathVariable("pageNumber") Long pageNumber) {
-        return responseDtoService.getReviewResponseDto();
+        return responseDtoService.getReviewResponseDto(id,pageNumber);
     }
 }

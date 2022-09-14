@@ -15,11 +15,11 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
     @PersistenceContext
     protected EntityManager entityManager;
     @Override
-    public PageDto<List<ReviewResponseDto>> getReviewResponseDto() {
-
-
-entityManager.createQuery("select new com.kata.cinema.base.dto.ReviewResponseDto(r.typeReview) from Review r", ReviewResponseDto.class).getResultList();
-        return null;
+    public PageDto<ReviewResponseDto> getReviewResponseDto(Long movieID,Long count) {
+       List<ReviewResponseDto> resultList =entityManager.createQuery("select new com.kata.cinema.base.dto.ReviewResponseDto(r.id,r.typeReview,r.title)" +
+                       " from Review r where r.id =: movieID", ReviewResponseDto.class).setParameter("movieID",movieID).getResultList();
+        PageDto<ReviewResponseDto> pageDto = new PageDto<>(count,resultList);
+        return pageDto;
 
     }
 }

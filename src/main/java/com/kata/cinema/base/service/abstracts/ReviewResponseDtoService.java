@@ -7,5 +7,5 @@ import com.kata.cinema.base.dto.ReviewResponseDto;
 
 public interface ReviewResponseDtoService {
 
-    PageDto<ReviewResponseDto> getReviewResponseDto();
+    PageDto<ReviewResponseDto> getReviewResponseDto(Long movieID,Long count);
 }

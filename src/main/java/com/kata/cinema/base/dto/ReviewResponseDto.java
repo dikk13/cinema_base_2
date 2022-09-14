@@ -23,13 +23,10 @@ public class ReviewResponseDto {
     private LocalDate date;
 
 
-    public ReviewResponseDto(ReviewSortType reviewSortType, Long id, TypeReview typeReview, String title, String description, String fullName, LocalDate date) {
-        this.reviewSortType = reviewSortType.DATE_ASC;
+    public ReviewResponseDto( Long id, TypeReview typeReview, String title) {
         this.id = id;
         this.typeReview = typeReview;
         this.title = title;
-        this.description = description;
-        this.fullName = fullName;
-        this.date = date;
+
     }
 }
