@@ -1,7 +1,7 @@
 package com.kata.cinema.base.models;
 
 
-import com.kata.cinema.base.enums.Rubric;
+import com.kata.cinema.base.models.enums.Rubric;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,22 +1,13 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.enums.MovieType;
+import com.kata.cinema.base.models.enums.MovieType;
+import com.kata.cinema.base.models.enums.MPAA;
+import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
