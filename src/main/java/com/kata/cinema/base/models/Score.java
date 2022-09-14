@@ -37,14 +37,14 @@ public class Score {
     private User user;
 
     @Column(name = "score")
-    private int score;
+    private Integer score;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return score == score1.score && Objects.equals(id, score1.id) && Objects.equals(movie, score1.movie) && Objects.equals(user, score1.user);
+        return score.equals(score1.score) && Objects.equals(id, score1.id) && Objects.equals(movie, score1.movie) && Objects.equals(user, score1.user);
     }
 
     @Override

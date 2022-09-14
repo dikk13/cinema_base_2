@@ -1,6 +1,7 @@
 package com.kata.cinema.base.models;
 
 
+import com.kata.cinema.base.enums.Rubric;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Table
+@Table (name = "news")
 @NoArgsConstructor
 public class News {
 
@@ -35,7 +36,7 @@ public class News {
     private Long id;
 
     @Column(name = "rubric")
-    private String rubric;
+    private Rubric rubric;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -43,7 +44,7 @@ public class News {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "html body")
+    @Column(name = "html_body")
     private String htmlBody;
 
     @ManyToOne(fetch = FetchType.LAZY)

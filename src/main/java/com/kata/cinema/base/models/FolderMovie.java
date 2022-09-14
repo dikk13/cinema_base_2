@@ -1,6 +1,8 @@
 package com.kata.cinema.base.models;
 
 
+import com.kata.cinema.base.enums.Category;
+import com.kata.cinema.base.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,10 +37,10 @@ public class FolderMovie {
     private Long id;
 
     @Column(name = "category")
-    private String category;
+    private Category category;
 
     @Column(name = "privacy")
-    private String privacy;
+    private Privacy privacy;
 
     @Column(name = "name")
     private String name;

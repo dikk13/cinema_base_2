@@ -1,14 +1,16 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.enums.MovieType;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,7 +61,10 @@ public class Movie {
     private String description;
 
     @Column(name = "type")
-    private String type;
+    private MovieType type;
+
+    @Column(name = "original_name")
+    private String originalName;
 
     @OneToMany(mappedBy = "movie")
     private List<Content> contents;
@@ -125,7 +130,4 @@ public class Movie {
                 ", type='" + type + '\'' +
                 '}';
     }
-
-
-
 }
