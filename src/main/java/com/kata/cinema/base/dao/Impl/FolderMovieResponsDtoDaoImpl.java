@@ -16,8 +16,6 @@ public class FolderMovieResponsDtoDaoImpl implements FolderMovieResponsDtoDao {
 
     @Override
     public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
-        System.out.println("CATCH FINAL METHOD");
-        System.out.println("for id " + folderMovieId);
         TypedQuery<FolderMovieResponsDto> query = entityManager.createQuery("select new com.kata.cinema.base.dto.FolderMovieResponsDto(fm.id, fm.category, fm.privacy, fm.name, fm.description) from FolderMovie fm where fm.id =: id", FolderMovieResponsDto.class);
         query.setParameter("id", folderMovieId);
         return query.getSingleResult();

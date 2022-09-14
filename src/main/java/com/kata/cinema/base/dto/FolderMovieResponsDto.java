@@ -10,9 +10,9 @@ import lombok.*;
 @Setter
 @ToString
 public class FolderMovieResponsDto {
-    protected Long id;
-    protected Category category;
-    protected Privacy privacy;
-    protected String name;
-    protected String description;
+    private Long id;
+    private Category category;
+    private Privacy privacy;
+    private String name;
+    private String description;
 }

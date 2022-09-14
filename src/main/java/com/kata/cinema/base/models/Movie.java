@@ -57,6 +57,9 @@ public class Movie {
     @Column(name = "type")
     private MovieType type;
 
+    @Column(name = "original_name")
+    private String originalName;
+
     @OneToMany(mappedBy = "movie")
     private List<Content> contents;
 
@@ -121,4 +124,6 @@ public class Movie {
                 ", type='" + type + '\'' +
                 '}';
     }
+
+
 }

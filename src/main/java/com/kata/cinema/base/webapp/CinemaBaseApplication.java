@@ -19,6 +19,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class CinemaBaseApplication {
     public static void main(String[] args) {
         SpringApplication.run(CinemaBaseApplication.class, args);
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(FolderMovieResponsDto.class);
     }
 }
