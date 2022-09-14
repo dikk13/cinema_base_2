@@ -34,11 +34,9 @@ public class Movie {
     private String dateRelease;
 
     @Column(name = "rars")
-    @Enumerated(EnumType.STRING)
     private RARS rars;
 
     @Column(name = "mpaa")
-    @Enumerated(EnumType.STRING)
     private MPAA mpaa;
 
     @Column(name = "time")
