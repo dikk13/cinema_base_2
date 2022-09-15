@@ -47,15 +47,14 @@ public class UserFolderMovieRestController {
 
         /* --- Будет возвращать list<MovieResponseDTO> из нескольких страниц  --- */
 
-        List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id);
+        List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id, sortMovieFolder);
         System.out.println("***********");
         System.out.println(answer);
-//        PageDto<MovieResponseDto> pageDto = new PageDto<>();
-//        pageDto.setCount(3L);
-//        pageDto.setEntities(answer);
-//        ResponseEntity<PageDto<MovieResponseDto>> responseEntity= new ResponseEntity<>(pageDto, HttpStatus.OK);
-//        return responseEntity;
-        return new ResponseEntity<>(HttpStatus.OK);
+        PageDto<MovieResponseDto> pageDto = new PageDto<>();
+        pageDto.setCount(3L);
+        pageDto.setEntities(answer);
+        return new ResponseEntity<>(pageDto, HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
