@@ -5,6 +5,8 @@ import com.kata.cinema.base.models.Movie;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface MovieResponseDtoMapper {
@@ -16,5 +18,6 @@ public interface MovieResponseDtoMapper {
     @Mapping(source = "countries", target = "countries")
 
     MovieResponseDto mapMovieToDto (Movie movie);
+    List<MovieResponseDto> mapListOfMoviesToDto (List<Movie> movies);
 
 }

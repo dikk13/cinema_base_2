@@ -14,7 +14,7 @@ public class MovieResponseDto {
     protected String name;
     protected String originalName;
     protected Integer time;  // перевести в Integer
-    protected LocalDate dateRelease;
+    protected String  dateRelease;
     protected String countries;
 //    protected String genres;    // тащить
 //    protected String director;  // тащить

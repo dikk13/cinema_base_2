@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -110,7 +111,7 @@ public class Movie {
     }
 
     public Integer timeToInt(String time) {
-        return Integer.getInteger(time);
+        return Integer.valueOf(time);
     }
 
 }
