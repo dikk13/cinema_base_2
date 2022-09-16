@@ -1,35 +1,27 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
 
-import com.kata.cinema.base.dao.abstracts.CommentsDao;
 import com.kata.cinema.base.dto.CommentsRequestDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
 import com.kata.cinema.base.models.Comments;
-import com.kata.cinema.base.models.News;
-import com.kata.cinema.base.models.User;
+import com.kata.cinema.base.service.abstracts.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user/news/{id}/comments")
+@RequestMapping("/api/user/news/{id}")
 public class UserNewsRestController {
 
     @Autowired
     private CommentsMapper commentsMapper;
 
     @Autowired
-    private CommentsDao commentsDao;
+    private CommentsService commentsService;
 
-    @PostMapping("")
-    void addComments(@PathVariable("id") long newsId, @RequestParam(name = "userId") long userId,
+    @PostMapping("/comments")
+    void addComments(@PathVariable("id") long newsId, @RequestParam("userId") long userId,
                      @RequestBody CommentsRequestDto commentsRequestDto) {
         Comments comments = commentsMapper.toComments(commentsRequestDto);
-        User user = new User();
-        user.setId(userId);
-        News news = new News();
-        news.setId(newsId);
-        comments.setUser(user);
-        comments.setNews(news);
-        commentsDao.create(comments);
+        commentsService.create(comments, newsId, userId);
     }
 }

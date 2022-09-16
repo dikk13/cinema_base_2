@@ -13,11 +13,14 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CommentsMapper {
 
-//    @Mapping(source = "id", target = "id")
-//    @Mapping(source = "text", target = "text")
-//    @Mapping(source = "date", target = "date")
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "text", target = "text")
+    @Mapping(source = "date", target = "dateTime")
     CommentsResponseDto toDTO (Comments comments);
     List<CommentsResponseDto> toDTOList (List<Comments> comments);
+
+    @Mapping(source = "text", target = "text")
+    @Mapping(source = "date", target = "date")
     Comments toComments(CommentsRequestDto commentsRequestDto);
 
 }
