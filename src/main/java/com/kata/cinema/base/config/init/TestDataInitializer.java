@@ -78,6 +78,7 @@ public class TestDataInitializer {
             Genre genre = new Genre();
             genre.setName(String.format("Жанр%s", i));
             genreService.create(genre);
+            genreList.add(genre);
         }
     }
 
