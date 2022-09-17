@@ -2,6 +2,7 @@ package com.kata.cinema.base.service.Impl;
 
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
 import com.kata.cinema.base.dao.abstracts.CommentsDao;
+import com.kata.cinema.base.dto.CommentsRequestDto;
 import com.kata.cinema.base.models.Comments;
 import com.kata.cinema.base.service.abstracts.CommentsService;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
         super(abstractDao);
         this.commentsDao = commentsDao;
     }
+
     @Override
     public List<Comments> getAllCommentsByNewsId(long id) {
         return commentsDao.getCommentsListByNewsId(id);
@@ -27,7 +29,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
         commentsDao.create(comments);
     }
 
-    public void create(Comments entity, long userId, long newsId) {
+    public void create(CommentsRequestDto entity, long userId, long newsId) {
         commentsDao.create(entity, userId, newsId);
     }
 }

@@ -4,7 +4,6 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 import com.kata.cinema.base.dto.CommentsResponseDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
 import com.kata.cinema.base.service.abstracts.CommentsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +15,17 @@ import java.util.List;
 @RequestMapping("/api/news/{id}")
 public class NewsRestController {
 
-    @Autowired
-    private CommentsService commentsService;
+    private final CommentsService commentsService;
 
-    @Autowired
-    private CommentsMapper commentsMapper;
+    private final CommentsMapper commentsMapper;
+
+    public NewsRestController(CommentsService commentsService, CommentsMapper commentsMapper) {
+        this.commentsService = commentsService;
+        this.commentsMapper = commentsMapper;
+    }
 
     @GetMapping("/comments")
     public List<CommentsResponseDto> getCommentsResponseDtoById(@PathVariable("id") long newsId) {
-//        return commentsService.getAllCommentsByNewsId(newsId).stream().map(c -> commentsMapper.toDTO(c)).toList();
         return commentsMapper.toDTOList(commentsService.getAllCommentsByNewsId(newsId));
     }
 }
