@@ -16,7 +16,7 @@ public class MovieResponseDto {
     protected Integer time;  // перевести в Integer
     protected String  dateRelease;
     protected String countries;
-//    protected String genres;    // тащить
+    protected String genres;    // тащить
 //    protected String director;  // тащить
 //    protected String roles;     // тащить
 }

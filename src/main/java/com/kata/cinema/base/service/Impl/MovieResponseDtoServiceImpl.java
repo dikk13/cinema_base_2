@@ -27,9 +27,9 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
     public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(Long folderMovieId, String sortMovieFolder) {
 
         List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId);
-        System.out.println("cp from service");
+        System.out.println("Итак, получил данные по жанрам, проверяем");
         for (Movie movie: movieList) {
-            System.out.println(movie.getGenres());
+            System.out.println(movie.getName() + " жанры : " + movie.getGenres());
         }
         List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
         switch (sortMovieFolder) {
@@ -42,7 +42,6 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
             // MY_SCORE("Моя оценка"),
             // COUNT_SCORE("Число оценок"),
         }
-
 
         return resultedList;
     }
