@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
-@Table
+@Table (name = "genres")
 @Entity
 @Setter
 @Getter
