@@ -54,8 +54,5 @@ public class UserFolderMovieRestController {
         pageDto.setCount(3L);
         pageDto.setEntities(answer);
         return new ResponseEntity<>(pageDto, HttpStatus.OK);
-//        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

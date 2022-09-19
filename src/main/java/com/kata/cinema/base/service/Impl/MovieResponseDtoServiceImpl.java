@@ -25,12 +25,7 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
 
     @Override
     public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(Long folderMovieId, String sortMovieFolder) {
-
         List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId);
-        System.out.println("Итак, получил данные по жанрам, проверяем");
-        for (Movie movie: movieList) {
-            System.out.println(movie.getName() + " жанры : " + movie.getGenres());
-        }
         List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
         switch (sortMovieFolder) {
             case ("NAME") -> resultedList.sort((a, b) -> a.getName().compareTo(b.getName()));
