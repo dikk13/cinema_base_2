@@ -6,6 +6,7 @@ import com.kata.cinema.base.dto.CommentsRequestDto;
 import com.kata.cinema.base.models.Comments;
 import com.kata.cinema.base.service.abstracts.CommentsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comments> getAllCommentsByNewsId(long id) {
         return commentsDao.getCommentsListByNewsId(id);
     }
@@ -29,6 +31,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
         commentsDao.create(comments);
     }
 
+    @Transactional
     public void create(CommentsRequestDto entity, long userId, long newsId) {
         commentsDao.create(entity, userId, newsId);
     }

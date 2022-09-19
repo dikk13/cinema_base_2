@@ -4,7 +4,7 @@ import com.kata.cinema.base.dao.abstracts.CommentsDao;
 import com.kata.cinema.base.dto.CommentsRequestDto;
 import com.kata.cinema.base.models.Comments;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.math.BigInteger;
 import java.util.List;
@@ -22,7 +22,7 @@ public class CommentsDaoImpl extends AbstractDaoImpl<Long, Comments> implements 
                 .getResultList();
     }
 
-    @Transactional
+
     public void create(CommentsRequestDto entity, long userId, long newsId) {
         BigInteger id = (BigInteger) entityManager.createNativeQuery("select nextval ('seq_comments_id')").getSingleResult();
         entityManager.createNativeQuery("insert into comments (date, text, news_id, user_id, id) values (?, ?, ?, ?, ?)")
