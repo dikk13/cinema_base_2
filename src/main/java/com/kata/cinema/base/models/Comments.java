@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table(name = "comments")
+@Table
 @Entity
 @Setter
 @Getter
@@ -30,11 +30,11 @@ public class Comments {
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "news_id", insertable = false, updatable = false)
+    @JoinColumn(name = "news_id", updatable = false)
     private News news;
 
     @Override
@@ -49,7 +49,6 @@ public class Comments {
         Comments comments = (Comments) obj;
         return id == comments.id && Objects.equals(text, comments.text) && Objects.equals(date, comments.date) &&
                 Objects.equals(user, comments.user) && Objects.equals(news, comments.news);
-
     }
 
     @Override

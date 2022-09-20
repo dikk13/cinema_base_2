@@ -2,7 +2,6 @@ package com.kata.cinema.base.service.Impl;
 
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
 import com.kata.cinema.base.dao.abstracts.CommentsDao;
-import com.kata.cinema.base.dto.CommentsRequestDto;
 import com.kata.cinema.base.models.Comments;
 import com.kata.cinema.base.service.abstracts.CommentsService;
 import org.springframework.stereotype.Service;
@@ -27,12 +26,8 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
     }
 
     @Override
+    @Transactional
     public void create(Comments comments) {
         commentsDao.create(comments);
-    }
-
-    @Transactional
-    public void create(CommentsRequestDto entity, long userId, long newsId) {
-        commentsDao.create(entity, userId, newsId);
     }
 }

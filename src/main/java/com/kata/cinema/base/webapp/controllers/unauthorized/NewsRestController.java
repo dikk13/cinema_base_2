@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/news/{id}")
+@RequestMapping("/api/news")
 public class NewsRestController {
 
     private final CommentsService commentsService;
@@ -24,7 +24,7 @@ public class NewsRestController {
         this.commentsMapper = commentsMapper;
     }
 
-    @GetMapping("/comments")
+    @GetMapping("/{id}/comments")
     public List<CommentsResponseDto> getCommentsResponseDtoById(@PathVariable("id") long newsId) {
         return commentsMapper.toDTOList(commentsService.getAllCommentsByNewsId(newsId));
     }
