@@ -4,6 +4,7 @@ import com.kata.cinema.base.dao.abstracts.MovieResponseDao;
 import com.kata.cinema.base.dto.MovieResponseDto;
 import com.kata.cinema.base.mappers.MovieResponseDtoMapper;
 import com.kata.cinema.base.models.Movie;
+import com.kata.cinema.base.models.MoviePerson;
 import com.kata.cinema.base.models.enums.SortMovieFolderType;
 import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
@@ -25,19 +27,11 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
 
     @Override
     public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(Long folderMovieId, String sortMovieFolder) {
-        List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId);
-        List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
-        switch (sortMovieFolder) {
-            case ("NAME") -> resultedList.sort((a, b) -> a.getName().compareTo(b.getName()));
-            case ("ORIGINAL_NAME") -> resultedList.sort((a, b) -> a.getOriginalName().compareTo(b.getOriginalName()));
-            case ("YEAR") -> resultedList.sort((a, b) -> a.getDateRelease().compareTo(b.getDateRelease()));
-
-            // Еще надо добавить :
-            // RATING("Рейтинг"),
-            // MY_SCORE("Моя оценка"),
-            // COUNT_SCORE("Число оценок"),
+        List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId, sortMovieFolder);
+        for (Movie movie: movieList) {
+            System.out.println(movie.getGenres());
         }
-
+        List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
         return resultedList;
     }
 }

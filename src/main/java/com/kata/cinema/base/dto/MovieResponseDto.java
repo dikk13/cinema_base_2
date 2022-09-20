@@ -11,12 +11,12 @@ import java.time.LocalDate;
 @ToString
 public class MovieResponseDto {
     private Long id;
-    protected String name;
-    protected String originalName;
-    protected Integer time;  // перевести в Integer
-    protected String  dateRelease;
-    protected String countries;
-    protected String genres;
-//    protected String director;  // тащить
-//    protected String roles;     // тащить
+    private String name;
+    private String originalName;
+    private Integer time;  // перевести в Integer
+    private String  dateRelease;
+    private String countries;
+    private String genres;
+    private String directors;
+    private String roles;
 }

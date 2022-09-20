@@ -18,6 +18,8 @@ public class MoviePerson {
 
     @Embeddable
     @NoArgsConstructor
+    @Getter
+    @Setter
     public static class Id implements Serializable {
         @Column(name = "movie_id")
         protected Long movieId;
@@ -44,15 +46,15 @@ public class MoviePerson {
     @Column (name = "name_role", nullable = true, length = 100)
     protected String nameRole;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "movie_id", insertable = false, updatable = false)
     protected Movie movie;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "profession_id", insertable = false, updatable = false)
     protected Profession profession;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
     protected Person person;
 

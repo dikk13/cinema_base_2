@@ -11,15 +11,34 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-@NamedEntityGraphs({
-        @NamedEntityGraph(
-                name = "movieResponseDtoGraph",
-                attributeNodes = {@NamedAttributeNode(value = "genres")}
-        )
-})
+//@NamedEntityGraphs({
+//        @NamedEntityGraph(
+//                name = "movieResponseDtoGraph",
+//                attributeNodes = {@NamedAttributeNode(value = "genres"),
+//                        @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub")},
+//                subgraphs = { @NamedSubgraph()}
+//        )
+//})
+
+@NamedEntityGraph(name = "movieResponseDtoGraph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "name"),
+                @NamedAttributeNode(value = "originalName"),
+                @NamedAttributeNode(value = "time"),
+                @NamedAttributeNode(value = "dateRelease"),
+                @NamedAttributeNode(value = "genres"),
+                @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub"),
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "moviePersonSub", attributeNodes = @NamedAttributeNode("person"))
+        }
+)
+
 @Table (name = "movies")
 @Entity
 @Setter
@@ -64,7 +83,7 @@ public class Movie {
     private List<Content> contents;
 
     @OneToMany(mappedBy = "movie")
-    private List<MoviePerson> moviePerson;
+    private Set<MoviePerson> moviePerson;
 
     @OneToMany(mappedBy = "movie")
     private List<AwardCeremonyResult> awardCeremonyResults;
@@ -88,7 +107,7 @@ public class Movie {
             name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genres;
+    private List<Genre> genres = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
