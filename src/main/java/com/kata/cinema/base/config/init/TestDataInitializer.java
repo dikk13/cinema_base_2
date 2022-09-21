@@ -68,7 +68,7 @@ public class TestDataInitializer {
         movie.setTime(String.valueOf(random.ints(100, 181)));
         movie.setMpaa(MPAA.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
         movie.setRars(RARS.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
-        movie.setGenres(genreListMovie);
+//        movie.setGenres(genreListMovie);
         entityManager.persist(movie);
 
     }

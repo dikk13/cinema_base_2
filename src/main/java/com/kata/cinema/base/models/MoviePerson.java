@@ -41,22 +41,22 @@ public class MoviePerson {
     private Id id = new Id();
 
     @Column (name = "type_character", nullable = false, length = 20)
-    protected String typeCharacter;
+    private String typeCharacter;
 
     @Column (name = "name_role", nullable = true, length = 100)
-    protected String nameRole;
+    private String nameRole;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "movie_id", insertable = false, updatable = false)
-    protected Movie movie;
+    private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "profession_id", insertable = false, updatable = false)
-    protected Profession profession;
+    private Profession profession;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
-    protected Person person;
+    private Person person;
 
 
 }

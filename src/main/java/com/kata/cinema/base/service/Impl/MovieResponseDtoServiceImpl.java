@@ -26,11 +26,13 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
     }
 
     @Override
-    public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(Long folderMovieId, String sortMovieFolder) {
-        List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId, sortMovieFolder);
-        for (Movie movie: movieList) {
-            System.out.println(movie.getGenres());
-        }
+    public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(
+            Long folderMovieId,
+            String sortMovieFolder,
+            Integer pageNumber,
+            Integer itemsOnPage) {
+
+        List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage);
         List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
         return resultedList;
     }

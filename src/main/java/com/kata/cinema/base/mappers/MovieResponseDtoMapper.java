@@ -17,20 +17,30 @@ import java.util.Set;
 public interface MovieResponseDtoMapper {
 
     @Named("createGenresString")
-    static String createGenresString (List<Genre> genres){
+    static String createGenresString (Set<Genre> genres){
+        int counter = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (Genre genre: genres) {
-            stringBuilder.append(genre.getName()).append(", ");
+            stringBuilder.append(genre.getName());
+            if (counter < genres.size() - 1) {
+                stringBuilder.append(", ");
+                counter++;
+            }
         }
         return stringBuilder.toString();
     }
 
     @Named("createDirectorsString")
     static String createDirectorsString (Set<MoviePerson> moviePersonSet) {
+        int counter = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (MoviePerson moviePerson: moviePersonSet) {
             if (Integer.parseInt(moviePerson.getTypeCharacter()) == CharacterType.NO_CHARACTER_MOVIE.ordinal()) {
+                if (counter > 0) {
+                    stringBuilder.append(", ");
+                }
                 stringBuilder.append(moviePerson.getPerson().getFirstName()).append(" ").append(moviePerson.getPerson().getLastName());
+                counter++;
             }
         }
         return stringBuilder.toString();
@@ -38,10 +48,15 @@ public interface MovieResponseDtoMapper {
 
     @Named("createRolesString")
     static String createRolesString (Set<MoviePerson> moviePersonSet) {
+        int counter = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (MoviePerson moviePerson: moviePersonSet) {
             if (Integer.parseInt(moviePerson.getTypeCharacter()) == CharacterType.MAIN_CHARACTER.ordinal()) {
-                stringBuilder.append(moviePerson.getPerson().getFirstName()).append(" ").append(moviePerson.getPerson().getLastName());
+                if (counter > 0) {
+                    stringBuilder.append(", ");
+                }
+                    stringBuilder.append(moviePerson.getPerson().getFirstName()).append(" ").append(moviePerson.getPerson().getLastName());
+                    counter++;
             }
         }
         return stringBuilder.toString();

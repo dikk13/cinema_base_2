@@ -6,21 +6,38 @@ import com.kata.cinema.base.models.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
+
+
+
+
+//@NamedEntityGraph(name = "graph_FolderMovie.Movies.Genres.Persons",
+//        attributeNodes = @NamedAttributeNode(value = "movies", subgraph = "subgraph_FolderMovie.Movies.Genres"),
+//        subgraphs = {
+//                @NamedSubgraph(name = "subgraph_FolderMovie.Movies.Genres",
+//                        attributeNodes = {
+//                        @NamedAttributeNode(value = "genres"),
+//                        @NamedAttributeNode(value = "moviePerson", subgraph = "subgraph_Movies.Persons")}),
+//                @NamedSubgraph(name = "subgraph_Movies.Persons", attributeNodes = @NamedAttributeNode(value = "person"))
+//        })
+
+//@NamedEntityGraph(name = "FolderMovieDTO",
+//        attributeNodes = @NamedAttributeNode(value = "movies", subgraph = "sub_movies"),
+//        subgraphs = {
+//            @NamedSubgraph(name = "sub_movies", attributeNodes = {
+//                    @NamedAttributeNode(value = "genres"),
+//                    @NamedAttributeNode(value = "moviePerson", subgraph = "sub_persons")}),
+//            @NamedSubgraph(name = "sub_persons", attributeNodes = @NamedAttributeNode(value = "person"))
+//            })
+
+
 
 
 @Entity

@@ -11,10 +11,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 //@NamedEntityGraphs({
 //        @NamedEntityGraph(
@@ -27,10 +24,10 @@ import java.util.Set;
 
 @NamedEntityGraph(name = "movieResponseDtoGraph",
         attributeNodes = {
-                @NamedAttributeNode(value = "name"),
-                @NamedAttributeNode(value = "originalName"),
-                @NamedAttributeNode(value = "time"),
-                @NamedAttributeNode(value = "dateRelease"),
+//                @NamedAttributeNode(value = "name"),
+//                @NamedAttributeNode(value = "originalName"),
+//                @NamedAttributeNode(value = "time"),
+//                @NamedAttributeNode(value = "dateRelease"),
                 @NamedAttributeNode(value = "genres"),
                 @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub"),
         },
@@ -107,7 +104,7 @@ public class Movie {
             name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genres = new ArrayList<>();
+    private Set <Genre> genres;
 
     @Override
     public boolean equals(Object o) {
