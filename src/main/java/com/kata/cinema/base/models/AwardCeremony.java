@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +18,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Table
+@Table(name = "AwardCeremony")
 @Entity
 @Setter
+@ToString
 @Getter
 @NoArgsConstructor
 public class AwardCeremony {
@@ -35,6 +37,7 @@ public class AwardCeremony {
     @Column
     private String placeEvent;
 
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "awards_id")
     private Award awards;
@@ -44,16 +47,14 @@ public class AwardCeremony {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AwardCeremony awardCeremony = (AwardCeremony) o;
-
         return (Objects.equals(id, awardCeremony.id)) && Objects.equals(dateEvent, awardCeremony.dateEvent)
                 && Objects.equals(placeEvent, awardCeremony.placeEvent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateEvent, placeEvent);
+        return getClass().hashCode();
 
     }
 

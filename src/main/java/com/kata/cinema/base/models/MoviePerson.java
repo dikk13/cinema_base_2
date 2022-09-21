@@ -50,7 +50,7 @@ public class MoviePerson extends Movie {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), movie, profession, person, typeCharacter, nameRole);
+        return getClass().hashCode();
     }
 
     @Override

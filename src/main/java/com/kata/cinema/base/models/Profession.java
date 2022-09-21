@@ -29,6 +29,11 @@ public class Profession {
     protected String name;
 
     @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "Profession{" +
                 "id=" + id +

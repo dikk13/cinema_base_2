@@ -49,7 +49,7 @@ public class Score {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, user, score);
+        return getClass().hashCode();
     }
 
     @Override

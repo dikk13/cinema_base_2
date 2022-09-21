@@ -40,7 +40,7 @@ public class UserAvatar extends User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userAvatar, avatarUrl);
+        return getClass().hashCode();
     }
 
     @Override

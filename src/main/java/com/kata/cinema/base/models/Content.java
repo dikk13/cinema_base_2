@@ -50,7 +50,7 @@ public class Content {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, content_url, type);
+        return getClass().hashCode();
     }
 
     @Override

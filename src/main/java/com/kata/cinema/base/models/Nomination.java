@@ -42,7 +42,7 @@ public class Nomination {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return getClass().hashCode();
     }
 
     @Override

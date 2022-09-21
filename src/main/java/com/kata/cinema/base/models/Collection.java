@@ -55,7 +55,7 @@ public class Collection {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, enable, movies);
+        return getClass().hashCode();
     }
 
     @Override

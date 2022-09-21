@@ -52,7 +52,7 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, height, dateOfBirth, placeOfBirth);
+        return getClass().hashCode();
     }
 
     @Override

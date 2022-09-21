@@ -6,6 +6,7 @@ import com.kata.cinema.base.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "folders_movies")
 @NoArgsConstructor
 public class FolderMovie {
@@ -48,17 +50,18 @@ public class FolderMovie {
     @Column(name = "description")
     private String description;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     protected User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(
             name = "folder_movies_to_movie",
-            joinColumns = @JoinColumn(name = "folder_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private List<Movie> movies;
-
+            joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
+    private List<Movie> movies = new java.util.ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -70,7 +73,7 @@ public class FolderMovie {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, user, privacy, name, description);
+        return getClass().hashCode();
     }
 }
 

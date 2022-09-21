@@ -113,7 +113,7 @@ public class Movie {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, countries, dateRelease, rars, mpaa, time, description, type);
+        return getClass().hashCode();
     }
 
     @Override

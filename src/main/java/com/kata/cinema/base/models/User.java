@@ -54,7 +54,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, first_name, last_name, password, birthday);
+        return getClass().hashCode();
     }
 
     @Override

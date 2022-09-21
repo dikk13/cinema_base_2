@@ -43,7 +43,7 @@ public class PersonMarriage extends Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), person, marriageStatus, human);
+        return getClass().hashCode();
     }
 
     @Override

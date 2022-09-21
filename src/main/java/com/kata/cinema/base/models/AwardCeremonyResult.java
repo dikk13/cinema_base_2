@@ -69,7 +69,7 @@ public class AwardCeremonyResult {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nominationStatus);
+        return getClass().hashCode();
     }
 
     @Override
