@@ -67,7 +67,8 @@ public class News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
-        return id == news.id && Objects.equals(rubric, news.rubric) && Objects.equals(date, news.date) && Objects.equals(title, news.title) && Objects.equals(htmlBody, news.htmlBody) && Objects.equals(user, news.user);
+        return Objects.equals(id, news.id) && Objects.equals(date, news.date) && Objects.equals(title, news.title) &&
+                Objects.equals(htmlBody, news.htmlBody);
     }
 
     @Override

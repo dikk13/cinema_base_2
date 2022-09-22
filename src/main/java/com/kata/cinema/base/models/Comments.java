@@ -46,7 +46,6 @@ public class Comments {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Comments comments = (Comments) obj;
-        return id == comments.id && Objects.equals(text, comments.text) && Objects.equals(date, comments.date) &&
-                Objects.equals(user, comments.user) && Objects.equals(news, comments.news);
+        return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
     }
 }

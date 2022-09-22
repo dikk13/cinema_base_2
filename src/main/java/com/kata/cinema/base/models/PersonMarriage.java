@@ -38,7 +38,7 @@ public class PersonMarriage extends Person {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         PersonMarriage that = (PersonMarriage) o;
-        return Objects.equals(person, that.person) && Objects.equals(marriageStatus, that.marriageStatus) && Objects.equals(human, that.human);
+        return Objects.equals(marriageStatus, that.marriageStatus);
     }
 
     @Override

@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 
-
 @Entity
 @Getter
 @Setter

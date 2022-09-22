@@ -68,7 +68,7 @@ public class FolderMovie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FolderMovie that = (FolderMovie) o;
-        return id == that.id && user == that.user && Objects.equals(category, that.category) && Objects.equals(privacy, that.privacy) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override

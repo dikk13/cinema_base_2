@@ -50,7 +50,7 @@ public class Collection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Collection that = (Collection) o;
-        return enable == that.enable && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(movies, that.movies);
+        return enable == that.enable && Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override

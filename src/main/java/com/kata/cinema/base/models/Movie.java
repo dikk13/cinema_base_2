@@ -108,7 +108,10 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(countries, movie.countries) && Objects.equals(dateRelease, movie.dateRelease) && Objects.equals(rars, movie.rars) && Objects.equals(mpaa, movie.mpaa) && Objects.equals(time, movie.time) && Objects.equals(description, movie.description) && Objects.equals(type, movie.type);
+        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) &&
+                Objects.equals(countries, movie.countries) && Objects.equals(dateRelease, movie.dateRelease) &&
+                Objects.equals(time, movie.time) && Objects.equals(description, movie.description) &&
+                Objects.equals(originalName, movie.originalName);
     }
 
     @Override

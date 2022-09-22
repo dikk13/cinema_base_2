@@ -21,7 +21,6 @@ import java.util.Objects;
 @Table(name = "AwardCeremony")
 @Entity
 @Setter
-@ToString
 @Getter
 @NoArgsConstructor
 public class AwardCeremony {
@@ -42,13 +41,12 @@ public class AwardCeremony {
     @JoinColumn(name = "awards_id")
     private Award awards;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AwardCeremony awardCeremony = (AwardCeremony) o;
-        return (Objects.equals(id, awardCeremony.id)) && Objects.equals(dateEvent, awardCeremony.dateEvent)
+        return Objects.equals(id, awardCeremony.id) && Objects.equals(dateEvent, awardCeremony.dateEvent)
                 && Objects.equals(placeEvent, awardCeremony.placeEvent);
     }
 

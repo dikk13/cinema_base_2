@@ -44,7 +44,7 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return score.equals(score1.score) && Objects.equals(id, score1.id) && Objects.equals(movie, score1.movie) && Objects.equals(user, score1.user);
+        return Objects.equals(score, score1.score) && Objects.equals(id, score1.id);
     }
 
     @Override
