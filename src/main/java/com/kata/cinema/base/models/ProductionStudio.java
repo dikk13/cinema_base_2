@@ -17,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class ProductionStudio {
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_production_studio_id")
     @SequenceGenerator(name = "seq_production_studio_id",sequenceName = "SEQ_PRODUCTION_STUDIO_ID", allocationSize = 1)
     private Long id;
