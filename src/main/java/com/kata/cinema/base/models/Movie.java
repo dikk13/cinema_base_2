@@ -6,28 +6,15 @@ import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-//@NamedEntityGraphs({
-//        @NamedEntityGraph(
-//                name = "movieResponseDtoGraph",
-//                attributeNodes = {@NamedAttributeNode(value = "genres"),
-//                        @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub")},
-//                subgraphs = { @NamedSubgraph()}
-//        )
-//})
 
 @NamedEntityGraph(name = "movieResponseDtoGraph",
         attributeNodes = {
-//                @NamedAttributeNode(value = "name"),
-//                @NamedAttributeNode(value = "originalName"),
-//                @NamedAttributeNode(value = "time"),
-//                @NamedAttributeNode(value = "dateRelease"),
                 @NamedAttributeNode(value = "genres"),
                 @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub"),
         },
@@ -84,6 +71,9 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private List<AwardCeremonyResult> awardCeremonyResults;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Score> scores;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

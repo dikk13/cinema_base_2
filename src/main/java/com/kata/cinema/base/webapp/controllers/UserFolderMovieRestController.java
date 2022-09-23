@@ -4,7 +4,6 @@ package com.kata.cinema.base.webapp.controllers;
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.MovieResponseDto;
 import com.kata.cinema.base.dto.PageDto;
-import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.abstracts.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.http.HttpStatus;
@@ -44,14 +43,9 @@ public class UserFolderMovieRestController {
             @RequestParam(value = "sortMovieFolder", defaultValue = "ORDER") String sortMovieFolder,
             @RequestParam(value = "showType", defaultValue = "ALL") String showType) {
 
-
-        /* --- Будет возвращать list<MovieResponseDTO> из нескольких страниц  --- */
-
         List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id, sortMovieFolder, pageNumber, itemsOnPage);
-        System.out.println("***********");
-        System.out.println(answer);
         PageDto<MovieResponseDto> pageDto = new PageDto<>();
-        pageDto.setCount(5L);
+        pageDto.setCount((long) answer.size());
         pageDto.setEntities(answer);
         return new ResponseEntity<>(pageDto, HttpStatus.OK);
     }

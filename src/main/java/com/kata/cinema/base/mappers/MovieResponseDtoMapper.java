@@ -8,7 +8,6 @@ import com.kata.cinema.base.models.enums.CharacterType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
 import java.util.List;
 import java.util.Set;
 
