@@ -22,120 +22,107 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
             Integer itemsOnPage) {
         System.out.println("try get movies for folderMovie " + folderMovieId);
 
+        if (sortMovieFolder != null) {
+            switch (sortMovieFolder) {
+                case ("COUNT_SCORE"):
+                case ("RATING"):
+                    return getMovieListByFolderMovieId_postSorting(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage);
+            }
+        }
 
         /* --- РАБОЧИЙ КОД С НЕ РЕАЛИЗОВАННЫМИ СОРТИРОВКАМИ  COUNT_SCORE("Число оценок"), RATING ("Средняя оценка пользователями) ---*/
 
-//        EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
-//        TypedQuery<Movie> query = entityManager
-//                .createQuery("select m from Movie m left join m.scores mss on m.id = mss.movie.id and " +
-//                        "mss.user.id= (select fm.user.id from FolderMovie fm where fm.id =: id) " +
-//                        "where m.id in " +
-//                        "(select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: id) " + sorted(sortMovieFolder), Movie.class)
-//                .setParameter("id", folderMovieId)
-//                .setHint("javax.persistence.fetchgraph", entityGraph)   // fetchgraph  или loadgraph
-//                .setFirstResult((pageNumber - 1) * itemsOnPage)
-//                .setMaxResults(itemsOnPage);
-//
-//        return query.getResultList();
+        EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
+        TypedQuery<Movie> query = entityManager
+                .createQuery("select m from Movie m " + sorted(sortMovieFolder, folderMovieId.toString())[0] +
+                        " where m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: id) " + sorted(sortMovieFolder, folderMovieId.toString())[1], Movie.class)
+                .setParameter("id", folderMovieId)
+                .setHint("javax.persistence.fetchgraph", entityGraph)   // fetchgraph  или loadgraph
+                .setFirstResult((pageNumber - 1) * itemsOnPage)
+                .setMaxResults(itemsOnPage);
 
+        return query.getResultList();
+    }
 
-        /* --  -- */
+    @Override
+    public List<Movie> getMovieListByFolderMovieId_postSorting(Long folderMovieId, String sortMovieFolder, Integer pageNumber, Integer itemsOnPage) {
 
-        Query query = entityManager.createQuery("select m.id, m.name, count (s.score) as cnt from Movie m " +
-                "left outer join Score s on m.id = s.movie.id " +
-                "where m.id in " +
-                "(select fm_movies.id from FolderMovie fm join fm.movies fm_movies on m.id = fm_movies.id where fm.id =: folder_movie_id)" +
+        /* -- 1. Получили и сохранили список очередности (!!!) id фильмов -- */
+
+        Query queueOrderQuery = entityManager.createQuery("select m.id, m.name, " + chooseAgrFuncParams(sortMovieFolder) + " (s.score) as agregate_func from Movie m " +
+                        "left outer join Score s on m.id = s.movie.id " +
+                        "where m.id in " +
+                        "(select fm_movies.id from FolderMovie fm join fm.movies fm_movies on m.id = fm_movies.id where fm.id =: folder_movie_id)" +
                         "group by m.id " +
-                        "order by cnt desc nulls last, m.id")
+                        "order by agregate_func desc nulls last, m.id")
                 .setParameter("folder_movie_id", folderMovieId)
                 .setFirstResult((pageNumber - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage);
 
-        List<Object[]> result = query.getResultList();
-        for (Object[] row: result) {
-            System.out.println(row[0] + " " + row[1]);
-        }
+        List<Object[]> queueOrder = queueOrderQuery.getResultList();
 
-        int i = 1;
-        // Пробуем добавить очередность
-        for (Object[] row: result) {
-            row[2] = i;
-            i++;
-        }
-
-
-
-        System.out.println("получили очередность");
-        for (Object[] row: result) {
-            System.out.println(row[2] + " " + row[0] + " " + row[1]);
-        }
-
-        System.out.println("Строка для id: " + getIdrow(result));
+        /* -- 2. Получили объекты фильмов -- */
 
         EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
-                TypedQuery<Movie> query2 = entityManager
-                .createQuery("select m from Movie m where m.id in " + getIdrow(result), Movie.class)
+        TypedQuery<Movie> extractMoviesQuery = entityManager
+                .createQuery("select m from Movie m where m.id in " + getIdQueue(queueOrder), Movie.class)
                 .setHint("javax.persistence.fetchgraph", entityGraph);   // fetchgraph  или loadgraph
 
+        List<Movie> movieList = extractMoviesQuery.getResultList();
 
-        List<Movie> movieList = query2.getResultList();
-        System.out.println("Получаем результат");
-        for (Movie movie: movieList) {
-            System.out.println(movie.getId() + " " + movie.getName());
+        /* -- 3. Отсортировали объекты фильмов в соответствии с порядком из п.1 -- */
+
+        Map <Long, Movie> sortedMovieList = new LinkedHashMap<>();
+        for (Object[] row: queueOrder) {
+            sortedMovieList.put((Long) row[0], null);
         }
-
-        /*-- А теперь надо отсортировать по моему массиву --*/
-
-        // Сделаем словарь, где ключи - это номер в очереди
-        Map <Long, Movie> queue = new LinkedHashMap<>();
-        for (Object[] row: result) {
-            queue.put((Long) row[0], null);
-        }
-
-        System.out.println("ключи очереди: " + queue.keySet());
 
         for (Movie movie: movieList) {
-            queue.put(movie.getId(), movie);
+            sortedMovieList.put(movie.getId(), movie);
         }
 
-        System.out.println("---------------------");
-        for (Long item: queue.keySet()) {
-            System.out.println(queue.get(item));
-        }
-
-        List<Movie> newList = new ArrayList<>(queue.values());
-        System.out.println(newList);
-
-
-
-
-        return newList;
+        return new ArrayList<>(sortedMovieList.values());
     }
 
     @Override
-    public String sorted(String sortingParameters) {
+    public String[] sorted(String sortingParameters, String folderMovieId) {
+        String[] requestParams = new String[2];
         if (sortingParameters != null) {
             switch (sortingParameters) {
                 case ("NAME"):
-                    return "order by m.name";
+                    requestParams[0] = "";
+                    requestParams[1] = "order by m.name";
+                    return requestParams;
                 case ("ORIGINAL_NAME"):
-                    return "order by m.originalName";
+                    requestParams[0] = "";
+                    requestParams[1] = "order by m.originalName";
+                    return requestParams;
                 case ("YEAR"):
-                    return "order by m.dateRelease";
-                case ("RATING"):
-                    return "order by m.mpaa";
+                    requestParams[0] = "";
+                    requestParams[1] = "order by m.dateRelease";
+                    return requestParams;
                 case ("MY_SCORE"):
-                    return "order by mss.score desc nulls last";
-                // Еще надо добавить :
-                // COUNT_SCORE("Число оценок"),
-                // RATING ("Средняя оценка пользователями)
+                    requestParams[0] = "left join m.scores mss on m.id = mss.movie.id and mss.user.id= (select fm.user.id from FolderMovie fm where fm.id = " + folderMovieId + ")";
+                    requestParams[1] = "order by mss.score desc nulls last, m.id";
+                    return requestParams;
             }
         }
-        return "order by m.id asc";
+        requestParams[0] = "";
+        requestParams[1] = "order by m.id asc";
+        return requestParams;
     }
 
     @Override
-    public String getIdrow(List<Object[]> result) {
+    public String chooseAgrFuncParams(String sortingParameters) {
+        return switch (sortingParameters) {
+            case ("COUNT_SCORE") -> "count";
+            case ("RATING") -> "avg";
+            default -> sortingParameters;  // ?
+        };
+    }
+
+    @Override
+    public String getIdQueue(List<Object[]> result) {
         System.out.println("размер списка: " + result.size());
         int i = 1;
         StringBuilder idString = new StringBuilder("(");
@@ -149,4 +136,9 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         idString.append(")");
         return idString.toString();
     }
+
+
 }
+
+
+
