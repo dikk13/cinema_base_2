@@ -30,7 +30,6 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
             }
         }
 
-        /* --- РАБОЧИЙ КОД С НЕ РЕАЛИЗОВАННЫМИ СОРТИРОВКАМИ  COUNT_SCORE("Число оценок"), RATING ("Средняя оценка пользователями) ---*/
 
         EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
         TypedQuery<Movie> query = entityManager
@@ -89,22 +88,26 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         String[] requestParams = new String[2];
         if (sortingParameters != null) {
             switch (sortingParameters) {
-                case ("NAME"):
+                case ("NAME") -> {
                     requestParams[0] = "";
                     requestParams[1] = "order by m.name";
                     return requestParams;
-                case ("ORIGINAL_NAME"):
+                }
+                case ("ORIGINAL_NAME") -> {
                     requestParams[0] = "";
                     requestParams[1] = "order by m.originalName";
                     return requestParams;
-                case ("YEAR"):
+                }
+                case ("YEAR") -> {
                     requestParams[0] = "";
                     requestParams[1] = "order by m.dateRelease";
                     return requestParams;
-                case ("MY_SCORE"):
+                }
+                case ("MY_SCORE") -> {
                     requestParams[0] = "left join m.scores mss on m.id = mss.movie.id and mss.user.id= (select fm.user.id from FolderMovie fm where fm.id = " + folderMovieId + ")";
                     requestParams[1] = "order by mss.score desc nulls last, m.id";
                     return requestParams;
+                }
             }
         }
         requestParams[0] = "";
