@@ -6,9 +6,9 @@ import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.GenreService;
-import lombok.AllArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
+import com.kata.cinema.base.service.abstracts.MovieService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
@@ -28,6 +29,9 @@ public class TestDataInitializer {
     private EntityManager entityManager;
 
     private final GenreService genreService;
+    private final MovieService movieService;
+
+    private final CollectionService collectionService;
 
     private static final int countMovieList = 100;
     private static final int countCollection = 20;
@@ -36,8 +40,10 @@ public class TestDataInitializer {
     private final List<Genre> genreList = new ArrayList<>();
 
 
-    public TestDataInitializer(GenreService genreService) {
+    public TestDataInitializer(GenreService genreService, MovieService movieService, CollectionService collectionService) {
         this.genreService = genreService;
+        this.movieService = movieService;
+        this.collectionService = collectionService;
     }
 
     public void movieInit() {
@@ -69,7 +75,7 @@ public class TestDataInitializer {
         movie.setMpaa(MPAA.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
         movie.setRars(RARS.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
         movie.setGenres(genreListMovie);
-        entityManager.persist(movie);
+        movieService.create(movie);
 
     }
 
@@ -85,16 +91,23 @@ public class TestDataInitializer {
     public void collectionInit() {
         Random random = new Random();
         Collection collection = new Collection();
-        List<Boolean> collectionList;
+        List<Boolean> collectionList = new ArrayList<>();
         for (int i = 0; i < countCollection; i++) {
             if (i < 5) {
                 collectionList = Collections.singletonList(false);
             } else {
                 collectionList = Collections.singletonList(true);
             }
+            collection.setName(String.valueOf(collectionList));
         }
-        collection.setMovies((List<Movie>) random.ints(5, 16));
-        entityManager.persist(collection);
+        List<Movie> collectMovieList = new ArrayList<>();
+        for (int i = 0; i < countCollection; i++) {
+            i = random.nextInt(5, 16);
+            collection.setMovies(collectMovieList);
+        }
+        collectionService.create(collection);
+
+
     }
 
     private void init() {
