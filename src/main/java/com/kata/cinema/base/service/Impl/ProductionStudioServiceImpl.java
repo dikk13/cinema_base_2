@@ -19,24 +19,6 @@ public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, Produ
         this.productionStudioDao = productionStudioDao;
     }
 
-//    @Override
-//    @Transactional
-//    public void create(ProductionStudio productionStudio) {
-//        productionStudioDao.create(productionStudio);
-//    }
-
-//    @Override
-//    public Optional<ProductionStudio> getById(Long id) {
-//        return productionStudioDao.getById(id);
-//    }
-
-//    @Override
-//    @Transactional
-//    public void deleteById(Long id) {
-//        super.deleteById(id);
-//    }
-
-
     @Override
     @Transactional
     public void updateById(Long id, ProductionStudio productionStudio) {
