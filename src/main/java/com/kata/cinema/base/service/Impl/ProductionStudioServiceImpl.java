@@ -28,7 +28,7 @@ public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, Produ
 
     @Override
     public Optional<ProductionStudio> getById(Long id) {
-        return super.getById(id);
+        return productionStudioDao.getById(id);
     }
 
     @Override
@@ -37,9 +37,13 @@ public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, Produ
         super.deleteById(id);
     }
 
+
     @Override
     @Transactional
-    public void update(ProductionStudio productionStudio) {
-        productionStudioDao.update(productionStudio);
+    public void updateById(Long id, ProductionStudio productionStudio) {
+        if (this.getById(id).isPresent()) {
+            productionStudio.setId(id);
+            productionStudioDao.update(productionStudio);
+        }
     }
 }

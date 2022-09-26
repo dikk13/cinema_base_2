@@ -1,9 +1,6 @@
 package com.kata.cinema.base.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductionStudio {
     @Id
     @Column

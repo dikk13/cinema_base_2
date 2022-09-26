@@ -15,7 +15,6 @@ public class ProductionMovieStudioDaoImpl extends AbstractDaoImpl<Long, Producti
                         "where psm.movie.id = :id", ProductionStudioMovie.class)
                 .setParameter("id", movieId)
                 .getSingleResult();
+    }
 
-//        return null;
-    };
 }

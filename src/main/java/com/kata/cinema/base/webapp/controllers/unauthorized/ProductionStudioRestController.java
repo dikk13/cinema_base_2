@@ -23,8 +23,7 @@ public class ProductionStudioRestController {
     }
 
 //GET /api/movies/{id}/studios возвращать будет  ProductionMovieStudioResponseDto
-    @GetMapping
-    @RequestMapping("/{id}/studios")
+    @GetMapping("/{id}/studios")
     public ProductionMovieStudioResponseDto getStudioMovie(@PathVariable("id") Long id) {
         return productionStudioMovieMapper.productionStudioMovieToProductionMovieStudioResponseDto(
                 productionMovieStudioService.getStudioByMovieId(id));
