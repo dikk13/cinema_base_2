@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductionStudioMovie {
     @Id
     @Column
@@ -25,10 +27,11 @@ public class ProductionStudioMovie {
     private Movie movie;
 
     @OneToOne
-    @JoinColumn(name = "studio_id")
+    @JoinColumn(name = "productionStudio_id")
     private ProductionStudio studio;
 
     @OneToOne
+    @JoinColumn(name = "studioPerformance_id")
     private StudioPerformance performance;
 
     @Override
