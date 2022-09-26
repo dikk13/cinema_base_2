@@ -3,6 +3,7 @@ package com.kata.cinema.base.dao.Impl;
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +29,10 @@ public abstract class AbstractDaoImpl<PK, E>  implements AbstractDao <PK, E> {
     }
 
     public void deleteById(PK id) {
-        entityManager.createQuery("DELETE " + getClass() + " WHERE id = :id")
+        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class<?> genericType = (Class<?>) type.getActualTypeArguments()[1];
+        entityManager.createQuery("DELETE " + genericType.getName() + " WHERE id = :id")
                 .setParameter("id", id).executeUpdate();
-
     }
 
     public Optional<E> getById(PK id) {

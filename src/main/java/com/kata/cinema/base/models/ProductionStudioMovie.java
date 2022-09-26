@@ -22,15 +22,15 @@ public class ProductionStudioMovie {
     allocationSize = 1)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productionStudio_id")
     private ProductionStudio studio;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "studioPerformance_id")
     private StudioPerformance performance;
 

@@ -16,8 +16,4 @@ public interface ProductionStudioMovieMapper {
     @Mapping(source = "performance", target = "performance")
     ProductionMovieStudioResponseDto productionStudioMovieToProductionMovieStudioResponseDto(ProductionStudioMovie productionStudioMovie);
 
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    ProductionStudioMovie updateProductionStudioMovieFromProductionMovieStudioResponseDto(
-//            ProductionMovieStudioResponseDto productionMovieStudioResponseDto,
-//            @MappingTarget ProductionStudioMovie productionStudioMovie);
 }

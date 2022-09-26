@@ -10,11 +10,9 @@ public class ProductionMovieStudioDaoImpl extends AbstractDaoImpl<Long, Producti
 
     @Override
     public ProductionStudioMovie getStudioByMovieId(Long movieId) {
-        return  entityManager.createQuery("SELECT new com.kata.cinema.base.models.ProductionStudioMovie(psm.id, " +
-                        "psm.movie, psm.studio, psm.performance) from ProductionStudioMovie psm " +
+        return  entityManager.createQuery("select psm from ProductionStudioMovie psm " +
                         "where psm.movie.id = :id", ProductionStudioMovie.class)
                 .setParameter("id", movieId)
                 .getSingleResult();
     }
-
 }

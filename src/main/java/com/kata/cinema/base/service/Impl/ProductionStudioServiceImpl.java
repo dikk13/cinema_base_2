@@ -7,7 +7,6 @@ import com.kata.cinema.base.service.abstracts.ProductionStudioService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, ProductionStudio>
@@ -20,22 +19,22 @@ public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, Produ
         this.productionStudioDao = productionStudioDao;
     }
 
-    @Override
-    @Transactional
-    public void create(ProductionStudio productionStudio) {
-        productionStudioDao.create(productionStudio);
-    }
+//    @Override
+//    @Transactional
+//    public void create(ProductionStudio productionStudio) {
+//        productionStudioDao.create(productionStudio);
+//    }
 
-    @Override
-    public Optional<ProductionStudio> getById(Long id) {
-        return productionStudioDao.getById(id);
-    }
+//    @Override
+//    public Optional<ProductionStudio> getById(Long id) {
+//        return productionStudioDao.getById(id);
+//    }
 
-    @Override
-    @Transactional
-    public void deleteById(Long id) {
-        super.deleteById(id);
-    }
+//    @Override
+//    @Transactional
+//    public void deleteById(Long id) {
+//        super.deleteById(id);
+//    }
 
 
     @Override
