@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PersonDao extends AbstractDao<Long, Person> {
 
-    public List<SearchPersonDto> namePerson();
+    List<SearchPersonDto> namePerson(String firstName);
 
 }

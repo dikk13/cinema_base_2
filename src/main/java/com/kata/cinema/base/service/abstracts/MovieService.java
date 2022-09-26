@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MovieService extends AbstractService<Long, Movie> {
 
-    public List<SearchMovieDto> titleMovie();
+    List<SearchMovieDto> titleMovie(String name);
 }

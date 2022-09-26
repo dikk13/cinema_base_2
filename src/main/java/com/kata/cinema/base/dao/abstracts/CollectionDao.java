@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CollectionDao extends AbstractDao<Long, Collection> {
 
-    public List<SearchCollectionDto> titleCollection();
+    List<SearchCollectionDto> titleCollection(String name);
 
 }

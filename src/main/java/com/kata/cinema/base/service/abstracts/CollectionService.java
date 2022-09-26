@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CollectionService extends AbstractService<Long, Collection> {
 
-    public List<SearchCollectionDto> titleCollection();
+    List<SearchCollectionDto> titleCollection(String name);
 }

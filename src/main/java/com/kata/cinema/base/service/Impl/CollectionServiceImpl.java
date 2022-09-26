@@ -22,7 +22,7 @@ public class CollectionServiceImpl extends AbstractServiceImpl<Long, Collection>
     }
 
     @Override
-    public List<SearchCollectionDto> titleCollection() {
-        return collectionDao.titleCollection();
+    public List<SearchCollectionDto> titleCollection(String name) {
+        return collectionDao.titleCollection(name);
     }
 }

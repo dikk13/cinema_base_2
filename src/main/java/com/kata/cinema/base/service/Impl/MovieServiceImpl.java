@@ -22,7 +22,7 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
     }
 
     @Override
-    public List<SearchMovieDto> titleMovie() {
-        return movieDao.titleMovie();
+    public List<SearchMovieDto> titleMovie(String name) {
+        return movieDao.titleMovie(name);
     }
 }

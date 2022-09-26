@@ -23,7 +23,7 @@ public class PersonServiceImpl extends AbstractServiceImpl<Long, Person> impleme
 
 
     @Override
-    public List<SearchPersonDto> namePerson() {
-        return personDao.namePerson();
+    public List<SearchPersonDto> namePerson(String firstName) {
+        return personDao.namePerson(firstName);
     }
 }

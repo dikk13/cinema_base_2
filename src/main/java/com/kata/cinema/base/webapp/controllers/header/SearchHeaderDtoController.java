@@ -3,6 +3,9 @@ package com.kata.cinema.base.webapp.controllers.header;
 import com.kata.cinema.base.dto.search.SearchCollectionDto;
 import com.kata.cinema.base.dto.search.SearchPersonDto;
 import com.kata.cinema.base.dto.search.SearchResponseDto;
+import com.kata.cinema.base.models.Collection;
+import com.kata.cinema.base.models.Movie;
+import com.kata.cinema.base.models.Person;
 import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.MovieService;
 import com.kata.cinema.base.service.abstracts.PersonService;
@@ -15,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/search?filterPattern=")
 public class SearchHeaderDtoController {
 
     private final CollectionService collectionService;
@@ -30,13 +32,14 @@ public class SearchHeaderDtoController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<SearchResponseDto> getAllMoviesPersonsCollection(@RequestParam ResponseEntity<SearchResponseDto> allParams) {
-            ResponseEntity.ok(collectionService.titleCollection());
-            ResponseEntity.ok(movieService.titleMovie());
-            ResponseEntity.ok(personService.namePerson());
-            return allParams;
+    @GetMapping("/api/search")
+    public ResponseEntity<SearchResponseDto> getAllMoviesPersonsCollection(@RequestParam(value = "filterPattern") String filter) {
+
+        return new ResponseEntity<>(new SearchResponseDto(movieService.titleMovie(filter),
+                collectionService.titleCollection(filter),
+                personService.namePerson(filter)), HttpStatus.OK);
+
     }
 }
-// GET /api/search?filterPattern= РІРѕР·РІСЂР°С‰Р°РµС‚ SearchResponseDto
-//filterPattern - РјРѕР¶РµС‚ РїСЂРёРЅРёРјР°С‚СЊ Р·РЅР°С‡РµРЅРёСЏ РєР°Рє РЅР°Р·РІР°РЅРёРµ С„РёР»СЊРјР°, РёРјСЏ РїРµСЂСЃРѕРЅС‹, РЅР°Р·РІР°РЅРёРµ РєРѕР»Р»РµРєС†РёРё
+// GET /api/search?filterPattern= возвращает SearchResponseDto
+//filterPattern - может принимать значения как название фильма, имя персоны, название коллекции

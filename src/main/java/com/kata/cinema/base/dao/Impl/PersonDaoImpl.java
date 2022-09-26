@@ -16,8 +16,10 @@ public class PersonDaoImpl extends AbstractDaoImpl<Long, Person> implements Pers
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<SearchPersonDto> namePerson() {
+
+    public List<SearchPersonDto> namePerson(String firstName) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.search.SearchPersonDto(p.id, p.firstName, p.lastName)"
-                + " from Person p", SearchPersonDto.class).setMaxResults(3).getResultList();
+                + " from Person p WHERE p.firstName LIKE :firstName", SearchPersonDto.class)
+                .setParameter("firstName", firstName + "%").setMaxResults(3).getResultList();
     }
 }

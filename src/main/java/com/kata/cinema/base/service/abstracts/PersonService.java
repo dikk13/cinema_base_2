@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PersonService extends AbstractService<Long, Person> {
 
-    public List<SearchPersonDto> namePerson();
+    List<SearchPersonDto> namePerson(String firstName);
 }

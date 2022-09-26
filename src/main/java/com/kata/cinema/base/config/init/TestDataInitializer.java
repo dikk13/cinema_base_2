@@ -91,7 +91,7 @@ public class TestDataInitializer {
     public void collectionInit() {
         Random random = new Random();
         Collection collection = new Collection();
-        List<Boolean> collectionList = new ArrayList<>();
+        List<Boolean> collectionList;
         for (int i = 0; i < countCollection; i++) {
             if (i < 5) {
                 collectionList = Collections.singletonList(false);

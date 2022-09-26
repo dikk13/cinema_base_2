@@ -15,8 +15,9 @@ public class CollectionDaoImpl extends AbstractDaoImpl<Long, Collection> impleme
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<SearchCollectionDto> titleCollection() {
+    public List<SearchCollectionDto> titleCollection(String name) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.search.SearchCollectionDto(c.name)"
-                + " from Collection c", SearchCollectionDto.class).setMaxResults(3).getResultList();
+                + " from Collection c WHERE c.name LIKE :name", SearchCollectionDto.class)
+                .setParameter("name", name).setMaxResults(3).getResultList();
     }
 }
