@@ -35,12 +35,12 @@ public class UserAvatar extends User {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         UserAvatar that = (UserAvatar) o;
-        return Objects.equals(userAvatar, that.userAvatar) && Objects.equals(avatarUrl, that.avatarUrl);
+        return Objects.equals(avatarUrl, that.avatarUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userAvatar, avatarUrl);
+        return getClass().hashCode();
     }
 
     @Override

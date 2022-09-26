@@ -50,8 +50,6 @@ public class AwardCeremonyResult {
     @Column
     private String nominationStatus;
 
-
-
     public AwardCeremonyResult(Long id, String nominationStatus) {
         this.id = id;
         this.nominationStatus = nominationStatus;
@@ -61,15 +59,13 @@ public class AwardCeremonyResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AwardCeremonyResult awardCeremonyResult = (AwardCeremonyResult) o;
-
-        return (Objects.equals(id, awardCeremonyResult.id)) && Objects.equals(nominationStatus, awardCeremonyResult.nominationStatus);
+        return Objects.equals(id, awardCeremonyResult.id) && Objects.equals(nominationStatus, awardCeremonyResult.nominationStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nominationStatus);
+        return getClass().hashCode();
     }
 
     @Override

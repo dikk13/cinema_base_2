@@ -45,12 +45,12 @@ public class MoviePerson extends Movie {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MoviePerson that = (MoviePerson) o;
-        return Objects.equals(movie, that.movie) && Objects.equals(profession, that.profession) && Objects.equals(person, that.person) && Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
+        return Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), movie, profession, person, typeCharacter, nameRole);
+        return getClass().hashCode();
     }
 
     @Override

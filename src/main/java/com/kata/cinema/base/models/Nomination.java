@@ -34,15 +34,13 @@ public class Nomination {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Nomination nomination = (Nomination) o;
-
-        return (Objects.equals(id, nomination.id)) && Objects.equals(name, nomination.name);
+        return Objects.equals(id, nomination.id) && Objects.equals(name, nomination.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return getClass().hashCode();
     }
 
     @Override

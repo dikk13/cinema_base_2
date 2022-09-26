@@ -31,20 +31,18 @@ public class Award {
     @Column
     private String description;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Award award = (Award) o;
-
-        return (Objects.equals(id, award.id)) && Objects.equals(name, award.name) && Objects.equals(description, award.description);
+        return Objects.equals(id, award.id) && Objects.equals(name, award.name) && Objects.equals(description, award.description);
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return getClass().hashCode();
     }
 
     @Override

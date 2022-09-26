@@ -45,12 +45,12 @@ public class Content {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Content content = (Content) o;
-        return Objects.equals(id, content.id) && Objects.equals(movie, content.movie) && Objects.equals(content_url, content.content_url) && Objects.equals(type, content.type);
+        return Objects.equals(id, content.id) && Objects.equals(content_url, content.content_url) && Objects.equals(type, content.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, content_url, type);
+        return getClass().hashCode();
     }
 
     @Override
