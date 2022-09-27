@@ -13,9 +13,7 @@ public class CommentsDaoImpl extends AbstractDaoImpl<Long, Comments> implements 
     @Override
     public List<Comments> getCommentsListByNewsId(long newsId) {
         return entityManager.
-                createQuery("select new com.kata.cinema.base." +
-                        "models.Comments(c.id, c.text, c.date, c.user, c.news)" +
-                        " from Comments c where c.news.id =: id", Comments.class)
+                createQuery("select c from Comments c where c.news.id =: id", Comments.class)
                 .setParameter("id", newsId)
                 .getResultList();
     }
