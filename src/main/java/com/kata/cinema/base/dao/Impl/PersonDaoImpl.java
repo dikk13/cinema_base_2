@@ -13,9 +13,6 @@ import java.util.List;
 @Repository
 public class PersonDaoImpl extends AbstractDaoImpl<Long, Person> implements PersonDao {
 
-    @PersistenceContext
-    EntityManager entityManager;
-
 
     public List<SearchPersonDto> namePerson(String firstName) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.search.SearchPersonDto(p.id, p.firstName, p.lastName)"

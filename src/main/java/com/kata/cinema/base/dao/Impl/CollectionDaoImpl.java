@@ -12,12 +12,10 @@ import java.util.List;
 @Repository
 public class CollectionDaoImpl extends AbstractDaoImpl<Long, Collection> implements CollectionDao {
 
-    @PersistenceContext
-    EntityManager entityManager;
 
     public List<SearchCollectionDto> titleCollection(String name) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.search.SearchCollectionDto(c.name)"
                 + " from Collection c WHERE c.name LIKE :name", SearchCollectionDto.class)
-                .setParameter("name", name).setMaxResults(3).getResultList();
+                .setParameter("name", name + "%").setMaxResults(3).getResultList();
     }
 }
