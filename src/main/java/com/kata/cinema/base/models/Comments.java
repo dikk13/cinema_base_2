@@ -1,20 +1,17 @@
 package com.kata.cinema.base.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table
+@Table(name = "Comments")
 @Entity
 @Setter
+@ToString
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comments {
 
     @Id
@@ -29,17 +26,19 @@ public class Comments {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", updatable = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "news_id", updatable = false)
+    @JoinColumn(name = "news_id", nullable = false, updatable = false)
     private News news;
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, text, date, user, news);
+        return getClass().hashCode();
     }
 
     @Override
@@ -47,18 +46,6 @@ public class Comments {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Comments comments = (Comments) obj;
-        return id == comments.id && Objects.equals(text, comments.text) && Objects.equals(date, comments.date) &&
-                Objects.equals(user, comments.user) && Objects.equals(news, comments.news);
-    }
-
-    @Override
-    public String toString() {
-        return "Comments{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", date='" + date + '\'' +
-                ", user='" + user + '\'' +
-                ", news='" + news +
-                '}';
+        return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
     }
 }
