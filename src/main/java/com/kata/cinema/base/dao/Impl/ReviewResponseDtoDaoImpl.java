@@ -43,14 +43,13 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                 .setParameter("movieId",parameters.get("movieId") )
                 .getSingleResult();
         return query;
-        /*join r.movie m*/
     }
 
-//Help me please
+    //Help me please
     @Override
     public String sortingByTypeReview(TypeReview typeReview) {
-        if(typeReview != null){
-            switch (typeReview){
+        if (typeReview != null) {
+            switch (typeReview) {
                 case POSITIVE:
                     return "where r.typeReview = 'POSITIVE'";
                 case NEUTRAL:
@@ -64,8 +63,8 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
 
     @Override
     public String sortingByReviewSortType(ReviewSortType reviewSortType) {
-        if(reviewSortType!=null){
-            switch (reviewSortType){
+        if (reviewSortType != null) {
+            switch (reviewSortType) {
                 case DATE_ASC -> {
                     return "ORDER BY r.date ASC";
                 }
@@ -78,59 +77,3 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
         return "";
     }
 }
-
-
-
-
-//        entityManager.createQuery(" SELECT new com.kata.cinema.base.dto.ReviewResponseDto" +
-//                "(r.id,r.typeReview,r.title,r.description,concat(r.user.first_name, '', r.user.last_name), r.date) FROM Review r",ReviewResponseDto.class);
-//
-//        private Long id;
-//        private TypeReview typeReview;
-//        private String title;
-//        private String description;
-//        private String fullName;
-//        private LocalDate date;
-//                r.id,
-//                r.typeReview,
-//                r.title,
-//                r.description,
-//                r.date,
-//                r.movie,
-//                concat( r.user.first_name , ' ', r.user.last_name)
-//                FROM Review r
-//                where r.date = : parameters
-//
-//                " , ReviewResponseDto.class).getResultList();
-//        parameters.put(String.valueOf(parameters.get("ORDER BY r.date ASC ")),reviewResponseDtos);
-//        Map<String,Object> map=new HashMap<>();
-//        map.put(parameters.toString(),reviewResponseDtos);
-
-//    @Override
-//    public List<Review> getReview(Long movieId,TypeReview typeReview, ReviewSortType reviewSortType ) {
-//        return  entityManager.createQuery("""
-//                        SELECT
-//                        r.id,
-//                        r.typeReview,
-//                        r.title,
-//                        r.description,
-//                        concat(r.user.first_name, ' ' , r.user.last_name),
-//                        r.date
-//
-//                        from Review r
-//                        where r.movie.id = :movieId
-//
-//
-//                """, Review.class).
-//                setParameter("movieId",movieId).
-//                getResultList();
-//
-//
-////        private Long id;
-////        private TypeReview typeReview;
-////        private String title;
-////        private String description;
-////        rivate LocalDate date;
-////        private Movie movie;
-////        private User user;
-//    }
