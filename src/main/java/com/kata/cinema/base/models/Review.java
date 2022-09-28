@@ -1,6 +1,7 @@
 package com.kata.cinema.base.models;
 
 import com.kata.cinema.base.enums.TypeReview;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Review {
 
     @Id

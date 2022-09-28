@@ -1,11 +1,13 @@
 package com.kata.cinema.base.dao.abstracts;
-
-import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.ReviewResponseDto;
+import com.kata.cinema.base.enums.ReviewSortType;
+import com.kata.cinema.base.enums.TypeReview;
 
-import java.util.List;
+import java.util.Map;
 
-public interface ReviewResponseDtoDao {
 
-    PageDto<ReviewResponseDto> getReviewResponseDto(Long movieID,Long count);
+public interface ReviewResponseDtoDao extends PaginationDtoDao<ReviewResponseDto> {
+    String sortingByTypeReview(TypeReview typeReview);
+    String sortingByReviewSortType(ReviewSortType reviewSortType);
+
 }
