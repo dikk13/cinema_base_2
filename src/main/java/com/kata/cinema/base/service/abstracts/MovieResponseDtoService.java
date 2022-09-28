@@ -9,5 +9,6 @@ public interface MovieResponseDtoService {
             Long FolderMovieId,
             String sortMovieFolder,
             Integer pageNumber,
-            Integer itemsOnPage);
+            Integer itemsOnPage,
+            String showType);
 }

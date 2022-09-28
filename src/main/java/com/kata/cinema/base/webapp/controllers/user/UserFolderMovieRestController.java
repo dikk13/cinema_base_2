@@ -43,7 +43,7 @@ public class UserFolderMovieRestController {
             @RequestParam(value = "sortMovieFolder", defaultValue = "ORDER") String sortMovieFolder,
             @RequestParam(value = "showType", defaultValue = "ALL") String showType) {
 
-        List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id, sortMovieFolder, pageNumber, itemsOnPage);
+        List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id, sortMovieFolder, pageNumber, itemsOnPage, showType);
         PageDto<MovieResponseDto> pageDto = new PageDto<>();
         pageDto.setCount((long) answer.size());
         pageDto.setEntities(answer);

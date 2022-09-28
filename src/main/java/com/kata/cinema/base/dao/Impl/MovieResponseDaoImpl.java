@@ -3,6 +3,8 @@ package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.MovieResponseDao;
 import com.kata.cinema.base.models.*;
+import com.kata.cinema.base.models.enums.Category;
+import com.kata.cinema.base.models.enums.ShowType;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -19,14 +21,15 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
             Long folderMovieId,
             String sortMovieFolder,
             Integer pageNumber,
-            Integer itemsOnPage) {
+            Integer itemsOnPage,
+            String showType) {
         System.out.println("try get movies for folderMovie " + folderMovieId);
 
         if (sortMovieFolder != null) {
             switch (sortMovieFolder) {
                 case ("COUNT_SCORE"):
                 case ("RATING"):
-                    return getMovieListByFolderMovieId_postSorting(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage);
+                    return getMovieListByFolderMovieId_postSorting(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage, showType);
             }
         }
 
@@ -34,8 +37,15 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
         TypedQuery<Movie> query = entityManager
                 .createQuery("select m from Movie m " + sorted(sortMovieFolder, folderMovieId.toString())[0] +
-                        " where m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: id) " + sorted(sortMovieFolder, folderMovieId.toString())[1], Movie.class)
-                .setParameter("id", folderMovieId)
+                        " where m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: folder_movie_id) "
+                        + showTypeSorted(showType)
+
+//                        "and m.id not in " +
+//                        "(select fm.id from FolderMovie fm where fm.category = 2 and fm.user.id = " +
+//                        "(select fm.user.id from fm where fm.id =: folder_movie_id))) "
+
+                        + sorted(sortMovieFolder, folderMovieId.toString())[1], Movie.class)
+                .setParameter("folder_movie_id", folderMovieId)
                 .setHint("javax.persistence.fetchgraph", entityGraph)   // fetchgraph  или loadgraph
                 .setFirstResult((pageNumber - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage);
@@ -44,14 +54,24 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
     }
 
     @Override
-    public List<Movie> getMovieListByFolderMovieId_postSorting(Long folderMovieId, String sortMovieFolder, Integer pageNumber, Integer itemsOnPage) {
+    public List<Movie> getMovieListByFolderMovieId_postSorting(Long folderMovieId, String sortMovieFolder, Integer pageNumber, Integer itemsOnPage, String showType) {
 
         /* -- 1. Получили и сохранили список очередности (!!!) id фильмов -- */
+
+        System.out.println("вызвали метод");
+        System.out.println("строка подзапроса");
+        System.out.println(showTypeSorted(showType));
 
         Query queueOrderQuery = entityManager.createQuery("select m.id, m.name, " + chooseAgrFuncParams(sortMovieFolder) + " (s.score) as agregate_func from Movie m " +
                         "left outer join Score s on m.id = s.movie.id " +
                         "where m.id in " +
-                        "(select fm_movies.id from FolderMovie fm join fm.movies fm_movies on m.id = fm_movies.id where fm.id =: folder_movie_id)" +
+                        "(select fm_movies.id from FolderMovie fm join fm.movies fm_movies on m.id = fm_movies.id where fm.id =: folder_movie_id) "
+                        + showTypeSorted(showType) +
+
+//                        "and m.id not in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
+//                        "(select fm.id from FolderMovie fm where fm.category = 2 and fm.user.id = " +
+//                        "(select fm.user.id from fm where fm.id =: folder_movie_id))) " +
+
                         "group by m.id " +
                         "order by agregate_func desc nulls last, m.id")
                 .setParameter("folder_movie_id", folderMovieId)
@@ -115,16 +135,15 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         return requestParams;
     }
 
-    @Override
+
     public String chooseAgrFuncParams(String sortingParameters) {
         return switch (sortingParameters) {
             case ("COUNT_SCORE") -> "count";
             case ("RATING") -> "avg";
-            default -> sortingParameters;  // ?
+            default -> sortingParameters;
         };
     }
 
-    @Override
     public String getIdQueue(List<Object[]> result) {
         System.out.println("размер списка: " + result.size());
         int i = 1;
@@ -140,7 +159,20 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         return idString.toString();
     }
 
+    public String showTypeSorted (String showType) {
+        return switch (showType) {
+            case ("VIEWED") ->
+                    "and m.id not in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
+                            "(select fm.id from FolderMovie fm where fm.category = " + Integer.toString(Category.VIEWED_MOVES.ordinal()) + " and fm.user.id = " +
+                            "(select fm.user.id from fm where fm.id =: folder_movie_id))) ";
 
+            case ("NOT_VIEWED") ->
+                    "and m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
+                            "(select fm.id from FolderMovie fm where fm.category = " + Integer.toString(Category.VIEWED_MOVES.ordinal()) + " and fm.user.id = " +
+                            "(select fm.user.id from fm where fm.id =: folder_movie_id))) ";
+            default -> "";
+        };
+    }
 }
 
 
