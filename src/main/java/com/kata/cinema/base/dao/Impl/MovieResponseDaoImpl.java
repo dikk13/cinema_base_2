@@ -163,12 +163,12 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
         return switch (showType) {
             case ("VIEWED") ->
                     "and m.id not in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
-                            "(select fm.id from FolderMovie fm where fm.category = " + Integer.toString(Category.VIEWED_MOVES.ordinal()) + " and fm.user.id = " +
+                            "(select fm.id from FolderMovie fm where fm.category = " + Category.VIEWED_MOVES.ordinal() + " and fm.user.id = " +
                             "(select fm.user.id from fm where fm.id =: folder_movie_id))) ";
 
             case ("NOT_VIEWED") ->
                     "and m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
-                            "(select fm.id from FolderMovie fm where fm.category = " + Integer.toString(Category.VIEWED_MOVES.ordinal()) + " and fm.user.id = " +
+                            "(select fm.id from FolderMovie fm where fm.category = " + Category.VIEWED_MOVES.ordinal() + " and fm.user.id = " +
                             "(select fm.user.id from fm where fm.id =: folder_movie_id))) ";
             default -> "";
         };

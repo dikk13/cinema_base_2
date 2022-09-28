@@ -29,7 +29,6 @@ public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
             String showType) {
 
         List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage, showType);
-        List<MovieResponseDto> resultedList = movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
-        return resultedList;
+        return movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
     }
 }
