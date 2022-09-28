@@ -6,7 +6,6 @@ import com.kata.cinema.base.enums.TypeReview;
 
 
 public interface ReviewResponseDtoDao extends PaginationDtoDao<ReviewResponseDto> {
-    String sortingByTypeReview(TypeReview typeReview);
-    String sortingByReviewSortType(ReviewSortType reviewSortType);
+
 
 }

@@ -25,7 +25,7 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                 "concat(r.user.first_name,' ', r.user.last_name)," +
                 " r.date) " +
                 "FROM Review r " +
-                " where r.movie.id = :movieId" + sortingByTypeReview((TypeReview) parameters.get("typeReview")) + sortingByReviewSortType((ReviewSortType) parameters.get("reviewSortType"))
+                " where r.movie.id = :movieId" + parameters.get("typeReview") + sortingByReviewSortType((ReviewSortType) parameters.get("reviewSortType"))
                 ,ReviewResponseDto.class)
                         .setParameter("movieId",parameters.get("movieId"))
                                 .setFirstResult((currentPage-1)*itemsOnPage)
@@ -39,30 +39,14 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
         Long query=entityManager.createQuery("select count (*) from Review r where r.movie.id = :movieId"+
-                        sortingByTypeReview ((TypeReview) parameters.get("typeReview")), Long.class)
+                        parameters.get("typeReview"), Long.class)
                 .setParameter("movieId",parameters.get("movieId") )
                 .getSingleResult();
         return query;
     }
 
-    //Help me please
-    @Override
-    public String sortingByTypeReview(TypeReview typeReview) {
-        if (typeReview != null) {
-            switch (typeReview) {
-                case POSITIVE:
-                    return "where r.typeReview = 'POSITIVE'";
-                case NEUTRAL:
-                    return "where r.typeReview = 'NEUTRAL'";
-                case NEGATIVE:
-                    return "where r.typeReview = 'NEGATIVE'";
-            }
-        }
-        return "";
-    }
 
-    @Override
-    public String sortingByReviewSortType(ReviewSortType reviewSortType) {
+   private String sortingByReviewSortType(ReviewSortType reviewSortType) {
         if (reviewSortType != null) {
             switch (reviewSortType) {
                 case DATE_ASC -> {
