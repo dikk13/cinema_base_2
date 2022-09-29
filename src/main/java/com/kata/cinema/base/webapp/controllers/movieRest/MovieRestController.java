@@ -26,21 +26,14 @@ public class MovieRestController {
     public MovieRestController(ReviewResponseDtoService responseDtoService) {
         this.responseDtoService = responseDtoService;
     }
-// запрос GET /api/movies/{id}/reviews/page/{pageNumber}?itemsOnPage={itemsOnPage}&typeReview={typeReview}&reviewSortType={reviewSortType}
 
-// ну я хз уже
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
-    public PageDto<ReviewResponseDto> getReview(
-            @PathVariable("id") Integer movieId,                                                                      // айди фильма  reviewSortType,responseDtoService.getReview()
-            @PathVariable("pageNumber") Integer pageNumber,                                                            //айди страницы
-            @RequestParam(value = "itemsOnPage",required = false,defaultValue = "10") Integer itemsOnPage,                                                 //кол-во элементов на странице
-            @RequestParam(value = "typeReview", required = false) TypeReview typeReview,                                              // тип рецензии
-            @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType         // сортировка по типу
-    ) {
-
+    public PageDto<ReviewResponseDto> getReview(@PathVariable("id") Long movieId, @PathVariable("pageNumber") Integer pageNumber, @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage, @RequestParam(value = "typeReview", required = false) TypeReview typeReview, @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put(String.valueOf(movieId),typeReview);
-        PageDto<ReviewResponseDto> reviewResponseDtoPageDto = responseDtoService.getPageDtoWithParameters(pageNumber,itemsOnPage, parameters);
+        parameters.put("movieId", movieId);
+        parameters.put("typeReview", typeReview);
+        parameters.put("reviewSortType", reviewSortType);
+        PageDto<ReviewResponseDto> reviewResponseDtoPageDto = responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
         return reviewResponseDtoPageDto;
     }
 }
