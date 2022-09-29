@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PaginationDtoServiceImpl<T> implements PaginationDtoService<T> {
+public abstract class PaginationDtoServiceImpl<T> implements PaginationDtoService<T> {
 
 
     private final PaginationDtoDao<T> paginationDtoDao;
 
-    @Autowired
+
     public PaginationDtoServiceImpl(PaginationDtoDao<T> paginationDtoDao) {
         this.paginationDtoDao = paginationDtoDao;
     }
