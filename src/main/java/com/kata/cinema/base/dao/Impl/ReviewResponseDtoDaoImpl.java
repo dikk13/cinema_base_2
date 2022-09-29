@@ -40,5 +40,4 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                 .setParameter("movieId", parameters.get("movieId"))
                 .getSingleResult();
     }
-
 }

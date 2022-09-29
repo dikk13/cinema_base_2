@@ -1,12 +1,10 @@
 package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.GenreDao;
-import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.dto.GenreResponseDto;
+import com.kata.cinema.base.models.Genre;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
