@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-//@ContextConfiguration
 @Transactional
 @DatabaseSetup("/dataset.xml")
 @TestExecutionListeners({
