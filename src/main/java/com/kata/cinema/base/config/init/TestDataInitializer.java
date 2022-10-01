@@ -4,8 +4,8 @@ package com.kata.cinema.base.config.init;
 import com.kata.cinema.base.models.Collection;
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.models.Movie;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.enums.MPAA;
+import com.kata.cinema.base.enums.RARS;
 import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.GenreService;
 import com.kata.cinema.base.service.abstracts.MovieService;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
