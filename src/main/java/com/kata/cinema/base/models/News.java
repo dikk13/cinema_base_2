@@ -5,6 +5,7 @@ import com.kata.cinema.base.models.enums.Rubric;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Table (name = "news")
+@ToString
+@Table(name = "news")
 @NoArgsConstructor
 public class News {
 
@@ -47,28 +49,30 @@ public class News {
     @Column(name = "html_body")
     private String htmlBody;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     protected User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(
             name = "news_movie",
-            joinColumns = @JoinColumn(name = "news_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private List<Movie> movies;
-
+            joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
+    private List<Movie> movies = new java.util.ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
-        return id == news.id && Objects.equals(rubric, news.rubric) && Objects.equals(date, news.date) && Objects.equals(title, news.title) && Objects.equals(htmlBody, news.htmlBody) && Objects.equals(user, news.user);
+        return Objects.equals(id, news.id) && Objects.equals(date, news.date) && Objects.equals(title, news.title) &&
+                Objects.equals(htmlBody, news.htmlBody);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rubric, date, title, htmlBody, user);
+        return getClass().hashCode();
     }
 }

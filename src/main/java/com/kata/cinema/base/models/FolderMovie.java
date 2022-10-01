@@ -6,7 +6,20 @@ import com.kata.cinema.base.models.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.*;
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +27,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "folders_movies")
 @NoArgsConstructor
 public class FolderMovie {
@@ -36,16 +50,18 @@ public class FolderMovie {
     @Column(name = "description")
     private String description;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     protected User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(
             name = "folders_movies_to_movie",
-            joinColumns = @JoinColumn(name = "folder_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private List<Movie> movies;
+            joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
+    private List<Movie> movies = new java.util.ArrayList<>();
 
 
     @Override
@@ -53,12 +69,12 @@ public class FolderMovie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FolderMovie that = (FolderMovie) o;
-        return id == that.id && user == that.user && Objects.equals(category, that.category) && Objects.equals(privacy, that.privacy) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, user, privacy, name, description);
+        return getClass().hashCode();
     }
 }
 

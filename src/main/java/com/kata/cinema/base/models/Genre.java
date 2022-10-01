@@ -4,8 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,7 +43,7 @@ public class Genre {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return getClass().hashCode();
     }
 
     @Override

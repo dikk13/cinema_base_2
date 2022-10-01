@@ -1,4 +1,4 @@
-package com.kata.cinema.base.models.dto;
+package com.kata.cinema.base.dto;
 
 import com.kata.cinema.base.models.Genre;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.kata.cinema.base.converter;
 
 import com.kata.cinema.base.models.Genre;
-import com.kata.cinema.base.models.dto.GenreResponseDto;
+import com.kata.cinema.base.dto.GenreResponseDto;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 

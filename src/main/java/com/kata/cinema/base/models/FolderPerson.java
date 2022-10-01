@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +17,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "folders_persons")
 @NoArgsConstructor
 public class FolderPerson {
@@ -43,18 +46,18 @@ public class FolderPerson {
     @Column(name = "description", nullable = true, length = 100)
     protected String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable (
-            name = "folders_persons_to_person",
-            joinColumns = @JoinColumn(name = "folder_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private Set <Person> folderPersonsSet = new HashSet<>();
+            name = "folder_persons_to_person",
+            joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+    private Set <Person> folderPersonsSet = new java.util.LinkedHashSet<>();
 
-
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
-
 
     public void addPersonToFolder (Person person) {
         folderPersonsSet.add(person);
@@ -70,5 +73,19 @@ public class FolderPerson {
 
     public void setFolderPersonsSet(Set<Person> folderPersonsSet) {
         this.folderPersonsSet = folderPersonsSet;
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FolderPerson that = (FolderPerson) o;
+        return Objects.equals(id, that.id) && favourites == that.favourites && Objects.equals(privacy, that.privacy) &&
+                Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 }

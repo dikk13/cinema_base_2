@@ -57,5 +57,28 @@ public class MoviePerson {
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
     private Person person;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        MoviePerson that = (MoviePerson) o;
+        return Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "MoviePerson{" +
+                "movie=" + movie +
+                ", profession=" + profession +
+                ", person=" + person +
+                ", typeCharacter='" + typeCharacter + '\'' +
+                ", nameRole='" + nameRole + '\'' +
+                '}';
+    }
 }
