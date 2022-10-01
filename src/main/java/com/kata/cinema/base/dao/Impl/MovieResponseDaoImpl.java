@@ -5,6 +5,9 @@ import com.kata.cinema.base.dao.abstracts.MovieResponseDao;
 import com.kata.cinema.base.models.*;
 import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.ShowType;
+import org.hibernate.Session;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -25,32 +28,98 @@ public class MovieResponseDaoImpl implements MovieResponseDao {
             String showType) {
         System.out.println("try get movies for folderMovie " + folderMovieId);
 
-        if (sortMovieFolder != null) {
-            switch (sortMovieFolder) {
-                case ("COUNT_SCORE"):
-                case ("RATING"):
-                    return getMovieListByFolderMovieId_postSorting(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage, showType);
-            }
+
+        TypedQuery<Movie> query = entityManager.createQuery("select m from Movie m left join m.scores ms where m.id in " +
+                        "(select fmm.id from FolderMovie fm left join fm.movies fmm where fm.id =: folder_movie_id " +
+                        "and fmm.id not in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
+                        "(select fm.id from FolderMovie fm where fm.category = 2 and fm.user.id = " +
+                        "(select fm.user.id from FolderMovie fm where fm.id =: folder_movie_id)))) group by m.id order by count (ms.score) desc nulls last, m.id", Movie.class)
+                .setParameter("folder_movie_id", folderMovieId);
+
+        List<Movie> movieList = query.getResultList();
+
+        for (Movie movie: movieList) {
+            System.out.println(movie.getId() + " " + movie.getName());
         }
 
 
-        EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
-        TypedQuery<Movie> query = entityManager
-                .createQuery("select m from Movie m " + sorted(sortMovieFolder, folderMovieId.toString())[0] +
-                        " where m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: folder_movie_id) "
-                        + showTypeSorted(showType)
 
-//                        "and m.id not in " +
+
+        System.out.println("test2");
+        TypedQuery<Movie> query2 = entityManager.createQuery("select m from Movie m join m.scores mss on m.id = mss.movie.id and mss.user.id = 1L where m.id in " +
+                        "(select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: folder_movie_id) order by mss.score desc nulls last, m.id", Movie.class)
+                .setParameter("folder_movie_id", folderMovieId);
+
+        List<Movie> movieList2 = query2.getResultList();
+
+        for (Movie movie: movieList2) {
+            System.out.println(movie.getId() + " " + movie.getName());
+        }
+
+
+        System.out.println("test3");
+        try (Session session = entityManager.unwrap(Session.class)) {
+            org.hibernate.query.Query query3 = entityManager.createQuery("select m.id as id, m.name as name, m_g.name as genre_name, m_p.person.id, m_p.person.firstName as person_Firstname, m_p.person.lastName as person_lastName " +
+                    "from Movie m join m.genres m_g join m.moviePerson m_p where m.id in (1, 2, 3)").unwrap(org.hibernate.query.Query.class).setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+            List<Map> answer = query3.list();
+            for (Map map: answer
+                 ) {
+                System.out.println(map);
+            }
+        }
+
+        System.out.println("test4");
+
+
+
+
+
+
+//        System.out.println("test2");
+//        TypedQuery<Movie> query2 = entityManager.createQuery("select m from Movie m left join m.scores mss on m.id = mss.movie.id and mss.user.id = " +
+//                        "(select fm.user.id from FolderMovie fm where fm.id =: folder_movie_id) where m.id in " +
+//                        "(select fmm.id from FolderMovie fm left join fm.movies fmm where fm.id =: folder_movie_id " +
+//                        "and fmm.id not in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id = " +
 //                        "(select fm.id from FolderMovie fm where fm.category = 2 and fm.user.id = " +
-//                        "(select fm.user.id from fm where fm.id =: folder_movie_id))) "
+//                        "(select fm.user.id from FolderMovie fm where fm.id =: folder_movie_id)))) group by m.id order by mss.score desc, m.id", Movie.class)
+//                .setParameter("folder_movie_id", folderMovieId);
+//
+//        List<Movie> movieList2 = query2.getResultList();
+//
+//        for (Movie movie: movieList2) {
+//            System.out.println(movie.getId() + " " + movie.getName());
+//        }
 
-                        + sorted(sortMovieFolder, folderMovieId.toString())[1], Movie.class)
-                .setParameter("folder_movie_id", folderMovieId)
-                .setHint("javax.persistence.fetchgraph", entityGraph)   // fetchgraph  или loadgraph
-                .setFirstResult((pageNumber - 1) * itemsOnPage)
-                .setMaxResults(itemsOnPage);
+/*   --- ******************************************************8 ---   */
 
-        return query.getResultList();
+
+//        if (sortMovieFolder != null) {
+//            switch (sortMovieFolder) {
+//                case ("COUNT_SCORE"):
+//                case ("RATING"):
+//                    return getMovieListByFolderMovieId_postSorting(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage, showType);
+//            }
+//        }
+//
+//        EntityGraph<?> entityGraph = entityManager.getEntityGraph("movieResponseDtoGraph");
+//        TypedQuery<Movie> query = entityManager
+//                .createQuery("select m from Movie m " + sorted(sortMovieFolder, folderMovieId.toString())[0] +
+//                        " where m.id in (select fmm.id from FolderMovie fm join fm.movies fmm where fm.id =: folder_movie_id) "
+//                        + showTypeSorted(showType)
+//
+////                        "and m.id not in " +
+////                        "(select fm.id from FolderMovie fm where fm.category = 2 and fm.user.id = " +
+////                        "(select fm.user.id from fm where fm.id =: folder_movie_id))) "
+//
+//                        + sorted(sortMovieFolder, folderMovieId.toString())[1], Movie.class)
+//                .setParameter("folder_movie_id", folderMovieId)
+//                .setHint("javax.persistence.fetchgraph", entityGraph)   // fetchgraph  или loadgraph
+//                .setFirstResult((pageNumber - 1) * itemsOnPage)
+//                .setMaxResults(itemsOnPage);
+//
+//        return query.getResultList();
+
+        return null;
     }
 
     @Override

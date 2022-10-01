@@ -23,6 +23,13 @@ import java.util.*;
         }
 )
 
+
+@NamedEntityGraph(name = "myTestGraph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "genres"),
+        }
+)
+
 @Table (name = "movies")
 @Entity
 @Setter
