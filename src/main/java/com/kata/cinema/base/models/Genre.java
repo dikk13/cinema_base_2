@@ -4,13 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,7 +24,7 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany (mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres")
     private Set<Movie> movies;
 
     @Override

@@ -4,13 +4,17 @@ package com.kata.cinema.base.webapp.controllers.user;
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.MovieResponseDto;
 import com.kata.cinema.base.dto.PageDto;
+import com.kata.cinema.base.models.enums.ShowType;
+import com.kata.cinema.base.models.enums.SortMovieFolderType;
 import com.kata.cinema.base.service.abstracts.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user/folders")
@@ -36,17 +40,18 @@ public class UserFolderMovieRestController {
     }
 
     @GetMapping(value = "/{id}/movies/page/{pageNumber}")
-    public ResponseEntity<PageDto<MovieResponseDto>> MyNewFunc (
+    public ResponseEntity<PageDto<MovieResponseDto>> getMoviesDtoListFromFolderMovieById (
             @PathVariable("id") Long id,
             @PathVariable("pageNumber") Integer pageNumber,
             @RequestParam(value = "itemsOnPage", defaultValue = "10") Integer itemsOnPage,
-            @RequestParam(value = "sortMovieFolder", defaultValue = "ORDER") String sortMovieFolder,
-            @RequestParam(value = "showType", defaultValue = "ALL") String showType) {
+            @RequestParam(value = "sortMovieFolder", required = false, defaultValue = "ORDER") SortMovieFolderType sortMovieFolderType,
+            @RequestParam(value = "showType", required = false, defaultValue = "ALL") ShowType showType) {
 
-        List<MovieResponseDto> answer = movieResponseDtoService.getMovieResponseDtoListByFolderMovieId(id, sortMovieFolder, pageNumber, itemsOnPage, showType);
-        PageDto<MovieResponseDto> pageDto = new PageDto<>();
-        pageDto.setCount((long) answer.size());
-        pageDto.setEntities(answer);
-        return new ResponseEntity<>(pageDto, HttpStatus.OK);
+        Map <String, Object> parameters = new HashMap<>();
+        parameters.put("folderMovieId", id);
+        parameters.put("sortingType", sortMovieFolderType);
+        parameters.put("showType", showType);
+        PageDto <MovieResponseDto> answer = movieResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 }

@@ -2,6 +2,8 @@ package com.kata.cinema.base.service.Impl;
 
 import com.kata.cinema.base.dao.abstracts.FolderMovieResponsDtoDao;
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
+import com.kata.cinema.base.dto.MovieResponseDto;
+import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.mappers.FolderMovieResponsDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.service.abstracts.FolderMovieResponsDtoService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoService {

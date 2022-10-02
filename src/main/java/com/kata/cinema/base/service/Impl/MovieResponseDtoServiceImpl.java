@@ -1,34 +1,29 @@
 package com.kata.cinema.base.service.Impl;
 
-import com.kata.cinema.base.dao.abstracts.MovieResponseDao;
+import com.kata.cinema.base.dao.abstracts.MovieResponseDtoDao;
 import com.kata.cinema.base.dto.MovieResponseDto;
-import com.kata.cinema.base.mappers.MovieResponseDtoMapper;
-import com.kata.cinema.base.models.Movie;
+import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class MovieResponseDtoServiceImpl implements MovieResponseDtoService {
+public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <MovieResponseDto> implements MovieResponseDtoService {
 
-    private final MovieResponseDao movieResponseDao;
-    private final MovieResponseDtoMapper movieResponseDtoMapper;
-
-    public MovieResponseDtoServiceImpl(MovieResponseDao movieResponseDao, MovieResponseDtoMapper movieResponseDtoMapper) {
-        this.movieResponseDao = movieResponseDao;
-        this.movieResponseDtoMapper = movieResponseDtoMapper;
+    private final MovieResponseDtoDao movieResponseDtoDao;
+    public MovieResponseDtoServiceImpl(MovieResponseDtoDao movieResponseDtoDao) {
+        super(movieResponseDtoDao);
+        this.movieResponseDtoDao = movieResponseDtoDao;
     }
 
     @Override
-    public List<MovieResponseDto> getMovieResponseDtoListByFolderMovieId(
-            Long folderMovieId,
-            String sortMovieFolder,
-            Integer pageNumber,
-            Integer itemsOnPage,
-            String showType) {
-
-        List<Movie> movieList = movieResponseDao.getMovieListByFolderMovieId(folderMovieId, sortMovieFolder, pageNumber, itemsOnPage, showType);
-        return movieResponseDtoMapper.mapListOfMoviesToDto(movieList);
+    public PageDto<MovieResponseDto> getPageDtoWithParameters(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
+        PageDto <MovieResponseDto> pageDto = new PageDto<>();
+        List<MovieResponseDto> movieList = movieResponseDtoDao.getItemsDto(currentPage, itemsOnPage, parameters);
+        pageDto.setCount((long) movieList.size());
+        pageDto.setEntities(movieList);
+        return pageDto;
     }
 }

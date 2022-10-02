@@ -15,7 +15,13 @@ import java.util.*;
 
 @NamedEntityGraph(name = "movieResponseDtoGraph",
         attributeNodes = {
+                @NamedAttributeNode(value = "id"),
+                @NamedAttributeNode(value = "name"),
+                @NamedAttributeNode(value = "originalName"),
                 @NamedAttributeNode(value = "genres"),
+                @NamedAttributeNode(value = "time"),
+                @NamedAttributeNode(value = "dateRelease"),
+                @NamedAttributeNode(value = "countries"),
                 @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub"),
         },
         subgraphs = {
