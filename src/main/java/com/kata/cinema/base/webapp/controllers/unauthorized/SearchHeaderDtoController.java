@@ -30,6 +30,5 @@ public class SearchHeaderDtoController {
         return new ResponseEntity<>(new SearchResponseDto(movieService.titleMovie(filter),
                 collectionService.titleCollection(filter),
                 personService.namePerson(filter)), HttpStatus.OK);
-
     }
 }
