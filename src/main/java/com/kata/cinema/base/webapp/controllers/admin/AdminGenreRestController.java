@@ -1,7 +1,7 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
-import com.kata.cinema.base.converter.GenreMapper;
+import com.kata.cinema.base.mappers.GenreMapper;
 
 import com.kata.cinema.base.exception.GenreIdNotFoundException;
 import com.kata.cinema.base.models.Genre;
