@@ -27,7 +27,6 @@ public class UserFolderMovieRestController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById (@PathVariable("id") Long id) {
-        System.out.println("GET TEST");
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id), HttpStatus.OK);
     }
 
