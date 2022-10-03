@@ -6,8 +6,10 @@ import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.service.abstracts.MovieResponseDtoService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <MovieResponseDto> implements MovieResponseDtoService {
@@ -21,9 +23,28 @@ public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <Movie
     @Override
     public PageDto<MovieResponseDto> getPageDtoWithParameters(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
         PageDto <MovieResponseDto> pageDto = new PageDto<>();
-        List<MovieResponseDto> movieList = movieResponseDtoDao.getItemsDto(currentPage, itemsOnPage, parameters);
-        pageDto.setCount((long) movieList.size());
-        pageDto.setEntities(movieList);
+        List<MovieResponseDto> movieResponseDtoList = movieResponseDtoDao.getItemsDto(currentPage, itemsOnPage, parameters);
+        Map<Long, MovieResponseDto> movieResponseDtoMap = new LinkedHashMap<>();
+
+        String idQueue = movieResponseDtoList.stream().map(MovieResponseDto::getId).toList().toString()
+                .replace("[", "(").replace("]",")");
+
+        for (MovieResponseDto movieDto: movieResponseDtoList) {
+            movieResponseDtoMap.put(movieDto.getId(), movieDto);
+        }
+
+        Map<Long, List<String>> genresMap = movieResponseDtoDao.getGenresMap(idQueue);
+        Map<Long, List<String>> producersMap = movieResponseDtoDao.getProducersMap(idQueue);
+        Map<Long, List<String>> actorsMap = movieResponseDtoDao.getActorsMap(idQueue);
+
+        for (Long item : movieResponseDtoMap.keySet()) {
+         movieResponseDtoMap.get(item).setGenres((genresMap.get(item) != null) ? genresMap.get(item).toString().replaceAll("[\\[\\]]", "") : "");
+         movieResponseDtoMap.get(item).setDirectors((producersMap.get(item) != null) ? producersMap.get(item).toString().replaceAll("[\\[\\]]", "") : "");
+         movieResponseDtoMap.get(item).setRoles((actorsMap.get(item) != null) ? actorsMap.get(item).toString().replaceAll("[\\[\\]]","") : "");
+        }
+
+        pageDto.setCount((long) movieResponseDtoList.size());
+        pageDto.setEntities(movieResponseDtoList);
         return pageDto;
     }
 }
