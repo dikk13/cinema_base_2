@@ -40,6 +40,7 @@ public class AdminGenreRestController {
     }
 
     @PutMapping("/api/admin/genres/{id}")
+    //TODO принимать новое имя, а не сущность
     public void updateGenre(@RequestBody Genre genre, @PathVariable("id") long id) {
         if (genreService.existById(id)) {
             genreService.update(genre);
