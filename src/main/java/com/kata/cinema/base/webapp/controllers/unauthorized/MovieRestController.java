@@ -1,4 +1,4 @@
-package com.kata.cinema.base.webapp.controllers.movieRest;
+package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 
 import com.kata.cinema.base.dto.PageDto;

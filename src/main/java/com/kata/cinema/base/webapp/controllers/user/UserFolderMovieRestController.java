@@ -1,4 +1,4 @@
-package com.kata.cinema.base.webapp.controllers;
+package com.kata.cinema.base.webapp.controllers.user;
 
 
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
