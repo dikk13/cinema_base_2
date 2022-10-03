@@ -1,9 +1,11 @@
 package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
+import com.kata.cinema.base.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;

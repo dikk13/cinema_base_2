@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Setter
 @Table
 @NoArgsConstructor
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @Column(name = "id")
@@ -48,5 +49,10 @@ public class Role {
                 "id=" + id +
                 ", role='" + role + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getAuthority() {
+        return getRole();
     }
 }
