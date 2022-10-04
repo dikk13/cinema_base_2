@@ -1,11 +1,14 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
+
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -22,22 +25,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Transactional
+@DatabaseSetup("/dataset.xml")
+@DatabaseTearDown("/empty_dataset.xml")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class })
+        DbUnitTestExecutionListener.class})
 class UserNewsRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DatabaseSetup("/dataset.xml")
     void addComments() throws Exception {
-        this.mockMvc.perform(
-                post("/api/user/news/1/comments?userId=1").content("{\"text\": \"some another text 007\"," +
-                        "\"date\": \"2022-06-16T18:37:23\"}").contentType("application/json")).andDo(print()).
-                andExpect(status().isOk());
+        this.mockMvc.perform(post("/api/user/news/100/comments?userId=100")
+                        .content("{\"text\": \"added test text\",\"date\": \"2022-06-16T18:37:11\"}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

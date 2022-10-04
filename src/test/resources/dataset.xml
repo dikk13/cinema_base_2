@@ -2,78 +2,78 @@
 <dataset>
     <users
             dtype='1'
-            id='1'
-            birthday= '2022-06-16'
+            id='100'
+            birthday='2022-06-16'
             email='email@mail.com'
             first_name='Name'
             last_name='Last'
             password='1'
             avatar_url='url'
-            user_id='1'
-   />
+            user_id='100'
+    />
     <news
-            id="1"
-            date="2022-06-17 16:37:23.000000"
+            id="100"
+            date="2022-06-17 16:37:23"
             html_body="body"
             rubric="1"
             title="title"
-            user_id="1"
+            user_id="100"
     />
     <comments
-            id="1"
-            date="2022-06-17 16:37:23.000000"
+            id="100"
+            date="2022-06-17 16:37:23"
             text="text"
-            news_id="1"
-            user_id="1"
+            news_id="100"
+            user_id="100"
     />
     <studio_performance
-        id="1"
-        name="SPName"
+            id="100"
+            name="SPName"
     />
     <production_studio
-        id="1"
-        date_foundation="2020-01-01"
-        description="PSDescription"
-        name="PSName"
+            id="100"
+            date_foundation="2020-01-01"
+            description="PSDescription"
+            name="PSName"
     />
     <persons
-        dtype="1a"
-        id="1"
-        date_birth="1999-01-01"
-        first_name="Name"
-        height="180"
-        last_name="Last"
-        place_of_birth="Earth"
-        marriage_status="free"
-        human_id="1"
-        person_id="1"
+            dtype="1a"
+            id="100"
+            date_birth="1999-01-01"
+            first_name="Name"
+            height="180"
+            last_name="Last"
+            place_of_birth="Earth"
+            marriage_status="free"
+            human_id="100"
+            person_id="100"
     />
     <professions
-        id="1"
-        name="Cinemator"
+            id="100"
+            name="Cinemator"
     />
     <movie
-        dtype="1a"
-        id="1"
-        countries="Russia"
-        date_release="2014-12-21"
-        description="MDescription"
-        mpaa="MMpaa"
-        name="MName"
-        original_name="MOName"
-        rars="MRars"
-        time="01:00:00"
-        type="1"
-        name_role="MActors"
-        type_character="MChars"
-        movie_id="1"
-        person_id="1"
-        profession_id="1"
+            dtype="1a"
+            id="100"
+            countries="Russia"
+            date_release="2014-12-21"
+            description="MDescription"
+            mpaa="MMpaa"
+            name="MName"
+            original_name="MOName"
+            rars="MRars"
+            time="01:00:00"
+            type="1"
+            name_role="MActors"
+            type_character="MChars"
+            movie_id="100"
+            person_id="100"
+            profession_id="100"
     />
     <production_studio_movie
-        id="1"
-        movie_id="1"
-        studio_performance_id="1"
-        production_studio_id="1"
+            id="100"
+            movie_id="100"
+            studio_performance_id="100"
+            production_studio_id="100"
     />
 </dataset>
