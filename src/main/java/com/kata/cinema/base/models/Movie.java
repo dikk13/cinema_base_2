@@ -6,35 +6,8 @@ import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.*;
-
-
-@NamedEntityGraph(name = "movieResponseDtoGraph",
-        attributeNodes = {
-                @NamedAttributeNode(value = "id"),
-                @NamedAttributeNode(value = "name"),
-                @NamedAttributeNode(value = "originalName"),
-                @NamedAttributeNode(value = "genres"),
-                @NamedAttributeNode(value = "time"),
-                @NamedAttributeNode(value = "dateRelease"),
-                @NamedAttributeNode(value = "countries"),
-                @NamedAttributeNode(value = "moviePerson", subgraph = "moviePersonSub"),
-        },
-        subgraphs = {
-                @NamedSubgraph(name = "moviePersonSub", attributeNodes = @NamedAttributeNode("person"))
-        }
-)
-
-
-@NamedEntityGraph(name = "myTestGraph",
-        attributeNodes = {
-                @NamedAttributeNode(value = "genres"),
-        }
-)
 
 @Table (name = "movies")
 @Entity
@@ -139,9 +112,4 @@ public class Movie {
                 ", type='" + type + '\'' +
                 '}';
     }
-
-    public Integer timeToInt(String time) {
-        return Integer.valueOf(time);
-    }
-
 }

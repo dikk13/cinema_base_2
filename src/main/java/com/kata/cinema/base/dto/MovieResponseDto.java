@@ -2,8 +2,6 @@ package com.kata.cinema.base.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -14,7 +12,7 @@ public class MovieResponseDto {
     private String name;
     private String originalName;
     private Integer time;  // перевести в Integer
-    private String  dateRelease;
+    private String dateRelease;
     private String countries;
     private String genres;
     private String directors;

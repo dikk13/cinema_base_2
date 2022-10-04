@@ -44,7 +44,7 @@ public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <Movie
                 movieResponseDtoMap.get(item).setRoles((actorsMap.get(item) != null) ? actorsMap.get(item).toString().replaceAll("[\\[\\]]","") : "");
             }
 
-            pageDto.setCount((long) movieResponseDtoList.size());
+            pageDto.setCount(movieResponseDtoDao.getResultTotal(parameters));
             pageDto.setEntities(movieResponseDtoList);
             return pageDto;
         }
