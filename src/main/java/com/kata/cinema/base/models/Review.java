@@ -50,12 +50,12 @@ public class Review {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return Objects.equals(id, review.id) && typeReview == review.typeReview && Objects.equals(title, review.title) && Objects.equals(description, review.description) && Objects.equals(date, review.date) && Objects.equals(movie, review.movie) && Objects.equals(user, review.user);
+        return Objects.equals(id, review.id) && typeReview == review.typeReview && Objects.equals(title, review.title) && Objects.equals(description, review.description) && Objects.equals(date, review.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, typeReview, title, description, date, movie, user);
+        return getClass().hashCode();
     }
 
     @Override

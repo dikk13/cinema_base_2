@@ -1,4 +1,4 @@
-package com.kata.cinema.base.converter;
+package com.kata.cinema.base.mappers;
 
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.dto.GenreResponseDto;
