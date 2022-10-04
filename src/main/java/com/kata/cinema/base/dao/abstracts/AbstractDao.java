@@ -1,6 +1,8 @@
 package com.kata.cinema.base.dao.abstracts;
 
 
+import com.kata.cinema.base.models.User;
+
 import java.util.List;
 import java.util.Optional;
 
