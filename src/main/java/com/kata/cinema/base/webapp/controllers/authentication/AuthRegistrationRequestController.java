@@ -33,12 +33,11 @@ public class AuthRegistrationRequestController {
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator, AuthenticationManager authenticationManager) {
+  public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator) {
     this.userMapper = userMapper;
     this.registrationUserDao = registrationUserDao;
     this.jwtUtil = jwtUtil;
     this.userValidator = userValidator;
-    this.authenticationManager = authenticationManager;
   }
 
 
@@ -57,14 +56,7 @@ public class AuthRegistrationRequestController {
       }
 
       registrationUserDao.register(user);
-
-      String token =  jwtUtil.generateToken(user.getEmail());
-
-      Map<Object, Object> response = new HashMap<>();
-      response.put("email", user.getEmail());
-      response.put("token", token);
-
-      return ResponseEntity.ok(response);
+      return ResponseEntity.ok(requestDto);
 
     }
 

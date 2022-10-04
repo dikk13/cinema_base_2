@@ -6,23 +6,23 @@ import com.kata.cinema.base.dao.abstracts.UserDao;
 import com.kata.cinema.base.models.Role;
 import com.kata.cinema.base.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
+@Repository
 public class RegistrationUserDaoImpl extends AbstractDaoImpl<Long, User> implements RegistrationUserDao {
 
     private final UserDao userDao;
 
     private final RoleDao roleDao;
 
-    private final BCryptPasswordEncoder cryptPasswordEncoder;
+    private BCryptPasswordEncoder cryptPasswordEncoder;
 
 
-    public RegistrationUserDaoImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder cryptPasswordEncoder) {
+    public RegistrationUserDaoImpl(UserDao userDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.roleDao = roleDao;
-        this.cryptPasswordEncoder = cryptPasswordEncoder;
     }
 
     @Transactional
