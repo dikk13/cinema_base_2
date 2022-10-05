@@ -29,7 +29,7 @@ public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <Movie
     public PageDto<MovieResponseDto> getPageDtoWithParameters(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
         PageDto <MovieResponseDto> pageDto = new PageDto<>();
         List<MovieResponseDto> movieResponseDtoList = movieResponseDtoDao.getItemsDto(currentPage, itemsOnPage, parameters);
-
+        System.out.println("CATCH #1");
         if (movieResponseDtoList.size() != 0) {
 
             Map<Long, MovieResponseDto> movieResponseDtoMap = new LinkedHashMap<>();
