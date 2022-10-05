@@ -10,8 +10,6 @@ import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.GenreService;
 import com.kata.cinema.base.service.abstracts.MovieService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +20,6 @@ import static java.lang.Integer.MIN_VALUE;
 
 
 public class TestDataInitializer {
-
-    //TODO передалать на использование сервисов
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private final GenreService genreService;
     private final MovieService movieService;
@@ -105,8 +99,6 @@ public class TestDataInitializer {
             collection.setMovies(collectMovieList);
         }
         collectionService.create(collection);
-
-
     }
 
     private void init() {
