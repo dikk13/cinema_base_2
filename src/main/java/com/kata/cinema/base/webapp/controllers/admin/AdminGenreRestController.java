@@ -1,7 +1,7 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
-import com.kata.cinema.base.converter.GenreMapper;
+import com.kata.cinema.base.mappers.GenreMapper;
 
 import com.kata.cinema.base.exception.GenreIdNotFoundException;
 import com.kata.cinema.base.models.Genre;
@@ -28,18 +28,19 @@ public class AdminGenreRestController {
     }
 
 
-    @GetMapping("/api/moderator/genres")
+    @GetMapping("/api/admin/genres")
     public ResponseEntity<List<GenreResponseDto>> getAllGenre() {
         return ResponseEntity.ok(genreService.getAllGenreResponseDto());
     }
 
-    @DeleteMapping("/api/moderator/genres/{id}")
+    @DeleteMapping("/api/admin/genres/{id}")
     public void deleteGenreById(@PathVariable("id") long id) {
         genreService.deleteById(id);
 
     }
 
-    @PutMapping("/api/moderator/genres/{id}")
+    @PutMapping("/api/admin/genres/{id}")
+    //TODO принимать новое имя, а не сущность
     public void updateGenre(@RequestBody Genre genre, @PathVariable("id") long id) {
         if (genreService.existById(id)) {
             genreService.update(genre);
@@ -48,7 +49,7 @@ public class AdminGenreRestController {
         }
     }
 
-    @PostMapping("/api/moderator/genres")
+    @PostMapping("/api/admin/genres")
     public void addNewGenre(@RequestBody GenreResponseDto genreDto) {
         genreService.create(genreMapper.toGenre(genreDto));
     }

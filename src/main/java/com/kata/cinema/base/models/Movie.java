@@ -1,8 +1,8 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.models.enums.MovieType;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.enums.MovieType;
+import com.kata.cinema.base.enums.MPAA;
+import com.kata.cinema.base.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,9 +32,11 @@ public class Movie {
     private String dateRelease;
 
     @Column(name = "rars")
+    @Enumerated(EnumType.STRING)
     private RARS rars;
 
     @Column(name = "mpaa")
+    @Enumerated(EnumType.STRING)
     private MPAA mpaa;
 
     @Column(name = "time")
@@ -53,7 +55,7 @@ public class Movie {
     private List<Content> contents;
 
     @OneToMany(mappedBy = "movie")
-    private Set<MoviePerson> moviePerson;
+    private List<MoviePerson> moviePerson;
 
     @OneToMany(mappedBy = "movie")
     private List<AwardCeremonyResult> awardCeremonyResults;
@@ -80,7 +82,7 @@ public class Movie {
             name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set <Genre> genres;
+    private List<Genre> genres;
 
     @Override
     public boolean equals(Object o) {

@@ -4,29 +4,22 @@ package com.kata.cinema.base.config.init;
 import com.kata.cinema.base.models.Collection;
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.models.Movie;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.enums.MPAA;
+import com.kata.cinema.base.enums.RARS;
 import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.GenreService;
 import com.kata.cinema.base.service.abstracts.MovieService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
 
 public class TestDataInitializer {
-
-    //TODO передалать на использование сервисов
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private final GenreService genreService;
     private final MovieService movieService;
@@ -106,8 +99,6 @@ public class TestDataInitializer {
             collection.setMovies(collectMovieList);
         }
         collectionService.create(collection);
-
-
     }
 
     private void init() {
