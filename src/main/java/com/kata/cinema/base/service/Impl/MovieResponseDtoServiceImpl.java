@@ -1,5 +1,7 @@
 package com.kata.cinema.base.service.Impl;
 
+import com.kata.cinema.base.dao.Impl.GenreDaoImpl;
+import com.kata.cinema.base.dao.Impl.PersonDaoImpl;
 import com.kata.cinema.base.dao.abstracts.MovieResponseDtoDao;
 import com.kata.cinema.base.dto.MovieResponseDto;
 import com.kata.cinema.base.dto.PageDto;
@@ -14,9 +16,13 @@ import java.util.Map;
 public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <MovieResponseDto> implements MovieResponseDtoService {
 
     private final MovieResponseDtoDao movieResponseDtoDao;
-    public MovieResponseDtoServiceImpl(MovieResponseDtoDao movieResponseDtoDao) {
+    private final GenreDaoImpl genreDaoImpl;
+    private final PersonDaoImpl personDaoImpl;
+    public MovieResponseDtoServiceImpl(MovieResponseDtoDao movieResponseDtoDao, GenreDaoImpl genreDaoImpl, PersonDaoImpl personDaoImpl) {
         super(movieResponseDtoDao);
         this.movieResponseDtoDao = movieResponseDtoDao;
+        this.genreDaoImpl = genreDaoImpl;
+        this.personDaoImpl = personDaoImpl;
     }
 
     @Override
@@ -34,9 +40,9 @@ public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <Movie
                 movieResponseDtoMap.put(movieDto.getId(), movieDto);
             }
 
-            Map<Long, List<String>> genresMap = movieResponseDtoDao.getGenresMap(idQueue);
-            Map<Long, List<String>> producersMap = movieResponseDtoDao.getProducersMap(idQueue);
-            Map<Long, List<String>> actorsMap = movieResponseDtoDao.getActorsMap(idQueue);
+            Map<Long, List<String>> genresMap = genreDaoImpl.getGenresMap(idQueue);
+            Map<Long, List<String>> producersMap = personDaoImpl.getProducersMap(idQueue);
+            Map<Long, List<String>> actorsMap = personDaoImpl.getActorsMap(idQueue);
 
             for (Long item : movieResponseDtoMap.keySet()) {
                 movieResponseDtoMap.get(item).setGenres((genresMap.get(item) != null) ? genresMap.get(item).toString().replaceAll("[\\[\\]]", "") : "");

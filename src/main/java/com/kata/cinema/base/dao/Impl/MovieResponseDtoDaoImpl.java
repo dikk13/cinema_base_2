@@ -52,54 +52,6 @@ public class MovieResponseDtoDaoImpl implements MovieResponseDtoDao {
         }
         return showTypeString.toString();
     }
-
-    @Override
-    public Map<Long, List<String>> getGenresMap(String moviesId) {
-        List <Object[]> testResult1 = entityManager.createQuery("select m.id, mg.name from Movie m join m.genres mg where m.id in " + moviesId)
-                .getResultList();
-        Map<Long, List<String>> genresMap = new HashMap<>();
-        for (Object[] row : testResult1) {
-            if (!genresMap.containsKey((Long) row[0])) {
-                genresMap.put((Long) row[0], new ArrayList<>());
-            }
-            genresMap.get((Long) row[0]).add((String) row[1]);
-        }
-        return genresMap;
-    }
-
-    @Override
-    public Map<Long, List<String>> getProducersMap(String moviesId) {
-        List <Object[]> testResult2 = entityManager.createQuery("select m.id, mp.person.firstName, mp.person.lastName from Movie m join m.moviePerson mp where m.id in "
-                    + moviesId + " and mp.profession.name = 'Режиссер' and mp.typeCharacter =: characterType")
-                .setParameter("characterType", String.valueOf(CharacterType.NO_CHARACTER_MOVIE.ordinal()))
-                .getResultList();
-
-            Map<Long, List<String>> producersMap = new HashMap<>();
-            for (Object[] row : testResult2) {
-                if (!producersMap.containsKey((Long) row[0])) {
-                    producersMap.put((Long) row[0], new ArrayList<>());
-                }
-                producersMap.get((Long) row[0]).add(row[1] + " " + row[2]);
-            }
-            return producersMap;
-    }
-
-    @Override
-    public Map<Long, List<String>> getActorsMap(String moviesId) {
-        List <Object[]> testResult3 = entityManager.createQuery("select m.id, mp.person.firstName, mp.person.lastName from Movie m join m.moviePerson mp where m.id in "
-                        + moviesId + " and mp.profession.name = 'Актер' and mp.typeCharacter =: characterType")
-                .setParameter("characterType", String.valueOf(CharacterType.MAIN_CHARACTER.ordinal()))
-                .getResultList();
-
-        Map<Long, List<String>> actorsMap = new HashMap<>();
-        for (Object[] row : testResult3) {
-            if (!actorsMap.containsKey((Long) row[0])) {
-                actorsMap.put((Long) row[0], new ArrayList<>());
-            }
-            actorsMap.get((Long) row[0]).add(row[1] + " " + row[2]);
-        }
-        return actorsMap;
-    }
 }
 
 
