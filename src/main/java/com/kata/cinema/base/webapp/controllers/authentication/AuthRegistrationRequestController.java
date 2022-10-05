@@ -25,23 +25,20 @@ import java.util.Map;
 @RequestMapping("/api")
 public class AuthRegistrationRequestController {
 
-  private final UserMapper userMapper;
-  private final RegistrationUserDao registrationUserDao;
-  private final JwtUtil jwtUtil;
-  private final UserValidator userValidator;
+    private final UserMapper userMapper;
+    private final RegistrationUserDao registrationUserDao;
+    private final JwtUtil jwtUtil;
+    private final UserValidator userValidator;
 
-  private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-  @Autowired
-  public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator) {
-    this.userMapper = userMapper;
-    this.registrationUserDao = registrationUserDao;
-    this.jwtUtil = jwtUtil;
-    this.userValidator = userValidator;
-  }
-
-
-
+    @Autowired
+    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator) {
+      this.userMapper = userMapper;
+      this.registrationUserDao = registrationUserDao;
+      this.jwtUtil = jwtUtil;
+      this.userValidator = userValidator;
+    }
 
 
     @PostMapping("/registration")
@@ -57,7 +54,6 @@ public class AuthRegistrationRequestController {
 
       registrationUserDao.register(user);
       return ResponseEntity.ok(requestDto);
-
     }
 
 
@@ -65,7 +61,7 @@ public class AuthRegistrationRequestController {
     public ResponseEntity authLogin(@RequestBody AuthRequestDto authRequestDto) {
 
       UsernamePasswordAuthenticationToken authenticationToken =
-              new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
+            new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
 
       try {
         authenticationManager.authenticate(authenticationToken);
@@ -81,7 +77,6 @@ public class AuthRegistrationRequestController {
 
       return ResponseEntity.ok(response);
     }
-
 }
 
 
