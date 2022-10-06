@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, ProductionStudio>
-        implements ProductionStudioService{
+public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, ProductionStudio> implements ProductionStudioService {
 
     private final ProductionStudioDao productionStudioDao;
 
-    public ProductionStudioServiceImpl(AbstractDao<Long, ProductionStudio> abstractDao, ProductionStudioDao productionStudioDao) {
-        super(abstractDao);
+    public ProductionStudioServiceImpl(ProductionStudioDao productionStudioDao) {
+        super(productionStudioDao);
         this.productionStudioDao = productionStudioDao;
     }
 

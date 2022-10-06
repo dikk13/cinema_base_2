@@ -42,7 +42,7 @@ public class AuthRegistrationRequestController {
 
 
     @PostMapping("/registration")
-    public ResponseEntity registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
+    public ResponseEntity<UserRegistrationRequestDto> registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
       User user = userMapper.toUser(requestDto);
       userValidator.validate(user, result);
 
@@ -58,7 +58,7 @@ public class AuthRegistrationRequestController {
 
 
     @PostMapping("/token")
-    public ResponseEntity authLogin(@RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<Map<String, Object>> authLogin(@RequestBody AuthRequestDto authRequestDto) {
 
       UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
@@ -71,7 +71,7 @@ public class AuthRegistrationRequestController {
 
       String token =  jwtUtil.generateToken(authRequestDto.getEmail());
 
-      Map<Object, Object> response = new HashMap<>();
+      Map<String, Object> response = new HashMap<>();
       response.put("email", authRequestDto.getEmail());
       response.put("token", token);
 

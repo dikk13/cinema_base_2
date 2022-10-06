@@ -16,8 +16,8 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
     private final MovieDao movieDao;
 
     @Autowired
-    protected MovieServiceImpl(AbstractDao<Long, Movie> abstractDao, MovieDao movieDao) {
-        super(abstractDao);
+    protected MovieServiceImpl(MovieDao movieDao) {
+        super(movieDao);
         this.movieDao = movieDao;
     }
 

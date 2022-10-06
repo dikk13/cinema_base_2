@@ -22,6 +22,7 @@ public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreD
     }
 
 
+    //TODO переписать на transformer
     public Map<Long, List<String>> getGenresMap(String moviesId) {
         List <Object[]> testResult1 = entityManager.createQuery("select m.id, mg.name from Movie m join m.genres mg where m.id in " + moviesId)
                 .getResultList();

@@ -13,11 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+//TODO создать подпакет page и перенести все класс связанные с пагинации туда, для дао также актуально
 public class MovieResponseDtoServiceImpl extends PaginationDtoServiceImpl <MovieResponseDto> implements MovieResponseDtoService {
 
     private final MovieResponseDtoDao movieResponseDtoDao;
     private final GenreDaoImpl genreDaoImpl;
     private final PersonDaoImpl personDaoImpl;
+
     public MovieResponseDtoServiceImpl(MovieResponseDtoDao movieResponseDtoDao, GenreDaoImpl genreDaoImpl, PersonDaoImpl personDaoImpl) {
         super(movieResponseDtoDao);
         this.movieResponseDtoDao = movieResponseDtoDao;

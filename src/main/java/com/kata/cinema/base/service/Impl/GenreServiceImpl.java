@@ -17,8 +17,8 @@ public class GenreServiceImpl extends AbstractServiceImpl<Long, Genre> implement
     private final GenreDao genreDao;
 
     @Autowired
-    public GenreServiceImpl(AbstractDao<Long, Genre> abstractDao, GenreDao genreDao) {
-        super(abstractDao);
+    public GenreServiceImpl(GenreDao genreDao) {
+        super(genreDao);
         this.genreDao = genreDao;
     }
 

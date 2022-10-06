@@ -1,6 +1,6 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.enums.TypeReview;
+import com.kata.cinema.base.models.enums.TypeReview;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

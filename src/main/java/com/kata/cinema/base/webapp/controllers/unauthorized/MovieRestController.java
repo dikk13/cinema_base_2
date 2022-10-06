@@ -3,8 +3,8 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.ReviewResponseDto;
-import com.kata.cinema.base.enums.ReviewSortType;
-import com.kata.cinema.base.enums.TypeReview;
+import com.kata.cinema.base.models.enums.ReviewSortType;
+import com.kata.cinema.base.models.enums.TypeReview;
 import com.kata.cinema.base.service.abstracts.ReviewResponseDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

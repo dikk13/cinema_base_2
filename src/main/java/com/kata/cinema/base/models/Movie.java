@@ -1,7 +1,7 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.enums.MPAA;
-import com.kata.cinema.base.enums.RARS;
+import com.kata.cinema.base.models.enums.MPAA;
+import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.models.enums.MovieType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
