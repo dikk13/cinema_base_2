@@ -1,12 +1,12 @@
 package com.kata.cinema.base.webapp;
 
-import com.kata.cinema.base.dto.FolderMovieResponsDto;
-import com.kata.cinema.base.models.User;
+import com.kata.cinema.base.config.init.TestDataInitializer;
+import com.kata.cinema.base.service.abstracts.CollectionService;
+import com.kata.cinema.base.service.abstracts.GenreService;
+import com.kata.cinema.base.service.abstracts.MovieService;
 import   org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

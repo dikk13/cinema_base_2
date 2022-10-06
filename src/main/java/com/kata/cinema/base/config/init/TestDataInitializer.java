@@ -10,6 +10,7 @@ import com.kata.cinema.base.service.abstracts.CollectionService;
 import com.kata.cinema.base.service.abstracts.GenreService;
 import com.kata.cinema.base.service.abstracts.MovieService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,11 +64,11 @@ public class TestDataInitializer {
             genres.remove(randomIndex);
         }
 
-        movie.setDateRelease(String.valueOf(random.ints(1990, 2023)));
+        movie.setDateRelease(LocalDate.of(random.nextInt(1990, 2023), random.nextInt(1, 12), random.nextInt(1, 28)));
         movie.setTime(String.valueOf(random.ints(100, 181)));
         movie.setMpaa(MPAA.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
         movie.setRars(RARS.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
-//        movie.setGenres(genreListMovie);
+        movie.setGenres(genreListMovie);
         movieService.create(movie);
 
     }

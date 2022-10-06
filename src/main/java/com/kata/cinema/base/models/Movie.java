@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Table
@@ -29,7 +30,7 @@ public class Movie {
     private String countries;
 
     @Column(name = "date_release")
-    private String dateRelease;
+    private LocalDate dateRelease;
 
     @Column(name = "rars")
     @Enumerated(EnumType.STRING)
