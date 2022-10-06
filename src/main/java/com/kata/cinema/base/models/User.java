@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @Column(name = "birthday")
     private LocalDate birthday;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -54,7 +57,8 @@ public class User implements UserDetails {
         User user = (User) o;
         return Objects.equals(id, user.id) && Objects.equals(email, user.email) &&
                 Objects.equals(first_name, user.first_name) && Objects.equals(last_name, user.last_name) &&
-                Objects.equals(password, user.password) && Objects.equals(birthday, user.birthday);
+                Objects.equals(password, user.password) && Objects.equals(birthday, user.birthday) &&
+                Objects.equals(avatarUrl, user.avatarUrl);
     }
 
     @Override
@@ -71,7 +75,7 @@ public class User implements UserDetails {
                 ", last_name='" + last_name + '\'' +
                 ", password='" + password + '\'' +
                 ", birthday=" + birthday +
-                ", userAvatars="  +
+                ", userAvatars=" + avatarUrl +
                 '}';
     }
 

@@ -1,9 +1,9 @@
 package com.kata.cinema.base.config.init;
 
 
-
 import com.kata.cinema.base.models.*;
 
+import com.kata.cinema.base.models.Collection;
 import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.Privacy;
@@ -12,10 +12,7 @@ import com.kata.cinema.base.service.abstracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class TestDataInitializer {
 
@@ -38,6 +35,11 @@ public class TestDataInitializer {
 
     private static final int countUser = 25;
     private static final int countGenre = 10;
+    private static final int ELEVEN_MONTHS = 11;
+    private static final int ONE_MONTH = 1;
+    private static final int TWENTY_SEVEN_DAYS = 27;
+    private static final int ONE_DAY = 1;
+    private static final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
 
     private static final Random random = new Random();
 
@@ -50,15 +52,10 @@ public class TestDataInitializer {
     public void movieInit() {
         final int START_YEAR = 1990;
         final int LAST_YEAR = 2022;
-        final int ELEVEN_MONTHS = 11;
-        final int ONE_MONTH = 1;
-        final int TWENTY_SEVEN_DAYS = 27;
-        final int ONE_DAY = 1;
         List<Genre> genreList = genreService.getAll();
-        final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
 
         for (int i = 1; i <= countMovieList; i++) {
-            MoviePerson movie = new MoviePerson();
+            Movie movie = new Movie();
 
             List<Genre> genreListMovie = new ArrayList<>();
             int randomNumberOfGenres = random.nextInt(2) + 1;
@@ -79,11 +76,9 @@ public class TestDataInitializer {
             movie.setGenres(genreListMovie);
             movie.setName(String.format("Фильм%s", i));
             movie.setDescription(DESCRIPTION);
-            movie.setTypeCharacter("Тип персонажа");
 
             movieService.create(movie);
         }
-
     }
 
     public void genreInit() {
@@ -133,19 +128,22 @@ public class TestDataInitializer {
         final int LAST_USER_IN_BASE = 25;
         final int START_YEAR = 1970;
         final int LAST_YEAR = 2010;
-        final int ELEVEN_MONTHS = 11;
-        final int ONE_MONTH = 1;
-        final int TWENTY_SEVEN_DAYS = 27;
-        final int ONE_DAY = 1;
-        final Role ROLE_USER = roleService.getByName("USER").get();
-        final Role ROLE_ADMIN = roleService.getByName("ADMIN").get();
-        final Role ROLE_PUBLICIST = roleService.getByName("PUBLICIST").get();
+
+        final Role ROLE_USER;
+        final Role ROLE_ADMIN;
+        final Role ROLE_PUBLICIST;
+        final Optional<Role> roleUserOptional = roleService.getByName("USER");
+        final Optional<Role> roleAdminOptional = roleService.getByName("ADMIN");
+        final Optional<Role> rolePublicistOptional = roleService.getByName("PUBLICIST");
+        ROLE_USER = roleUserOptional.orElseGet(Role::new);
+        ROLE_ADMIN = roleAdminOptional.orElseGet(Role::new);
+        ROLE_PUBLICIST = rolePublicistOptional.orElseGet(Role::new);
 
         List<Role> roles = new ArrayList<>();
         roles.add(ROLE_USER);
 
         for (int userNumber = 1; userNumber <= countUser; userNumber++) {
-            UserAvatar user = new UserAvatar();
+            User user = new User();
             user.setEmail(String.format("email%s@mail.ru", userNumber));
             user.setFirst_name(String.format("Имя%s", userNumber));
             user.setLast_name(String.format("Фамилия%s", userNumber));
@@ -168,13 +166,15 @@ public class TestDataInitializer {
                 user.setRole(roles);
             }
             userService.create(user);
-            user.setAvatarUrl(String.format("/uploads/users/avatar/%s", userService.getByEmail("email" + userNumber + "@mail.ru").get().getId()));
-            userService.update(user);
+            Optional<User> userOptional = userService.getByEmail("email" + userNumber + "@mail.ru");
+            if (userOptional.isPresent()) {
+                user.setAvatarUrl(String.format("/uploads/users/avatar/%s", userOptional.get().getId()));
+                userService.update(user);
+            }
         }
     }
 
     public void folderMovieInit() {
-        final String DESCRIPTION = "описание описание описание описание описание описание описание описание ";
         List<Movie> allMovies = movieService.getAll();
         List<User> allUsers = userService.getAll();
         for (User user : allUsers) {

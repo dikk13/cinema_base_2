@@ -4,20 +4,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-//@Table(name = "movie_person")
+@Table(name = "movie_person")
 @NoArgsConstructor
 //TODO без наследования
-public class MoviePerson extends Movie {
+public class MoviePerson {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_movie_person_id")
+    @SequenceGenerator(name = "seq_movie_person_id", sequenceName = "SEQ_MOVIE_PERSON_ID", allocationSize = 1)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "movie_id", insertable = false, updatable = false)
@@ -44,7 +45,8 @@ public class MoviePerson extends Movie {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MoviePerson that = (MoviePerson) o;
-        return Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
+        return Objects.equals(id, that.id) &&Objects.equals(typeCharacter, that.typeCharacter) &&
+                Objects.equals(nameRole, that.nameRole);
     }
 
     @Override
