@@ -16,8 +16,8 @@ public class CollectionServiceImpl extends AbstractServiceImpl<Long, Collection>
     private final CollectionDao collectionDao;
 
     @Autowired
-    protected CollectionServiceImpl(AbstractDao<Long, Collection> abstractDao, CollectionDao collectionDao) {
-        super(abstractDao);
+    protected CollectionServiceImpl(CollectionDao collectionDao) {
+        super(collectionDao);
         this.collectionDao = collectionDao;
     }
 

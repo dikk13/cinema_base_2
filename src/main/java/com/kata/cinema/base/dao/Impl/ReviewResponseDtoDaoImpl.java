@@ -30,8 +30,6 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                 .setFirstResult((currentPage - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage)
                 .getResultList();
-
-
     }
 
     @Override

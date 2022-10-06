@@ -16,8 +16,8 @@ public class PersonServiceImpl extends AbstractServiceImpl<Long, Person> impleme
     private final PersonDao personDao;
 
     @Autowired
-    protected PersonServiceImpl(AbstractDao<Long, Person> abstractDao, PersonDao personDao) {
-        super(abstractDao);
+    protected PersonServiceImpl(PersonDao personDao) {
+        super(personDao);
         this.personDao = personDao;
     }
 

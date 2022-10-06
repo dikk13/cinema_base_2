@@ -15,8 +15,8 @@ public class RoleServiceImpl extends AbstractServiceImpl<Long, Role> implements 
 
     private final RoleDao roleDao;
 
-    protected RoleServiceImpl(AbstractDao<Long, Role> abstractDao, RoleDao roleDao) {
-        super(abstractDao);
+    protected RoleServiceImpl(RoleDao roleDao) {
+        super(roleDao);
         this.roleDao = roleDao;
     }
 

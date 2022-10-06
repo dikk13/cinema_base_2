@@ -12,9 +12,8 @@ public class ProductionMovieStudioServiceImpl extends AbstractServiceImpl<Long, 
 
     private final ProductionMovieStudioDao productionMovieStudioDao;
 
-    public ProductionMovieStudioServiceImpl(AbstractDao<Long, ProductionStudioMovie> abstractDao,
-                                            ProductionMovieStudioDao productionMovieStudioDao) {
-        super(abstractDao);
+    public ProductionMovieStudioServiceImpl(ProductionMovieStudioDao productionMovieStudioDao) {
+        super(productionMovieStudioDao);
         this.productionMovieStudioDao = productionMovieStudioDao;
     }
 

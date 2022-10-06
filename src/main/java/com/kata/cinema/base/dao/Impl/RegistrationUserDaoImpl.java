@@ -19,7 +19,6 @@ public class RegistrationUserDaoImpl extends AbstractDaoImpl<Long, User> impleme
 
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
-
     public RegistrationUserDaoImpl(UserDao userDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.roleDao = roleDao;
@@ -33,10 +32,6 @@ public class RegistrationUserDaoImpl extends AbstractDaoImpl<Long, User> impleme
 
         user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
         user.setRole(userRoles);
-
         userDao.create(user);
-
-
-
     }
 }

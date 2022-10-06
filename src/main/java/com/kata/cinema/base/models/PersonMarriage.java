@@ -1,15 +1,12 @@
 package com.kata.cinema.base.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -18,15 +15,27 @@ import java.util.Objects;
 @Setter
 @Table(name = "persons_marriage")
 @NoArgsConstructor
-//TODO без наследования
-public class PersonMarriage extends Person {
+public class PersonMarriage {
+
+    @Embeddable
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Id implements Serializable {
+        @Column(name = "person_id")
+        protected Long personId;
+
+        @Column(name = "human_id")
+        protected Long humanId;
+    }
+    @EmbeddedId
+    private Id id = new Id();
+
+    @Column(name = "marriage_status")
+    private String marriageStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
-
-    @Column(name = "marriageStatus")
-    protected String marriageStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "human_id", insertable = false, updatable = false)

@@ -14,8 +14,8 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comments> imp
 
     private final CommentsDao commentsDao;
 
-    public CommentsServiceImpl(AbstractDao<Long, Comments> abstractDao, CommentsDao commentsDao) {
-        super(abstractDao);
+    public CommentsServiceImpl(CommentsDao commentsDao) {
+        super(commentsDao);
         this.commentsDao = commentsDao;
     }
 

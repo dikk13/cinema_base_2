@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminProductionStudioRestController {
 
     private final ProductionStudioService productionStudioService;
-
     private final ProductionStudioMapper productionStudioMapper;
 
     public AdminProductionStudioRestController(ProductionStudioService productionStudioService,
