@@ -1,28 +1,14 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.enums.MovieType;
 import com.kata.cinema.base.enums.MPAA;
 import com.kata.cinema.base.enums.RARS;
+import com.kata.cinema.base.models.enums.MovieType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import java.util.List;
-import java.util.Objects;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.*;
 
 @Table
 @Entity
@@ -44,7 +30,7 @@ public class Movie {
     private String countries;
 
     @Column(name = "date_release")
-    private String dateRelease;
+    private LocalDate dateRelease;
 
     @Column(name = "rars")
     @Enumerated(EnumType.STRING)
@@ -75,19 +61,15 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<AwardCeremonyResult> awardCeremonyResults;
 
+    @OneToMany(mappedBy = "movie")
+    private List<Score> scores;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "news_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "news_id"))
     private List<News> news;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "folder_movie_to_movie",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "folder_id"))
-    private List<FolderMovie> folderMovies ;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

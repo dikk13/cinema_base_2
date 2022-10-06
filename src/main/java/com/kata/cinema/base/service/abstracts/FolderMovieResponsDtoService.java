@@ -1,10 +1,11 @@
 package com.kata.cinema.base.service.abstracts;
 
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
+import com.kata.cinema.base.dto.MovieResponseDto;
 
 import java.util.List;
 
 public interface FolderMovieResponsDtoService {
-    public List<FolderMovieResponsDto> getFolderMovieResponsDtoListByUserId (Long userId);
-    public FolderMovieResponsDto getFolderMovieResponsDtoById (Long folderMovieId);
+   List<FolderMovieResponsDto> getFolderMovieResponsDtoListByUserId (Long userId);
+   FolderMovieResponsDto getFolderMovieResponsDtoById (Long folderMovieId);
 }

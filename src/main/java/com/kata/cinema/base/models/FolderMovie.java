@@ -1,8 +1,8 @@
 package com.kata.cinema.base.models;
 
 
-import com.kata.cinema.base.enums.Category;
-import com.kata.cinema.base.enums.Privacy;
+import com.kata.cinema.base.models.enums.Category;
+import com.kata.cinema.base.models.enums.Privacy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,10 +58,11 @@ public class FolderMovie {
     @ToString.Exclude
     @ManyToMany
     @JoinTable(
-            name = "folder_movies_to_movie",
+            name = "folders_movies_to_movie",
             joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
     private List<Movie> movies = new java.util.ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {
