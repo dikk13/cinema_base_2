@@ -1,9 +1,5 @@
 package com.kata.cinema.base.webapp;
 
-import com.kata.cinema.base.config.init.TestDataInitializer;
-import com.kata.cinema.base.service.abstracts.CollectionService;
-import com.kata.cinema.base.service.abstracts.GenreService;
-import com.kata.cinema.base.service.abstracts.MovieService;
 import   org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
