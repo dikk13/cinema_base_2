@@ -9,13 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "movie_person")
+//@Table(name = "movie_person")
 @NoArgsConstructor
 //TODO без наследования
 public class MoviePerson extends Movie {
@@ -35,7 +34,7 @@ public class MoviePerson extends Movie {
     @Column (name = "type_character", nullable = false, length = 20)
     protected String typeCharacter;
 
-    @Column (name = "name_role", nullable = true, length = 100)
+    @Column (name = "name_role", length = 100)
     protected String nameRole;
 
 

@@ -1,43 +1,43 @@
 package com.kata.cinema.base.config.init;
 
 
-import com.kata.cinema.base.models.Collection;
-import com.kata.cinema.base.models.Genre;
-import com.kata.cinema.base.models.Movie;
+import com.kata.cinema.base.enums.Category;
+import com.kata.cinema.base.enums.Privacy;
+import com.kata.cinema.base.models.*;
 import com.kata.cinema.base.enums.MPAA;
 import com.kata.cinema.base.enums.RARS;
-import com.kata.cinema.base.service.abstracts.CollectionService;
-import com.kata.cinema.base.service.abstracts.GenreService;
-import com.kata.cinema.base.service.abstracts.MovieService;
+import com.kata.cinema.base.service.abstracts.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.MIN_VALUE;
-
-
 public class TestDataInitializer {
-
-    //TODO передалать на использование сервисов
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private final GenreService genreService;
     private final MovieService movieService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private FolderMovieService folderMovieService;
 
     private final CollectionService collectionService;
 
     private static final int countMovieList = 100;
     private static final int countCollection = 20;
+
+    private static final int countUser = 25;
     private static final int countGenre = 10;
 
-    private final List<Genre> genreList = new ArrayList<>();
-
+    private static final Random random = new Random();
 
     public TestDataInitializer(GenreService genreService, MovieService movieService, CollectionService collectionService) {
         this.genreService = genreService;
@@ -46,44 +46,41 @@ public class TestDataInitializer {
     }
 
     public void movieInit() {
-        Movie movie = new Movie();
-        Random random = new Random();
-        List<Integer> movieList;
-        for (int i = 0; i < countMovieList; i++) {
-            movieList = Collections.singletonList(i);
-            movie.setName(String.valueOf(movieList));
-        }
-        String descript = """
-                            описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма
-                            описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма
-                            описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма
-                            описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма описание фильма
-                            """;
-        movie.setDescription(descript);
-        List<Genre> genreListMovie = new ArrayList<>();
-        List<Genre> genres = genreList;
-        for (int i = 0; i < 3; i++) {
-            int randomIndex = random.nextInt(genres.size());
-            Genre randomElement = genres.get(randomIndex);
-            genreListMovie.add(randomElement);
-            genres.remove(randomIndex);
-        }
+        List<Genre> genreList = genreService.getAll();
+        final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
 
-        movie.setDateRelease(String.valueOf(random.ints(1990, 2023)));
-        movie.setTime(String.valueOf(random.ints(100, 181)));
-        movie.setMpaa(MPAA.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
-        movie.setRars(RARS.valueOf(String.valueOf(random.ints(MIN_VALUE, MAX_VALUE))));
-        movie.setGenres(genreListMovie);
-        movieService.create(movie);
+        for (int i = 1; i <= countMovieList; i++) {
+            MoviePerson movie = new MoviePerson();
+
+            List<Genre> genreListMovie = new ArrayList<>();
+            int randomNumberOfGenres = random.nextInt(2) + 1;
+            for (int numberOfGenre = 0; numberOfGenre < randomNumberOfGenres; numberOfGenre++) {
+                List<Genre> genres = new ArrayList<>(genreList);
+                int randomIndex = random.nextInt(genres.size());
+                Genre randomElement = genres.get(randomIndex);
+                genreListMovie.add(randomElement);
+                genres.remove(randomIndex);
+            }
+
+            movie.setDateRelease(String.valueOf(random.ints(1990, 2023)));
+            movie.setTime(String.valueOf(random.ints(100, 181)));
+            movie.setMpaa(MPAA.values()[random.nextInt(MPAA.values().length)]);
+            movie.setRars(RARS.values()[random.nextInt(RARS.values().length)]);
+            movie.setGenres(genreListMovie);
+            movie.setName(String.format("Фильм%s", i));
+            movie.setDescription(DESCRIPTION);
+            movie.setTypeCharacter("Тип персонажа");
+
+            movieService.create(movie);
+        }
 
     }
 
     public void genreInit() {
-        for (int i = 0; i < countGenre; i++) {
+        for (int i = 1; i <= countGenre; i++) {
             Genre genre = new Genre();
             genre.setName(String.format("Жанр%s", i));
             genreService.create(genre);
-            genreList.add(genre);
         }
     }
 
@@ -105,13 +102,102 @@ public class TestDataInitializer {
             collection.setMovies(collectMovieList);
         }
         collectionService.create(collection);
+    }
 
+    public void roleInit() {
+        Role roleAdmin = new Role();
+        roleAdmin.setRole("ADMIN");
+        roleService.create(roleAdmin);
 
+        Role roleUser = new Role();
+        roleUser.setRole("USER");
+        roleService.create(roleUser);
+
+        Role rolePublicist = new Role();
+        rolePublicist.setRole("PUBLICIST");
+        roleService.create(rolePublicist);
+    }
+
+    public void userInit() {
+        final int ONE_BEFORE_LAST_USER_IN_BASE = 24;
+        final int LAST_USER_IN_BASE = 25;
+        final int START_YEAR = 1970;
+        final int LAST_YEAR = 2010;
+        final int ELEVEN_MONTHS = 11;
+        final int ONE_MONTH = 1;
+        final int TWENTY_SEVEN_DAYS = 27;
+        final int ONE_DAY = 1;
+        final Role ROLE_USER = roleService.getByName("USER").get();
+        final Role ROLE_ADMIN = roleService.getByName("ADMIN").get();
+        final Role ROLE_PUBLICIST = roleService.getByName("PUBLICIST").get();
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(ROLE_USER);
+
+        for (int userNumber = 1; userNumber <= countUser; userNumber++) {
+            UserAvatar user = new UserAvatar();
+            user.setEmail(String.format("email%s@mail.ru", userNumber));
+            user.setFirst_name(String.format("Имя%s", userNumber));
+            user.setLast_name(String.format("Фамилия%s", userNumber));
+            user.setPassword("password");
+            int year = random.nextInt(LAST_YEAR - START_YEAR) + START_YEAR;
+            int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+            int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+            user.setBirthday(LocalDate.of(year, month, day));
+            if (userNumber == ONE_BEFORE_LAST_USER_IN_BASE) {
+                List<Role> oneBeforeLastUserRoles = new ArrayList<>();
+                oneBeforeLastUserRoles.add(ROLE_USER);
+                oneBeforeLastUserRoles.add(ROLE_ADMIN);
+                user.setRole(oneBeforeLastUserRoles);
+            } else if (userNumber == LAST_USER_IN_BASE) {
+                List<Role> lastUserRoles = new ArrayList<>();
+                lastUserRoles.add(ROLE_USER);
+                lastUserRoles.add(ROLE_PUBLICIST);
+                user.setRole(lastUserRoles);
+            } else {
+                user.setRole(roles);
+            }
+            userService.create(user);
+            user.setAvatarUrl(String.format("/uploads/users/avatar/%s", userService.getByEmail("email" + userNumber + "@mail.ru").get().getId()));
+            userService.update(user);
+        }
+    }
+
+    public void folderMovieInit() {
+        final String DESCRIPTION = "описание описание описание описание описание описание описание описание ";
+        List<Movie> allMovies = movieService.getAll();
+        List<User> allUsers = userService.getAll();
+        for (User user : allUsers) {
+            for (int category = 0; category < Category.values().length - 1; category++) {
+                FolderMovie folderMovie = new FolderMovie();
+                folderMovie.setCategory(Category.values()[category]);
+                folderMovie.setName(Category.values()[category].name());
+                folderMovie.setPrivacy(Privacy.PUBLIC);
+                folderMovie.setUser(user);
+                folderMovie.setDescription(DESCRIPTION);
+                List<Movie> movies = new ArrayList<>();
+                int moviesCount = random.nextInt(20) + 5;
+                for (int i = 0; i < moviesCount; i++) {
+                    while (true) {
+                        int uniqueRandomFilm = random.nextInt(allMovies.size());
+                        if (!movies.contains(allMovies.get(uniqueRandomFilm))) {
+                            movies.add(allMovies.get(uniqueRandomFilm));
+                            break;
+                        }
+                    }
+                }
+                folderMovie.setMovies(movies);
+                folderMovieService.create(folderMovie);
+            }
+        }
     }
 
     private void init() {
+        roleInit();
         genreInit();
         movieInit();
         collectionInit();
+        userInit();
+        folderMovieInit();
     }
 }

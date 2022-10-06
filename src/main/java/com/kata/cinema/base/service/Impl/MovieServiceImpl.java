@@ -7,10 +7,12 @@ import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.abstracts.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implements MovieService {
 
     private final MovieDao movieDao;

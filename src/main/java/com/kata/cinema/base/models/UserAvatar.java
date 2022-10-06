@@ -10,20 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "user_avatar")
 @NoArgsConstructor
 //TODO без наследования
 public class UserAvatar extends User {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserAvatar userAvatar;
+    private User user;
 
     @Column(name = "avatar_url")
     private String avatarUrl;
@@ -46,7 +44,7 @@ public class UserAvatar extends User {
     @Override
     public String toString() {
         return "UserAvatar{" +
-                "user=" + userAvatar +
+                "user=" + user +
                 ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
