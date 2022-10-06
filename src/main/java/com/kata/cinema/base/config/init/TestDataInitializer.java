@@ -1,11 +1,13 @@
 package com.kata.cinema.base.config.init;
 
 
-import com.kata.cinema.base.enums.Category;
-import com.kata.cinema.base.enums.Privacy;
+
 import com.kata.cinema.base.models.*;
-import com.kata.cinema.base.enums.MPAA;
-import com.kata.cinema.base.enums.RARS;
+
+import com.kata.cinema.base.models.enums.Category;
+import com.kata.cinema.base.models.enums.MPAA;
+import com.kata.cinema.base.models.enums.Privacy;
+import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.service.abstracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,6 +48,12 @@ public class TestDataInitializer {
     }
 
     public void movieInit() {
+        final int START_YEAR = 1990;
+        final int LAST_YEAR = 2022;
+        final int ELEVEN_MONTHS = 11;
+        final int ONE_MONTH = 1;
+        final int TWENTY_SEVEN_DAYS = 27;
+        final int ONE_DAY = 1;
         List<Genre> genreList = genreService.getAll();
         final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
 
@@ -61,8 +69,10 @@ public class TestDataInitializer {
                 genreListMovie.add(randomElement);
                 genres.remove(randomIndex);
             }
-
-            movie.setDateRelease(String.valueOf(random.ints(1990, 2023)));
+            int year = random.nextInt(LAST_YEAR - START_YEAR) + START_YEAR;
+            int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+            int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+            movie.setDateRelease(LocalDate.of(year, month, day));
             movie.setTime(String.valueOf(random.ints(100, 181)));
             movie.setMpaa(MPAA.values()[random.nextInt(MPAA.values().length)]);
             movie.setRars(RARS.values()[random.nextInt(RARS.values().length)]);
