@@ -37,4 +37,3 @@ public class GenreDaoImpl extends AbstractDaoImpl <Long,Genre> implements GenreD
     }
 
 }
-

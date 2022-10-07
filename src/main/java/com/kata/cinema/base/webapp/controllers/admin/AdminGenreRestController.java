@@ -30,7 +30,7 @@ public class AdminGenreRestController {
 
     @GetMapping("/api/admin/genres")
     public ResponseEntity<List<GenreResponseDto>> getAllGenre() {
-        return ResponseEntity.ok(genreService.getAllGenreResponseDto());
+        return ResponseEntity.ok(genreMapper.toDTOList(genreService.getAll()));
     }
 
     @DeleteMapping("/api/admin/genres/{id}")

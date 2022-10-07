@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -13,49 +12,32 @@ import java.util.Objects;
 @Setter
 @Table(name = "movie_person")
 @NoArgsConstructor
+//TODO без наследования
 public class MoviePerson {
-
-    @Embeddable
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class Id implements Serializable {
-        @Column(name = "movie_id")
-        protected Long movieId;
-
-        @Column(name = "profession_id")
-        protected Long professionId;
-
-        @Column(name = "person_id")
-        protected Long personId;
-
-        public Id (Long movieId, Long professionId, Long personId) {
-            this.movieId = movieId;
-            this.professionId = professionId;
-            this.personId = personId;
-        }
-    }
-
-    @EmbeddedId
-    private Id id = new Id();
-
-    @Column (name = "type_character", nullable = false, length = 20)
-    private String typeCharacter;
-
-    @Column (name = "name_role", nullable = true, length = 100)
-    private String nameRole;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_movie_person_id")
+    @SequenceGenerator(name = "seq_movie_person_id", sequenceName = "SEQ_MOVIE_PERSON_ID", allocationSize = 1)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "movie_id", insertable = false, updatable = false)
-    private Movie movie;
+    protected Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "profession_id", insertable = false, updatable = false)
-    private Profession profession;
+    protected Profession profession;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "person_id", insertable = false, updatable = false)
-    private Person person;
+    protected Person person;
+
+    @Column (name = "type_character", nullable = false, length = 20)
+    protected String typeCharacter;
+
+    @Column (name = "name_role", length = 100)
+    protected String nameRole;
+
 
     @Override
     public boolean equals(Object o) {
@@ -63,7 +45,8 @@ public class MoviePerson {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MoviePerson that = (MoviePerson) o;
-        return Objects.equals(typeCharacter, that.typeCharacter) && Objects.equals(nameRole, that.nameRole);
+        return Objects.equals(id, that.id) &&Objects.equals(typeCharacter, that.typeCharacter) &&
+                Objects.equals(nameRole, that.nameRole);
     }
 
     @Override

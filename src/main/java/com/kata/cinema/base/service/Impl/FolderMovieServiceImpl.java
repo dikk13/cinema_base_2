@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class FolderMovieServiceImpl extends AbstractServiceImpl<Long, FolderMovie> implements  FolderMovieService{
+@Transactional
+public class FolderMovieServiceImpl extends AbstractServiceImpl<Long, FolderMovie> implements FolderMovieService {
 
     private final FolderMovieDao folderMovieDao;
 
