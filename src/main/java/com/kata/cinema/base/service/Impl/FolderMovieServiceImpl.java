@@ -5,8 +5,10 @@ import com.kata.cinema.base.dao.abstracts.FolderMovieDao;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.service.abstracts.FolderMovieService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional
 public class FolderMovieServiceImpl extends AbstractServiceImpl<Long, FolderMovie> implements FolderMovieService {
