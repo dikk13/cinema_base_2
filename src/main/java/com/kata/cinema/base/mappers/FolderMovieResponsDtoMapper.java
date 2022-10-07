@@ -15,4 +15,5 @@ public interface FolderMovieResponsDtoMapper {
     @Mapping(source = "description", target = "description")
     FolderMovieResponsDto mapSingleMovieFolderToDto (FolderMovie folderMovie);
     List<FolderMovieResponsDto> mapMovieFoldersListToDto (List<FolderMovie> folderMovieSet);
+    FolderMovie toFolder(FolderMovieResponsDto folderMovieResponsDto);
 }

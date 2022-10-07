@@ -2,17 +2,14 @@ package com.kata.cinema.base.service.Impl;
 
 import com.kata.cinema.base.dao.abstracts.FolderMovieResponsDtoDao;
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
-import com.kata.cinema.base.dto.MovieResponseDto;
-import com.kata.cinema.base.dto.PageDto;
+import com.kata.cinema.base.dto.FolderResponseDto;
 import com.kata.cinema.base.mappers.FolderMovieResponsDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.service.abstracts.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.abstracts.FolderMovieService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoService {
@@ -40,5 +37,10 @@ public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoSe
     @Override
     public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
         return folderMovieResponsDtoDao.getFolderMovieResponsDtoById(folderMovieId);
+    }
+
+    @Override
+    public List<FolderResponseDto> getFolderByUser(Long userId) {
+        return folderMovieResponsDtoDao.getFolderByUser(userId);
     }
 }
