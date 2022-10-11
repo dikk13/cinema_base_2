@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Table
@@ -28,6 +29,12 @@ public class Score {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "score")
+    private Integer score;
+
+    @Column(name = "date")
+    private LocalDate date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
@@ -36,8 +43,6 @@ public class Score {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    @Column(name = "score")
-    private Integer score;
 
     @Override
     public boolean equals(Object o) {
@@ -59,6 +64,7 @@ public class Score {
                 ", movie=" + movie +
                 ", user=" + user +
                 ", score=" + score +
+                ", date=" + date +
                 '}';
     }
 }
