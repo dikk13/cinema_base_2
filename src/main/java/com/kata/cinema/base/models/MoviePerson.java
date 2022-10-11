@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.models.enums.CharacterType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,6 @@ import java.util.Objects;
 @Setter
 @Table(name = "movie_person")
 @NoArgsConstructor
-//TODO без наследования
 public class MoviePerson {
     @Id
     @Column(name = "id")
@@ -33,7 +33,8 @@ public class MoviePerson {
     protected Person person;
 
     @Column (name = "type_character", nullable = false, length = 20)
-    protected String typeCharacter;
+    @Enumerated(EnumType.STRING)
+    protected CharacterType type;
 
     @Column (name = "name_role", length = 100)
     protected String nameRole;
@@ -45,7 +46,7 @@ public class MoviePerson {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MoviePerson that = (MoviePerson) o;
-        return Objects.equals(id, that.id) &&Objects.equals(typeCharacter, that.typeCharacter) &&
+        return Objects.equals(id, that.id) &&Objects.equals(type, that.type) &&
                 Objects.equals(nameRole, that.nameRole);
     }
 
@@ -60,7 +61,7 @@ public class MoviePerson {
                 "movie=" + movie +
                 ", profession=" + profession +
                 ", person=" + person +
-                ", typeCharacter='" + typeCharacter + '\'' +
+                ", typeCharacter='" + type + '\'' +
                 ", nameRole='" + nameRole + '\'' +
                 '}';
     }

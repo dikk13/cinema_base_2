@@ -1,8 +1,10 @@
 package com.kata.cinema.base.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -10,9 +12,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class CommentsResponseDto {
+public class CommentsResponseDto implements Serializable {
     private Long id;
     @NotBlank
     private String text;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTime;
 }

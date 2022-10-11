@@ -18,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Table(name = "AwardCeremony")
+@Table(name = "award_ceremony")
 @Entity
 @Setter
 @Getter
