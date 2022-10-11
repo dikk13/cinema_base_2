@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -76,30 +77,33 @@ public class MovieRestController {
                 .setParameter("movieId", movieId)
                 .getSingleResult();
 
-        Movie movieG = (Movie) entityManager.createQuery(
-                        "select m from Movie m " +
-                                "join fetch m.genres g " +
-                                "where m.id =: movieId")
-                .setParameter("movieId", movieId)
+
+//
+//        List<Object> movie2 = entityManager.createQuery(
+//                        "select m.moviePerson from Movie m " +
+//                                "join fetch m.moviePerson mp " +
+//                                "join fetch mp.profession p " +
+////                                "join fetch mp.person per " +
+//                                "where m.id =: movieId group by mp.profession.id")
+//                .setParameter("movieId", movieId)
+//                .getResultList();
+
+        String previewUrl = (String) entityManager.createQuery("select c.content_url from Content c where c.movie.id =: id and c.type = 'PREVIEW'")
+                .setParameter("id", movieId)
                 .getSingleResult();
 
-        Movie movieS = (Movie) entityManager.createQuery(
-                        "select m from Movie m " +
-                                "join fetch m.scores s " +
-                                "where m.id =: movieId")
-                .setParameter("movieId", movieId)
-                .getSingleResult();
+        List<Score> scoreList = entityManager.createQuery("select s from Score s where s.movie.id =: id")
+                .setParameter("id", movieId)
+                .getResultList();
 
-        Movie movieC = (Movie) entityManager.createQuery(
-                        "select m from Movie m " +
-                                "join fetch m.contents c " +
-                                "where m.id =: movieId")
-                .setParameter("movieId", movieId)
-                .getSingleResult();
 
-        movie.setGenres(movieG.getGenres());
-        movie.setScores(movieS.getScores());
-        movie.setContents(movieC.getContents());
+        List<Genre> genreList = entityManager.createQuery("select m.genres from Movie m where m.id =: id")
+                .setParameter("id", movieId)
+                .getResultList();
+
+        String genres = genreList.stream().map(g -> g.getName() + ", ").collect(Collectors.joining());
+
+        genres = genres.substring(0, genres.length() - 2);
 
         List<MoviePerson> moviePersonList = movie.getMoviePerson();
 
@@ -146,35 +150,22 @@ public class MovieRestController {
             if (userOptional.isEmpty()) myScore = null;
             else {
                 user = userOptional.get();
-                myScore = scoreService.getScoreByUserAndMovieId(user.getId(), movieId).getScore();
+                User finalUser = user;
+                myScore = scoreList
+                        .stream()
+                        .filter(score -> score
+                                .getUser()
+                                .getId()
+                                .equals(finalUser.getId()))
+                        .toList()
+                        .get(0)
+                        .getScore();
             }
         }
 
-//        movie = (Movie) entityManager.createQuery("select m from Movie m join fetch m.scores s where m.id =: movieId")
-//                .setParameter("movieId", movieId)
-//                .getSingleResult();
-
-//        movie = (Movie) entityManager.createQuery("select m from Movie m join fetch m.genres g where m.id =: movieId")
-//                .setParameter("movieId", movieId)
-//                .getSingleResult();
-
-//        List<Score> s = entityManager.createQuery("select s from Score s where s.movie.id =: id").setParameter("id", movieId).getResultList();
-//        s.get(0).setUser(user);
-//        s.get(0).setMovie(movie);
-//        Double avg = s.stream().mapToInt(Score::getScore).average().getAsDouble();
-//        Integer cou = s.size();
-//        movie.setScores(s);
-
-//        MovieViewResponseDto movieViewResponseDto = new MovieViewResponseDto(movieId, movie.getName(), movie.getOriginalName(), movie.getCountries(),
-//                movie.getDateRelease(), movie.getRars(), movie.getMpaa(), movie.getDescription(), "",
-//                movie.getGenres(),
-//                avg,
-//                cou,
-//                myScore,
-//                casts);
 
         MovieViewResponseDto movieViewResponseDto = new MovieViewResponseDto();
-                movieViewResponseDto.setId(movieId);
+        movieViewResponseDto.setId(movieId);
         movieViewResponseDto.setName(movie.getName());
         movieViewResponseDto.setOriginalName(movie.getOriginalName());
         movieViewResponseDto.setCountries(movie.getCountries());
@@ -182,23 +173,14 @@ public class MovieRestController {
         movieViewResponseDto.setRars(movie.getRars());
         movieViewResponseDto.setMpaa(movie.getMpaa());
         movieViewResponseDto.setDescription(movie.getDescription());
-        movieViewResponseDto.setPreviewUrl(
-                movie.getContents()
-                        .stream()
-                        .filter(content -> content.getMovie().getId().equals(movieId))
-                        .filter(content -> content.getType() == ContentType.PREVIEW)
-                        .reduce((a, b) -> {
-                            return a;
-                        }).get().getContent_url());
-
-        movieViewResponseDto.setGenres(movie.getGenres().toString());
-        movieViewResponseDto.setScore(movie.getScores().stream().mapToInt(score -> score.getScore()).average().getAsDouble());
-        movieViewResponseDto.setCountScore(movie.getScores().size());
+        movieViewResponseDto.setPreviewUrl(previewUrl);
+        movieViewResponseDto.setGenres(genres);
+        movieViewResponseDto.setScore(scoreList.stream().mapToInt(s -> s.getScore()).average().getAsDouble());
+        movieViewResponseDto.setCountScore(scoreList.size());
         movieViewResponseDto.setMyScore(myScore);
         movieViewResponseDto.setCasts(casts);
 
         return movieViewResponseDto;
-//                movie.getScores().stream().mapToInt(Score::getScore).average().orElse(0.0),
-//                movie.getScores().size(), myScore, casts);
+
     }
 }
