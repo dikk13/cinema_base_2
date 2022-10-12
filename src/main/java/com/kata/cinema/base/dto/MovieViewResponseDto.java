@@ -1,8 +1,6 @@
 package com.kata.cinema.base.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kata.cinema.base.models.Genre;
-import com.kata.cinema.base.models.Score;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.RARS;
 import lombok.*;
@@ -38,9 +36,9 @@ public class MovieViewResponseDto implements Serializable {
     private String previewUrl;
     private String genres;
 
-    private Double score;
+    private Double score;//average score
     private Integer countScore;
-    private Integer myScore;
+    private Integer myScore;//current user score
 
     private List<CastResponseDto> casts;
 }

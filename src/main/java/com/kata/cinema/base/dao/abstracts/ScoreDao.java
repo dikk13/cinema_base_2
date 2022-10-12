@@ -2,6 +2,8 @@ package com.kata.cinema.base.dao.abstracts;
 
 import com.kata.cinema.base.models.Score;
 
+import java.util.List;
+
 public interface ScoreDao extends AbstractDao<Long, Score> {
-    Score getScoreByUserAndMovieId (Long userId, Long movieId);
+    List<Score> getScoreListByMovieId (Long id);
 }

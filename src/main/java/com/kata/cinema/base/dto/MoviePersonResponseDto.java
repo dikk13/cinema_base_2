@@ -18,8 +18,8 @@ public class MoviePersonResponseDto implements Serializable {
     @JsonIgnore
     private Long professionId;
     private Long personId;
-    private String fullName; //Person first + last
-    private  String originalFullName; //Person originalFirst + originalLast
+    private String fullName; //'Person.firstName Person.lastName'
+    private  String originalFullName; //'Person.originalFirstName Person.originalLastName'
     private CharacterType type;
-    private String nameCharacter; //nameRole
+    private String nameCharacter; //MoviePerson.nameRole
 }

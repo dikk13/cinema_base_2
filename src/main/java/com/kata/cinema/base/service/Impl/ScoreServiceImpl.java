@@ -4,9 +4,9 @@ import com.kata.cinema.base.dao.abstracts.AbstractDao;
 import com.kata.cinema.base.dao.abstracts.ScoreDao;
 import com.kata.cinema.base.models.Score;
 import com.kata.cinema.base.service.abstracts.ScoreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ScoreServiceImpl extends AbstractServiceImpl<Long, Score> implements ScoreService {
@@ -18,8 +18,8 @@ public class ScoreServiceImpl extends AbstractServiceImpl<Long, Score> implement
         this.scoreDao = scoreDao;
     }
 
-    @Override
-    public Score getScoreByUserAndMovieId(Long userId, Long movieId) {
-        return scoreDao.getScoreByUserAndMovieId(userId, movieId);
+
+    public List<Score> getScoreListByMovieId(Long movieId) {
+        return scoreDao.getScoreListByMovieId(movieId);
     }
 }

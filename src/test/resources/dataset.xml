@@ -9,6 +9,15 @@
             password='1'
             avatar_url='url'
     />
+    <users
+            id='101'
+            birthday='2022-06-16'
+            email='email2@mail.com'
+            first_name='Name2'
+            last_name='Last2'
+            password='1'
+            avatar_url='url2'
+    />
     <news
             id="100"
             date="2022-06-17 16:37:23"
@@ -155,13 +164,31 @@
             movie_id="100"
             user_id="100"
     />
+    <score
+            id="101"
+            score="4"
+            movie_id="100"
+            user_id="101"
+    />
     <genres
             id="100"
             name="genre"
     />
+    <genres
+            id="101"
+            name="genre2"
+    />
+    <genres
+            id="102"
+            name="genre3"
+    />
     <movie_genre
             movie_id="100"
             genre_id="100"
+    />
+    <movie_genre
+            movie_id="100"
+            genre_id="101"
     />
 
 
