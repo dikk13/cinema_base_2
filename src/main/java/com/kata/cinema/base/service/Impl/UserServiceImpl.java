@@ -77,7 +77,7 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, User> implements 
             targetUser.setEmail(userRequestDto.getEmail());
             targetUser.setFirst_name(userRequestDto.getFirstName());
             targetUser.setLast_name(userRequestDto.getLastName());
-            targetUser.setBirthday(LocalDate.parse(userRequestDto.getBirthday()));
+            targetUser.setBirthday(userRequestDto.getBirthday());
             try {
                 userDao.update(targetUser);
             }

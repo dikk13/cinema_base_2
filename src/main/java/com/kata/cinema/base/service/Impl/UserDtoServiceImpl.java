@@ -6,7 +6,6 @@ import com.kata.cinema.base.dto.response.UserResponseDto;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.abstracts.UserDtoService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class UserDtoServiceImpl extends AbstractServiceImpl<Long, User> implemen
                     targetUser.getFirst_name(),
                     targetUser.getLast_name(),
                     targetUser.getAvatarUrl(),
-                    targetUser.getBirthday().toString(),
+                    targetUser.getBirthday(),
                     targetUser.getRole().stream().map(r -> new RoleResponseDto(r.getId(), r.getRole())).collect(Collectors.toList()));
         }
         return null;
