@@ -2,6 +2,9 @@ package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.ScoreMovieDao;
 import com.kata.cinema.base.dto.ScoreMovieResponseDto;
+import com.kata.cinema.base.models.User;
+import com.kata.cinema.base.models.enums.SortScoreType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,8 +20,9 @@ public class ScoreMovieDaoImpl implements ScoreMovieDao {
 
     @Override
     public List<ScoreMovieResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
-        return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.ScoreMovieResponseDto" +
-                "(s.id + s.score + s.date)" + "FROM Score s", ScoreMovieResponseDto.class)
+        return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.ScoreMovieResponseDto (s.id + s.score + s.date) " +
+                        "from score s join movie m on m.id = s.movie_id join user u on u.id = s.user_id where u.id = " + getUserId()
+                        + getSort((SortScoreType) parameters.get("sortScoreType")), ScoreMovieResponseDto.class)
                 .setFirstResult((currentPage - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage)
                 .getResultList();
@@ -26,7 +30,28 @@ public class ScoreMovieDaoImpl implements ScoreMovieDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("select count (s) from Score s", Long.class)
+        return entityManager.createQuery("select count (s) from Score s join user u on u.id = s.user_id where u.id = " + getUserId(), Long.class)
                 .getSingleResult();
+    }
+
+    private String getSort(SortScoreType sortScoreType) {
+        StringBuilder sort = new StringBuilder();
+        switch (sortScoreType) {
+            case DATE_ASC -> sort.append(" order by s.date");
+
+            case SCORE_ASC -> sort.append(" order by s.score");
+
+            case NAME_ASC -> sort.append(" order by m.name");
+
+            case COUNT_SCORE_ASC -> sort.append(" order by count (s)");
+
+            case DATE_RELEASE_ASC -> sort.append(" order by m.dateRelease");
+        }
+        return sort.toString();
+    }
+
+    private String getUserId(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return String.valueOf(user.getId());
     }
 }
