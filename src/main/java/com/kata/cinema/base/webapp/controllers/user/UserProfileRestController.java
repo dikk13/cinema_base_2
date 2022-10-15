@@ -9,6 +9,8 @@ import com.kata.cinema.base.service.abstracts.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserProfileRestController {
@@ -24,7 +26,8 @@ public class UserProfileRestController {
     @GetMapping("/profile")
     public UserResponseDto getUserProfileInfo(
             @AuthenticationPrincipal User currentUser) {
-        return userDtoService.getUserResponseDto(currentUser);
+        Optional<User> targetUser = userService.getById(currentUser.getId());
+        return targetUser.map(userDtoService::getUserResponseDto).orElse(null);
     }
 
     @PutMapping("/profile")
@@ -38,7 +41,8 @@ public class UserProfileRestController {
     public void changeUserPassword(
             @RequestBody PasswordChangeRequestDto passwordChangeRequestDto,
             @AuthenticationPrincipal User currentUser) {
-        userService.changePassword(passwordChangeRequestDto, currentUser);
+        Optional<User> targetUser = userService.getById(currentUser.getId());
+        targetUser.ifPresent(user -> userService.changePassword(passwordChangeRequestDto, user));
     }
 
     @DeleteMapping("/profile")

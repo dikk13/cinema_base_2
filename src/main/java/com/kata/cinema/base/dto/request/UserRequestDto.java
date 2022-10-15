@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class UserRequestDto {
     private String email;
     private String firstName;

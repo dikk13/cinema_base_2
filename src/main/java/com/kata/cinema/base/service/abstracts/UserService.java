@@ -7,7 +7,6 @@ import com.kata.cinema.base.models.User;
 import java.util.Optional;
 
 public interface UserService extends AbstractService<Long, User>  {
-
     Optional<User> getByEmail(String email);
     void changePassword(PasswordChangeRequestDto passwordChangeRequestDto, User targetUser);
     void disableUser(User targetUser);

@@ -40,19 +40,17 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, User> implements 
     @Transactional
     @Override
     public void changePassword(PasswordChangeRequestDto passwordChangeRequestDto, User targetUser) {
-        if (targetUser != null && passwordChangeRequestDto != null) {
-            if(cryptor.getCryptor().matches(passwordChangeRequestDto.getOldPassword(), targetUser.getPassword())) {
-                targetUser.setPassword(cryptor.getCryptor().encode(passwordChangeRequestDto.getNewPassword()));
-                passwordChangeRequestDto.setOldPassword("");
-                passwordChangeRequestDto.setNewPassword("");
-                try {
-                    userDao.update(targetUser);
-                } catch (Exception e) {
-                    throw new UpdateEntityException("При попытке обновления объекта в БД произошла ошибка");
-                }
-            } else {
-                throw new PasswordUncoincidenceException("Предыдущие пароли не совпадают");
+        if (cryptor.getCryptor().matches(passwordChangeRequestDto.getOldPassword(), targetUser.getPassword())) {
+            targetUser.setPassword(cryptor.getCryptor().encode(passwordChangeRequestDto.getNewPassword()));
+            passwordChangeRequestDto.setOldPassword("");
+            passwordChangeRequestDto.setNewPassword("");
+            try {
+                userDao.update(targetUser);
+            } catch (Exception e) {
+                throw new UpdateEntityException("При попытке обновления объекта в БД произошла ошибка");
             }
+        } else {
+            throw new PasswordUncoincidenceException("Предыдущие пароли не совпадают");
         }
     }
 
