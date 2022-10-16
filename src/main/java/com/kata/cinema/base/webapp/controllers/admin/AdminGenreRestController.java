@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -40,11 +41,13 @@ public class AdminGenreRestController {
     }
 
     @PutMapping("/api/admin/genres/{id}")
-    //TODO принимать новое имя, а не сущность
-    public void updateGenre(@RequestBody Genre genre, @PathVariable("id") long id) {
-        if (genreService.existById(id)) {
-            genreService.update(genre);
-        } else {
+    public void updateGenre(@RequestParam (name = "name") String genreName, @PathVariable("id") long id) {
+        Optional<Genre> genreContainer= genreService.getById(id);
+        if (genreContainer.isPresent()) {
+            genreContainer.get().setName(genreName);
+            genreService.update(genreContainer.get());
+        }
+        else {
             throw new GenreIdNotFoundException("Genre with this ID: " + id + " ,don't found ") {};
         }
     }
