@@ -1,11 +1,9 @@
 package com.kata.cinema.base.dao.Impl;
 
 import com.kata.cinema.base.dao.abstracts.AbstractDao;
-import com.kata.cinema.base.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +15,6 @@ import java.util.Optional;
     которые подавляют Unchecked cast сыроого типа в параметризованный.
     Предупреждение возникает из-за вероятности возникновения ClassCastException при попытке приведения элемента листа
     к некому типу данных, являющемуся E - одним из параметров класса.
-
  */
 
 public abstract class AbstractDaoImpl<PK, E> implements AbstractDao<PK, E> {

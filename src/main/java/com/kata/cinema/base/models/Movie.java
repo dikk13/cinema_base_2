@@ -1,8 +1,8 @@
 package com.kata.cinema.base.models;
 
 import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.models.enums.MovieType;
+import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -112,18 +112,4 @@ public class Movie {
         return getClass().hashCode();
     }
 
-//    @Override
-//    public String toString() {
-//        return "Movie{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", countries='" + countries + '\'' +
-//                ", date_release='" + dateRelease + '\'' +
-//                ", rars='" + rars + '\'' +
-//                ", mpaa='" + mpaa + '\'' +
-//                ", time='" + time + '\'' +
-//                ", description='" + description + '\'' +
-//                ", type='" + type + '\'' +
-//                '}';
-//    }
 }
