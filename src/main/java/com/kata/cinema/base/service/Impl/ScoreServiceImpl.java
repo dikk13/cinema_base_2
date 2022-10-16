@@ -6,8 +6,6 @@ import com.kata.cinema.base.models.Score;
 import com.kata.cinema.base.service.abstracts.ScoreService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ScoreServiceImpl extends AbstractServiceImpl<Long, Score> implements ScoreService {
 
@@ -18,8 +16,8 @@ public class ScoreServiceImpl extends AbstractServiceImpl<Long, Score> implement
         this.scoreDao = scoreDao;
     }
 
-
-    public List<Score> getScoreListByMovieId(Long movieId) {
-        return scoreDao.getScoreListByMovieId(movieId);
+    @Override
+    public Integer getScoreByMovieIdAndUserId(Long movieId, Long userId) {
+        return scoreDao.getScoreByMovieIdAndUserId(movieId, userId);
     }
 }

@@ -6,7 +6,6 @@ import com.kata.cinema.base.models.Movie;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class MovieDaoImpl extends AbstractDaoImpl<Long, Movie> implements MovieDao {
@@ -19,21 +18,5 @@ public class MovieDaoImpl extends AbstractDaoImpl<Long, Movie> implements MovieD
                 .setMaxResults(3)
                 .getResultList();
     }
-
-    public Optional<Movie> getMovieWithMoviePersonsWithProfessionsAndPersonsByMovieId(Long id) {
-        try {
-            return Optional.of((Movie) entityManager.createQuery("select movie from Movie movie " +
-                            "join fetch movie.moviePerson moviePerson " +
-                            "join fetch moviePerson.profession profession " +
-                            "join fetch moviePerson.person person " +
-                            "where movie.id =: id")
-                    .setParameter("id", id)
-                    .getSingleResult());
-        } catch (Exception ex) {
-            return Optional.empty();
-        }
-    }
-
-
 
 }

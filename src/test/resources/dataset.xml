@@ -18,6 +18,14 @@
             password='1'
             avatar_url='url2'
     />
+    <role
+            id="100"
+            role="ROLE"
+    />
+    <user_roles
+            user_id="100"
+            role_id="100"
+    />
     <news
             id="100"
             date="2022-06-17 16:37:23"
@@ -83,6 +91,18 @@
     />
     <movie
             id="100"
+            countries="Russia"
+            date_release="2014-12-21"
+            description="MDescription"
+            mpaa="GENERAL_AUDIENCES"
+            name="MName"
+            original_name="MOName"
+            rars="ZERO_PLUS"
+            time="01:00:00"
+            type="MOVIES"
+    />
+    <movie
+            id="101"
             countries="Russia"
             date_release="2014-12-21"
             description="MDescription"

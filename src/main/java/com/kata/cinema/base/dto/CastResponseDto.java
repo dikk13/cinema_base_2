@@ -12,10 +12,15 @@ import java.util.List;
 @Setter
 @ToString
 public class CastResponseDto implements Serializable {
-
     @JsonIgnore
     private Long movieId;
     private Long professionId;
     private String professionName;
     private List<MoviePersonResponseDto> persons;
+
+    public CastResponseDto(Long movieId, Long professionId, String professionName) {
+        this.movieId = movieId;
+        this.professionId = professionId;
+        this.professionName = professionName;
+    }
 }

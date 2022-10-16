@@ -1,13 +1,14 @@
 package com.kata.cinema.base.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kata.cinema.base.models.MoviePerson;
 import com.kata.cinema.base.models.enums.CharacterType;
 import lombok.*;
 
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.kata.cinema.base.models.MoviePerson} entity
+ * A DTO for the {@link MoviePerson} entity
  */
 @NoArgsConstructor
 @AllArgsConstructor

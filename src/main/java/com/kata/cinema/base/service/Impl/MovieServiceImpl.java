@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,12 +28,4 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
         return movieDao.titleMovie(name);
     }
 
-    @Override
-    public Optional<Movie> getMovieWithMoviePersonsWithProfessionsAndPersonsByMovieId(Long id) {
-        return movieDao.getMovieWithMoviePersonsWithProfessionsAndPersonsByMovieId(id);
-    }
-
-//    public String getPreviewUrlByMovieId(Long id) {
-//        return movieDao.getPreviewUrlByMovieId(id);
-//    }
 }
