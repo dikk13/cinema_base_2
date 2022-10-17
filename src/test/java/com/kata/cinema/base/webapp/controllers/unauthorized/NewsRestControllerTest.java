@@ -41,6 +41,7 @@ public class NewsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(100))
-                .andExpect(jsonPath("$.[0].dateTime").value("2022-06-17T16:37:23"));
+                .andExpect(jsonPath("$.[0].dateTime").value("2022-06-17 16:37:23"));
+//        .andExpect(jsonPath("$.[0].dateTime").value("2022-06-17T16:37:23"));
     }
 }

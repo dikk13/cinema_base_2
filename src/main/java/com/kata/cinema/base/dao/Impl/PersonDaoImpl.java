@@ -28,7 +28,7 @@ public class PersonDaoImpl extends AbstractDaoImpl<Long, Person> implements Pers
     public Map<Long, List<String>> getProducersMap(String moviesId) {
         List <Object[]> testResult2 = entityManager.createQuery("select m.id, mp.person.firstName, mp.person.lastName from Movie m join m.moviePerson mp where m.id in "
                         + moviesId + " and mp.profession.name = 'Режиссер' and mp.typeCharacter =: characterType")
-                .setParameter("characterType", String.valueOf(CharacterType.NO_CHARACTER_MOVIE.ordinal()))
+                .setParameter("characterType", CharacterType.NO_CHARACTER_MOVIE.name())
                 .getResultList();
 
         Map<Long, List<String>> producersMap = new HashMap<>();
@@ -45,7 +45,7 @@ public class PersonDaoImpl extends AbstractDaoImpl<Long, Person> implements Pers
     public Map<Long, List<String>> getActorsMap(String moviesId) {
         List <Object[]> testResult3 = entityManager.createQuery("select m.id, mp.person.firstName, mp.person.lastName from Movie m join m.moviePerson mp where m.id in "
                         + moviesId + " and mp.profession.name = 'Актер' and mp.typeCharacter =: characterType")
-                .setParameter("characterType", String.valueOf(CharacterType.MAIN_CHARACTER.ordinal()))
+                .setParameter("characterType", CharacterType.MAIN_CHARACTER.name())
                 .getResultList();
 
         Map<Long, List<String>> actorsMap = new HashMap<>();

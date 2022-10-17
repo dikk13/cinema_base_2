@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <users
-            dtype='1'
             id='100'
             birthday='2022-06-16'
             email='email@mail.com'
@@ -9,7 +8,23 @@
             last_name='Last'
             password='1'
             avatar_url='url'
-            user_id='100'
+    />
+    <users
+            id='101'
+            birthday='2022-06-16'
+            email='email2@mail.com'
+            first_name='Name2'
+            last_name='Last2'
+            password='1'
+            avatar_url='url2'
+    />
+    <role
+            id="100"
+            role="ROLE"
+    />
+    <user_roles
+            user_id="100"
+            role_id="100"
     />
     <news
             id="100"
@@ -37,38 +52,66 @@
             name="PSName"
     />
     <persons
-            dtype="1a"
             id="100"
             date_birth="1999-01-01"
             first_name="Name"
             height="180"
             last_name="Last"
+            original_first_name="OName"
+            original_last_name="OLast"
             place_of_birth="Earth"
-            marriage_status="free"
-            human_id="100"
-            person_id="100"
+    />
+    <persons
+            id="101"
+            date_birth="1999-01-01"
+            first_name="Name2"
+            height="180"
+            last_name="Last2"
+            original_first_name="OName2"
+            original_last_name="OLast2"
+            place_of_birth="Earth"
+    />
+    <persons
+            id="102"
+            date_birth="1999-01-01"
+            first_name="Name3"
+            height="180"
+            last_name="Last3"
+            original_first_name="OName3"
+            original_last_name="OLast3"
+            place_of_birth="Earth"
     />
     <professions
             id="100"
             name="Cinemator"
     />
+    <professions
+            id="101"
+            name="Cinemator2"
+    />
     <movie
-            dtype="1a"
             id="100"
             countries="Russia"
             date_release="2014-12-21"
             description="MDescription"
-            mpaa="MMpaa"
+            mpaa="GENERAL_AUDIENCES"
             name="MName"
             original_name="MOName"
-            rars="MRars"
+            rars="ZERO_PLUS"
             time="01:00:00"
-            type="1"
-            name_role="MActors"
-            type_character="MChars"
-            movie_id="100"
-            person_id="100"
-            profession_id="100"
+            type="MOVIES"
+    />
+    <movie
+            id="101"
+            countries="Russia"
+            date_release="2014-12-21"
+            description="MDescription"
+            mpaa="GENERAL_AUDIENCES"
+            name="MName"
+            original_name="MOName"
+            rars="ZERO_PLUS"
+            time="01:00:00"
+            type="MOVIES"
     />
     <production_studio_movie
             id="100"
@@ -76,4 +119,98 @@
             studio_performance_id="100"
             production_studio_id="100"
     />
+    <movie_person
+            id="100"
+            name_role="role1"
+            type_character="NO_CHARACTER_MOVIE"
+            movie_id="100"
+            person_id="100"
+            profession_id="100"
+    />
+    <movie_person
+            id="101"
+            name_role="role2"
+            type_character="NO_CHARACTER_MOVIE"
+            movie_id="100"
+            person_id="101"
+            profession_id="100"
+    />
+    <movie_person
+            id="102"
+            name_role="role2"
+            type_character="NO_CHARACTER_MOVIE"
+            movie_id="100"
+            person_id="102"
+            profession_id="101"
+    />
+    <content
+            id="100"
+            content_url="content.com"
+            type="PREVIEW"
+            movies_id="100"
+    />
+    <content
+            id="101"
+            content_url="content.com/trailer"
+            type="TRAILER"
+            movies_id="100"
+    />
+    <award
+            id="100"
+            description="descr"
+            name="awname"
+    />
+    <award_ceremony
+            id="100"
+            date_event="2020-01-01"
+            place_event="place"
+            awards_id="100"
+    />
+    <nomination
+            id="100"
+            name="nomin-n"
+    />
+    <award_ceremony_result
+            id="100"
+            nomination_status="NOMINATED"
+            award_ceremony_id="100"
+            movie="100"
+            nomination_id="100"
+            person="100"
+    />
+    <score
+            id="100"
+            score="5"
+            movie_id="100"
+            user_id="100"
+    />
+    <score
+            id="101"
+            score="4"
+            movie_id="100"
+            user_id="101"
+    />
+    <genres
+            id="100"
+            name="genre"
+    />
+    <genres
+            id="101"
+            name="genre2"
+    />
+    <genres
+            id="102"
+            name="genre3"
+    />
+    <movie_genre
+            movie_id="100"
+            genre_id="100"
+    />
+    <movie_genre
+            movie_id="100"
+            genre_id="101"
+    />
+
+
+
 </dataset>

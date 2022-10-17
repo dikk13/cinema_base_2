@@ -1,20 +1,23 @@
 package com.kata.cinema.base.models;
 
 import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.models.enums.MovieType;
+import com.kata.cinema.base.models.enums.RARS;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@Table
+@Table(name = "movie")
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class Movie {
 
     @Id
@@ -47,21 +50,26 @@ public class Movie {
     private String description;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private MovieType type;
 
     @Column(name = "original_name")
     private String originalName;
 
     @OneToMany(mappedBy = "movie")
+    @ToString.Exclude
     private List<Content> contents;
 
     @OneToMany(mappedBy = "movie")
+    @ToString.Exclude
     private List<MoviePerson> moviePerson;
 
     @OneToMany(mappedBy = "movie")
+    @ToString.Exclude
     private List<AwardCeremonyResult> awardCeremonyResults;
 
     @OneToMany(mappedBy = "movie")
+    @ToString.Exclude
     private List<Score> scores;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,6 +77,7 @@ public class Movie {
             name = "news_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "news_id"))
+    @ToString.Exclude
     private List<News> news;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -76,6 +85,7 @@ public class Movie {
             name = "collection_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "collection_id"))
+    @ToString.Exclude
     private List<Collection> collections;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -83,6 +93,7 @@ public class Movie {
             name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ToString.Exclude
     private List<Genre> genres;
 
     @Override
@@ -101,18 +112,4 @@ public class Movie {
         return getClass().hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", countries='" + countries + '\'' +
-                ", date_release='" + dateRelease + '\'' +
-                ", rars='" + rars + '\'' +
-                ", mpaa='" + mpaa + '\'' +
-                ", time='" + time + '\'' +
-                ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                '}';
-    }
 }

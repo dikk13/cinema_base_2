@@ -1,13 +1,17 @@
 package com.kata.cinema.base.dto;
 
 import com.kata.cinema.base.models.StudioPerformance;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ProductionMovieStudioResponseDto implements Serializable {
-    private final Long id;
-    private final String name;
-    private final StudioPerformance performance;
+    private Long id;
+    private String name;
+    private StudioPerformance performance;
 }

@@ -1,30 +1,31 @@
 package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 
-import com.kata.cinema.base.dto.PageDto;
-import com.kata.cinema.base.dto.ReviewResponseDto;
+import com.kata.cinema.base.dto.*;
 import com.kata.cinema.base.models.enums.ReviewSortType;
 import com.kata.cinema.base.models.enums.TypeReview;
-import com.kata.cinema.base.service.abstracts.ReviewResponseDtoService;
+import com.kata.cinema.base.service.abstracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
 public class MovieRestController {
 
-
     private final ReviewResponseDtoService responseDtoService;
 
     @Autowired
-    public MovieRestController(ReviewResponseDtoService responseDtoService) {
+    public MovieRestController(ReviewResponseDtoService responseDtoService,
+                               MovieViewResponseDtoService movieViewResponseDtoService) {
         this.responseDtoService = responseDtoService;
+        this.movieViewResponseDtoService = movieViewResponseDtoService;
     }
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
@@ -33,7 +34,14 @@ public class MovieRestController {
         parameters.put("movieId", movieId);
         parameters.put("typeReview", typeReview);
         parameters.put("reviewSortType", reviewSortType);
-        PageDto<ReviewResponseDto> reviewResponseDtoPageDto = responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
-        return reviewResponseDtoPageDto;
+        return responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private final MovieViewResponseDtoService movieViewResponseDtoService;
+
+    @GetMapping("/api/movies/{id}")
+    public ResponseEntity<MovieViewResponseDto> getMovie(@PathVariable("id") Long movieId) {
+        return new ResponseEntity<>(movieViewResponseDtoService.getMovieViewResponseDtoByMovieId(movieId), HttpStatus.OK);
     }
 }
