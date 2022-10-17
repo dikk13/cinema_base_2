@@ -68,12 +68,10 @@ public class UserFolderMovieRestController {
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 
-    @GetMapping("/movies")
+    @GetMapping
     public ResponseEntity<List<FolderResponseDto>> getFolderByUser(@AuthenticationPrincipal User user) {
         User activeUser = (User) ((Authentication) user).getPrincipal();
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderByUser(activeUser.getId()), HttpStatus.OK);
-
-
     }
 
     @PostMapping("/movies")
