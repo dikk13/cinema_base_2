@@ -1,6 +1,5 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
-
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.FolderResponseDto;
 import com.kata.cinema.base.dto.MovieResponseDto;
@@ -41,11 +40,11 @@ public class UserFolderMovieRestController {
         this.folderMovieService = folderMovieService;
     }
 
-
-    @GetMapping("/movies")
-    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
-        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
-    }
+//
+//    @GetMapping("/movies")
+//    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+//        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById(@PathVariable("id") Long id) {
