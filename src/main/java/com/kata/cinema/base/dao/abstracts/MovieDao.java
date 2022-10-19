@@ -8,4 +8,5 @@ import java.util.List;
 public interface MovieDao extends AbstractDao<Long, Movie> {
 
     List<SearchMovieDto> titleMovie(String name);
+
 }
