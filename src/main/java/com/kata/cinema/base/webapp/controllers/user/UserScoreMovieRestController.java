@@ -9,6 +9,8 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.models.enums.SortScoreType;
 import com.kata.cinema.base.service.abstracts.ScoreMovieResponseDtoService;
 import com.kata.cinema.base.service.abstracts.ScoreMovieService;
+import com.kata.cinema.base.service.abstracts.ScoreService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,19 +19,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
+@AllArgsConstructor
 public class UserScoreMovieRestController {
 
     private final ScoreMovieResponseDtoService scoreMovieResponseDtoService;
     private final ScoreMovieService scoreMovieService;
     private final ScoreMovieMapper scoreMovieMapper;
+    private final ScoreService scoreService;
 
-
-    public UserScoreMovieRestController(ScoreMovieResponseDtoService scoreMovieResponseDtoService, ScoreMovieService scoreMovieService, ScoreMovieMapper scoreMovieMapper) {
-        this.scoreMovieResponseDtoService = scoreMovieResponseDtoService;
-        this.scoreMovieService = scoreMovieService;
-        this.scoreMovieMapper = scoreMovieMapper;
-
-    }
 
     @PostMapping("/movies/{id}/score")
     public void addScoreMovie(@PathVariable("id") Long movieId,
@@ -40,7 +37,7 @@ public class UserScoreMovieRestController {
         Movie movie = scoreMovieResponseDtoService.findMovie(movieId);
         newScore.setScore(score);
         newScore.setMovie(movie);
-        scoreMovieResponseDtoService.create(newScore);
+        scoreService.create(newScore);
     }
 
     @PatchMapping("/movies/{id}/score")
@@ -52,13 +49,13 @@ public class UserScoreMovieRestController {
         Movie movie = scoreMovieResponseDtoService.findMovie(movieId);
         updatedScore.setScore(score);
         updatedScore.setMovie(movie);
-        scoreMovieResponseDtoService.update(updatedScore);
+        scoreService.update(updatedScore);
 
     }
 
     @DeleteMapping("/scores/{id}")
     public void deleteScoreMovie(@PathVariable("id") Long id) {
-        scoreMovieResponseDtoService.deleteById(id);
+        scoreService.deleteById(id);
     }
 
     @GetMapping("/scores/page/{pageNumber}")

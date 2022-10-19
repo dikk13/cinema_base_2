@@ -7,6 +7,6 @@ import com.kata.cinema.base.models.Score;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ScoreMovieResponseDtoDaoImpl extends AbstractDaoImpl<Long, Score> implements ScoreMovieResponseDtoDao {
+public class ScoreMovieResponseDtoDaoImpl implements ScoreMovieResponseDtoDao {
 
 }
