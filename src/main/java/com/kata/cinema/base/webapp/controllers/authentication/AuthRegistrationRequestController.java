@@ -31,7 +31,6 @@ public class AuthRegistrationRequestController {
     private final RegistrationUserDao registrationUserDao;
     private final JwtUtil jwtUtil;
     private final UserValidator userValidator;
-
     private final AuthenticationManager authenticationManager;
 
     @Autowired

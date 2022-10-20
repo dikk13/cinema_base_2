@@ -10,6 +10,7 @@ import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.service.abstracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -29,7 +30,7 @@ public class TestDataInitializer {
     private FolderMovieService folderMovieService;
 
     private final CollectionService collectionService;
-
+    private final PasswordEncoder encoder;
     private static final int countMovieList = 100;
     private static final int countCollection = 20;
 
@@ -43,10 +44,11 @@ public class TestDataInitializer {
 
     private static final Random random = new Random();
 
-    public TestDataInitializer(GenreService genreService, MovieService movieService, CollectionService collectionService) {
+    public TestDataInitializer(GenreService genreService, MovieService movieService, CollectionService collectionService, PasswordEncoder encoder) {
         this.genreService = genreService;
         this.movieService = movieService;
         this.collectionService = collectionService;
+        this.encoder = encoder;
     }
 
     public void movieInit() {
@@ -174,7 +176,7 @@ public class TestDataInitializer {
             user.setEmail(String.format("email%s@mail.ru", userNumber));
             user.setFirst_name(String.format("Имя%s", userNumber));
             user.setLast_name(String.format("Фамилия%s", userNumber));
-            user.setPassword("password");
+            user.setPassword(encoder.encode("password"));
             int year = random.nextInt(LAST_YEAR - START_YEAR) + START_YEAR;
             int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
             int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
