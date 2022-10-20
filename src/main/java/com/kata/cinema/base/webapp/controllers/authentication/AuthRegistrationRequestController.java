@@ -43,11 +43,18 @@ public class AuthRegistrationRequestController {
 
     @PostMapping("/registration")
     public ResponseEntity<UserRegistrationRequestDto> registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
-      User user = userMapper.toUser(requestDto);
+        System.out.println("CP#1");
+        System.out.println("Incoming data: user - " + requestDto.toString());
+        User user = userMapper.toUser(requestDto);
+        System.out.println("Map to User Entity...");
+        System.out.println(user.toString());
       userValidator.validate(user, result);
-
+        System.out.println("CP#2");
       try {
+          System.out.println("CP#3");
         result.hasErrors();
+          System.out.println(result.hasErrors());
+          System.out.println("CP#4");
       } catch (AuthenticationException e) {
         throw new BadCredentialsException("Registration error");
       }
@@ -60,22 +67,23 @@ public class AuthRegistrationRequestController {
     @PostMapping("/token")
     public ResponseEntity<Map<String, Object>> authLogin(@RequestBody AuthRequestDto authRequestDto) {
 
-      UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
+//      UsernamePasswordAuthenticationToken authenticationToken =
+//            new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
+//
+//      try {
+//        authenticationManager.authenticate(authenticationToken);
+//      } catch (AuthenticationException e) {
+//        throw new BadCredentialsException("Invalid username or password");
+//      }
+//
+//      String token =  jwtUtil.generateToken(authRequestDto.getEmail());
+//
+//      Map<String, Object> response = new HashMap<>();
+//      response.put("email", authRequestDto.getEmail());
+//      response.put("token", token);
 
-      try {
-        authenticationManager.authenticate(authenticationToken);
-      } catch (AuthenticationException e) {
-        throw new BadCredentialsException("Invalid username or password");
-      }
-
-      String token =  jwtUtil.generateToken(authRequestDto.getEmail());
-
-      Map<String, Object> response = new HashMap<>();
-      response.put("email", authRequestDto.getEmail());
-      response.put("token", token);
-
-      return ResponseEntity.ok(response);
+//      return ResponseEntity.ok(response);
+      return ResponseEntity.ok(null);
     }
 }
 
