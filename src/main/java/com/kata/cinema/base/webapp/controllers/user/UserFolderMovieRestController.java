@@ -40,11 +40,11 @@ public class UserFolderMovieRestController {
         this.folderMovieService = folderMovieService;
     }
 
-//
-//    @GetMapping("/movies")
-//    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
-//        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
-//    }
+
+    @GetMapping("/movies")
+    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById(@PathVariable("id") Long id) {
@@ -67,12 +67,10 @@ public class UserFolderMovieRestController {
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 
-    @GetMapping("/movies")
+    @GetMapping
     public ResponseEntity<List<FolderResponseDto>> getFolderByUser(@AuthenticationPrincipal User user) {
         User activeUser = (User) ((Authentication) user).getPrincipal();
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderByUser(activeUser.getId()), HttpStatus.OK);
-
-
     }
 
     @PostMapping("/movies")
