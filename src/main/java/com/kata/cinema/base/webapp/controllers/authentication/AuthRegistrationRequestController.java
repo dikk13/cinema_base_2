@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,7 +73,12 @@ public class AuthRegistrationRequestController {
       Map<String, Object> response = new HashMap<>();
       response.put("email", authRequestDto.getUsername());
       response.put("token", token);
-
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        System.out.println(SecurityContextHolder.getContext());
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(authentication.getPrincipal());
+//        System.out.println(authentication.getCredentials());
+//        System.out.println(authentication.isAuthenticated());
       return ResponseEntity.ok(response);
     }
 }

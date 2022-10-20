@@ -50,6 +50,7 @@ public class TestDataInitializer {
     }
 
     public void movieInit() {
+
         final int START_YEAR = 1990;
         final int LAST_YEAR = 2022;
         List<Genre> genreList = genreService.getAll();
@@ -82,6 +83,7 @@ public class TestDataInitializer {
     }
 
     public void genreInit() {
+
         for (int i = 1; i <= countGenre; i++) {
             Genre genre = new Genre();
             genre.setName(String.format("Жанр%s", i));
@@ -90,26 +92,50 @@ public class TestDataInitializer {
     }
 
     public void collectionInit() {
+
         Random random = new Random();
-        Collection collection = new Collection();
-        List<Boolean> collectionList;
+        List<Collection> collections = new ArrayList<>(countCollection);
+        List<Movie> movies = movieService.getAll();
         for (int i = 0; i < countCollection; i++) {
-            if (i < 5) {
-                collectionList = Collections.singletonList(false);
-            } else {
-                collectionList = Collections.singletonList(true);
+            List<Movie> foldingMovieList = new ArrayList<>(movies);
+            List<Movie> proxyMovieList = new ArrayList<>();
+            collections.add(i, new Collection());
+            collections.get(i).setName("Подборка " + i);
+            collections.get(i).setEnable(i >= 5);
+            for (int j = 0; j < countMovieList / 4; j++) {
+                proxyMovieList.add(foldingMovieList.remove(random.nextInt(0, foldingMovieList.size()-1)));
             }
-            collection.setName(String.valueOf(collectionList));
+            collections.get(i).setMovies(proxyMovieList);
+            collectionService.create(collections.get(i));
         }
-        List<Movie> collectMovieList = new ArrayList<>();
-        for (int i = 0; i < countCollection; i++) {
-            i = random.nextInt(5, 16);
-            collection.setMovies(collectMovieList);
-        }
-        collectionService.create(collection);
+
+//        Random random = new Random();
+//        Collection collection = new Collection();
+//        System.out.println("CP1");
+//        List<Boolean> collectionList;
+//        for (int i = 0; i < countCollection; i++) {
+//            System.out.println("i = " + i);
+//            if (i < 5) {
+//                collectionList = Collections.singletonList(false);
+//                System.out.println(collectionList);
+//            } else {
+//                collectionList = Collections.singletonList(true);
+//                System.out.println(collectionList);
+//            }
+//            collection.setName(String.valueOf(collectionList));
+//            System.out.println(collection);
+//        }
+//        List<Movie> collectMovieList = new ArrayList<>();
+//        for (int i = 0; i < countCollection; i++) {
+//            i = random.nextInt(5, 16);
+//            collection.setMovies(collectMovieList);
+//        }
+//        collectionService.create(collection);
+
     }
 
     public void roleInit() {
+
         Role roleAdmin = new Role();
         roleAdmin.setRole("ADMIN");
         roleService.create(roleAdmin);
@@ -124,6 +150,7 @@ public class TestDataInitializer {
     }
 
     public void userInit() {
+
         final int ONE_BEFORE_LAST_USER_IN_BASE = 24;
         final int LAST_USER_IN_BASE = 25;
         final int START_YEAR = 1970;
@@ -175,6 +202,7 @@ public class TestDataInitializer {
     }
 
     public void folderMovieInit() {
+
         List<Movie> allMovies = movieService.getAll();
         List<User> allUsers = userService.getAll();
         for (User user : allUsers) {
