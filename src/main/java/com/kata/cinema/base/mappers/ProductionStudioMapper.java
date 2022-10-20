@@ -1,7 +1,7 @@
 package com.kata.cinema.base.mappers;
 
 import com.kata.cinema.base.models.ProductionStudio;
-import com.kata.cinema.base.dto.ProductionStudioRequestDto;
+import com.kata.cinema.base.dto.request.ProductionStudioRequestDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

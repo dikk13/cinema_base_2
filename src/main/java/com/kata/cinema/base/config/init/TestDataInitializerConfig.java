@@ -1,8 +1,8 @@
 package com.kata.cinema.base.config.init;
 
-import com.kata.cinema.base.service.abstracts.CollectionService;
-import com.kata.cinema.base.service.abstracts.GenreService;
-import com.kata.cinema.base.service.abstracts.MovieService;
+import com.kata.cinema.base.service.entity.CollectionService;
+import com.kata.cinema.base.service.entity.GenreService;
+import com.kata.cinema.base.service.entity.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;

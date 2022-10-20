@@ -1,8 +1,8 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
-import com.kata.cinema.base.dto.ProductionStudioRequestDto;
+import com.kata.cinema.base.dto.request.ProductionStudioRequestDto;
 import com.kata.cinema.base.mappers.ProductionStudioMapper;
-import com.kata.cinema.base.service.abstracts.ProductionStudioService;
+import com.kata.cinema.base.service.entity.ProductionStudioService;
 import org.springframework.web.bind.annotation.*;
 
 

@@ -1,12 +1,12 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
 
-import com.kata.cinema.base.dto.CommentsRequestDto;
+import com.kata.cinema.base.dto.request.CommentsRequestDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
 import com.kata.cinema.base.models.Comments;
 import com.kata.cinema.base.models.News;
 import com.kata.cinema.base.models.User;
-import com.kata.cinema.base.service.abstracts.CommentsService;
+import com.kata.cinema.base.service.entity.CommentsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

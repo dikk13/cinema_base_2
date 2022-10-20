@@ -1,15 +1,15 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
 import com.kata.cinema.base.dto.PageDto;
-import com.kata.cinema.base.dto.ScoreMovieResponseDto;
+import com.kata.cinema.base.dto.response.ScoreMovieResponseDto;
 import com.kata.cinema.base.mappers.ScoreMovieMapper;
 import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.models.Score;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.models.enums.SortScoreType;
-import com.kata.cinema.base.service.abstracts.ScoreMovieResponseDtoService;
-import com.kata.cinema.base.service.abstracts.ScoreMovieService;
-import com.kata.cinema.base.service.abstracts.ScoreService;
+import com.kata.cinema.base.service.dto.ScoreMovieResponseDtoService;
+import com.kata.cinema.base.service.entity.ScoreMovieService;
+import com.kata.cinema.base.service.entity.ScoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.kata.cinema.base.webapp.controllers.authentication;
 
-import com.kata.cinema.base.dao.abstracts.RegistrationUserDao;
-import com.kata.cinema.base.dto.AuthRequestDto;
-import com.kata.cinema.base.dto.UserRegistrationRequestDto;
+import com.kata.cinema.base.dao.entity.RegistrationUserDao;
+import com.kata.cinema.base.dto.request.AuthRequestDto;
+import com.kata.cinema.base.dto.request.UserRegistrationRequestDto;
 import com.kata.cinema.base.mappers.UserMapper;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.security.UserValidator;

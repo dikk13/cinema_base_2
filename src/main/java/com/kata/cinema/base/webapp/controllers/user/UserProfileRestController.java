@@ -4,8 +4,8 @@ import com.kata.cinema.base.dto.request.PasswordChangeRequestDto;
 import com.kata.cinema.base.dto.request.UserRequestDto;
 import com.kata.cinema.base.dto.response.UserResponseDto;
 import com.kata.cinema.base.models.User;
-import com.kata.cinema.base.service.abstracts.UserDtoService;
-import com.kata.cinema.base.service.abstracts.UserService;
+import com.kata.cinema.base.service.dto.UserDtoService;
+import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

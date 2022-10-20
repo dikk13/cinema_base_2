@@ -1,9 +1,9 @@
 package com.kata.cinema.base.webapp.controllers.unauthorized;
 
-import com.kata.cinema.base.dto.search.SearchResponseDto;
-import com.kata.cinema.base.service.abstracts.CollectionService;
-import com.kata.cinema.base.service.abstracts.MovieService;
-import com.kata.cinema.base.service.abstracts.PersonService;
+import com.kata.cinema.base.dto.response.SearchResponseDto;
+import com.kata.cinema.base.service.entity.CollectionService;
+import com.kata.cinema.base.service.entity.MovieService;
+import com.kata.cinema.base.service.entity.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

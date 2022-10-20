@@ -1,8 +1,8 @@
 package com.kata.cinema.base.webapp.controllers.unauthorized;
 
-import com.kata.cinema.base.dto.ProductionMovieStudioResponseDto;
+import com.kata.cinema.base.dto.response.ProductionMovieStudioResponseDto;
 import com.kata.cinema.base.mappers.ProductionStudioMovieMapper;
-import com.kata.cinema.base.service.abstracts.ProductionMovieStudioService;
+import com.kata.cinema.base.service.entity.ProductionMovieStudioService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

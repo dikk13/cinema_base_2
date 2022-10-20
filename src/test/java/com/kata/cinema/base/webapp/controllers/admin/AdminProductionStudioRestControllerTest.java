@@ -1,19 +1,11 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.kata.cinema.base.dto.ProductionStudioRequestDto;
-import com.kata.cinema.base.models.*;
-import com.kata.cinema.base.models.enums.Category;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.Privacy;
-import com.kata.cinema.base.models.enums.RARS;
-import com.kata.cinema.base.service.abstracts.*;
-import org.junit.jupiter.api.Assertions;
+import com.kata.cinema.base.dto.request.ProductionStudioRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,9 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

@@ -1,6 +1,6 @@
 package com.kata.cinema.base.mappers;
 
-import com.kata.cinema.base.dto.FolderMovieResponsDto;
+import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.models.FolderMovie;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

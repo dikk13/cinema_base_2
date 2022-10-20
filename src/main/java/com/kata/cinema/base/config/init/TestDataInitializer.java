@@ -8,7 +8,12 @@ import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.RARS;
-import com.kata.cinema.base.service.abstracts.*;
+import com.kata.cinema.base.service.entity.CollectionService;
+import com.kata.cinema.base.service.entity.FolderMovieService;
+import com.kata.cinema.base.service.entity.GenreService;
+import com.kata.cinema.base.service.entity.MovieService;
+import com.kata.cinema.base.service.entity.RoleService;
+import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

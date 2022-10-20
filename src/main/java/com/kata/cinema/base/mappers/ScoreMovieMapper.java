@@ -1,6 +1,6 @@
 package com.kata.cinema.base.mappers;
 
-import com.kata.cinema.base.dto.ScoreMovieResponseDto;
+import com.kata.cinema.base.dto.response.ScoreMovieResponseDto;
 import com.kata.cinema.base.models.Score;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

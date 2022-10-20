@@ -1,7 +1,7 @@
 package com.kata.cinema.base.mappers;
 
-import com.kata.cinema.base.dto.CommentsRequestDto;
-import com.kata.cinema.base.dto.CommentsResponseDto;
+import com.kata.cinema.base.dto.request.CommentsRequestDto;
+import com.kata.cinema.base.dto.response.CommentsResponseDto;
 import com.kata.cinema.base.models.Comments;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

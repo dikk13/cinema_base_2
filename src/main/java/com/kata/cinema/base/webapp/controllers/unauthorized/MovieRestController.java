@@ -2,9 +2,12 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 
 import com.kata.cinema.base.dto.*;
+import com.kata.cinema.base.dto.response.MovieViewResponseDto;
+import com.kata.cinema.base.dto.response.ReviewResponseDto;
 import com.kata.cinema.base.models.enums.ReviewSortType;
 import com.kata.cinema.base.models.enums.TypeReview;
-import com.kata.cinema.base.service.abstracts.*;
+import com.kata.cinema.base.service.dto.MovieViewResponseDtoService;
+import com.kata.cinema.base.service.dto.ReviewResponseDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

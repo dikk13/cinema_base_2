@@ -1,6 +1,6 @@
 package com.kata.cinema.base.mappers;
 
-import com.kata.cinema.base.dto.ProductionMovieStudioResponseDto;
+import com.kata.cinema.base.dto.response.ProductionMovieStudioResponseDto;
 import com.kata.cinema.base.models.ProductionStudioMovie;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
