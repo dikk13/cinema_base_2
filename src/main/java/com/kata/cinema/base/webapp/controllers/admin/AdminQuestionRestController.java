@@ -8,7 +8,6 @@ import com.kata.cinema.base.service.abstracts.NewsService;
 import com.kata.cinema.base.service.abstracts.QuestionService;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 
@@ -34,14 +33,19 @@ public class AdminQuestionRestController {
         for (QuestionRequestDto questionRequestDto: questionList){
             Question question = questionMapper.toQuestion(questionRequestDto);
             question.setNews(news);
-            question.setAnswers(questionService.toAnswer(questionRequestDto));
-            question.setResults(questionService.toResult(questionRequestDto));
+            question.setAnswers(questionMapper.answerRequestDtoListToAnswerList(questionRequestDto.getAnswers()));
+            question.setResults(questionMapper.resultRequestDtoListToResultList(questionRequestDto.getResults()));
             questionService.create(question);
         }
     }
 
     @DeleteMapping("{id}/questions/{id}")
-    public void deleteQuestion(@PathVariable("id") Long questionId) {
-        questionService.deleteQuestionWithAnswersAndResults(questionId);
+    public void deleteQuestion(@PathVariable("id") Long newsId, @PathVariable("id") Long questionId) {
+        if (questionService.questionBelongToNews(newsId, questionId)){
+            questionService.deleteQuestionWithAnswersAndResults(questionId);
+        } else {
+            throw new RuntimeException();
+        }
+
     }
 }
