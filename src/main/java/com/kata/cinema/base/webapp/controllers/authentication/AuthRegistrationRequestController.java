@@ -30,60 +30,49 @@ public class AuthRegistrationRequestController {
     private final JwtUtil jwtUtil;
     private final UserValidator userValidator;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator) {
-      this.userMapper = userMapper;
-      this.registrationUserDao = registrationUserDao;
-      this.jwtUtil = jwtUtil;
-      this.userValidator = userValidator;
+    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator, AuthenticationManager authenticationManager) {
+        this.userMapper = userMapper;
+        this.registrationUserDao = registrationUserDao;
+        this.jwtUtil = jwtUtil;
+        this.userValidator = userValidator;
+        this.authenticationManager = authenticationManager;
     }
 
 
     @PostMapping("/registration")
     public ResponseEntity<UserRegistrationRequestDto> registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
-        System.out.println("CP#1");
-        System.out.println("Incoming data: user - " + requestDto.toString());
         User user = userMapper.toUser(requestDto);
-        System.out.println("Map to User Entity...");
-        System.out.println(user.toString());
       userValidator.validate(user, result);
-        System.out.println("CP#2");
       try {
-          System.out.println("CP#3");
-        result.hasErrors();
-          System.out.println(result.hasErrors());
-          System.out.println("CP#4");
+          if (!result.hasErrors()) {
+            registrationUserDao.register(user);
+          }
       } catch (AuthenticationException e) {
         throw new BadCredentialsException("Registration error");
       }
-
-      registrationUserDao.register(user);
       return ResponseEntity.ok(requestDto);
     }
 
 
     @PostMapping("/token")
     public ResponseEntity<Map<String, Object>> authLogin(@RequestBody AuthRequestDto authRequestDto) {
+      UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(authRequestDto.getUsername(), authRequestDto.getPassword());
+      try {
+        authenticationManager.authenticate(authenticationToken);
+      } catch (AuthenticationException e) {
+        throw new BadCredentialsException("Invalid username or password");
+      }
+      String token =  jwtUtil.generateToken(authRequestDto.getUsername());
 
-//      UsernamePasswordAuthenticationToken authenticationToken =
-//            new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword());
-//
-//      try {
-//        authenticationManager.authenticate(authenticationToken);
-//      } catch (AuthenticationException e) {
-//        throw new BadCredentialsException("Invalid username or password");
-//      }
-//
-//      String token =  jwtUtil.generateToken(authRequestDto.getEmail());
-//
-//      Map<String, Object> response = new HashMap<>();
-//      response.put("email", authRequestDto.getEmail());
-//      response.put("token", token);
+      Map<String, Object> response = new HashMap<>();
+      response.put("email", authRequestDto.getUsername());
+      response.put("token", token);
 
-//      return ResponseEntity.ok(response);
-      return ResponseEntity.ok(null);
+      return ResponseEntity.ok(response);
     }
 }
 

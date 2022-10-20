@@ -20,8 +20,8 @@ public class AuthRequestDto {
     private String username;
     private String password;
 
-    public AuthRequestDto (String username, String password) {
-        this.username = username;
+    public AuthRequestDto (String email, String password) {
+        this.username = email;
         this.password = password;
     }
 //
