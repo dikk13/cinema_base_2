@@ -1,18 +1,25 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kata.cinema.base.mappers.GenreMapper;
 
 import com.kata.cinema.base.exception.GenreIdNotFoundException;
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.dto.GenreResponseDto;
 import com.kata.cinema.base.service.abstracts.GenreService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -40,11 +47,13 @@ public class AdminGenreRestController {
     }
 
     @PutMapping("/api/admin/genres/{id}")
-    //TODO принимать новое имя, а не сущность
-    public void updateGenre(@RequestBody Genre genre, @PathVariable("id") long id) {
-        if (genreService.existById(id)) {
-            genreService.update(genre);
-        } else {
+    public void updateGenre(@RequestParam (name = "name") String genreName, @PathVariable("id") long id) {
+        Optional<Genre> genreContainer= genreService.getById(id);
+        if (genreContainer.isPresent()) {
+            genreContainer.get().setName(genreName);
+            genreService.update(genreContainer.get());
+        }
+        else {
             throw new GenreIdNotFoundException("Genre with this ID: " + id + " ,don't found ") {};
         }
     }

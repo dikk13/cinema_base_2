@@ -1,6 +1,6 @@
 package com.kata.cinema.base.service.Impl;
 
-import com.kata.cinema.base.dao.abstracts.AbstractDao;
+
 import com.kata.cinema.base.dao.abstracts.MovieDao;
 import com.kata.cinema.base.dto.search.SearchMovieDto;
 import com.kata.cinema.base.models.Movie;
@@ -27,4 +27,5 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
     public List<SearchMovieDto> titleMovie(String name) {
         return movieDao.titleMovie(name);
     }
+
 }

@@ -27,6 +27,12 @@ public class Person {
     @Column(name = "last_name", nullable = true, length = 50)
     protected String lastName;
 
+    @Column(name="original_first_name", nullable = false, length = 50)
+    protected String originalFirstName;
+
+    @Column(name = "original_last_name", nullable = true, length = 50)
+    protected String originalLastName;
+
     @Column(name = "height", nullable = true, length = 5)
     protected Double height;
 

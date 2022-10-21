@@ -5,8 +5,6 @@ import com.kata.cinema.base.dto.search.SearchCollectionDto;
 import com.kata.cinema.base.models.Collection;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

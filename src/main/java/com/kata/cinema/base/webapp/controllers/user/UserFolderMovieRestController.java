@@ -1,6 +1,5 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
-
 import com.kata.cinema.base.dto.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.FolderResponseDto;
 import com.kata.cinema.base.dto.MovieResponseDto;
