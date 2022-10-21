@@ -1,6 +1,7 @@
 package com.kata.cinema.base.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -34,6 +35,7 @@ public class UserRegistrationRequestDto {
     @Size(min = 6, max = 20)
     private String confirmPassword;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate birthday;
 
     public UserRegistrationRequestDto (String email, String firstName, String lastName, String login, String password, String confirmPassword, LocalDate birthday) {
