@@ -73,11 +73,6 @@ public class AuthRegistrationRequestController {
       response.put("email", authRequestDto.getUsername());
       response.put("token", token);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        System.out.println(SecurityContextHolder.getContext());
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(authentication.getPrincipal());
-//        System.out.println(authentication.getCredentials());
-//        System.out.println(authentication.isAuthenticated());
       return ResponseEntity.ok(response);
     }
 }
