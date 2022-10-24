@@ -28,7 +28,7 @@ public class AdminQuestionRestController {
     }
 
     @PostMapping("/{id}/questions")
-    public void addQuestions(@PathVariable("id") Long newsId, List <QuestionRequestDto> questionList) {
+    public void addQuestions(@PathVariable("id") Long newsId, @RequestBody List <QuestionRequestDto> questionList) {
         News news = newsService.getNewsById(newsId);
         for (QuestionRequestDto questionRequestDto: questionList){
             Question question = questionMapper.toQuestion(questionRequestDto);
@@ -39,8 +39,8 @@ public class AdminQuestionRestController {
         }
     }
 
-    @DeleteMapping("{id}/questions/{id}")
-    public void deleteQuestion(@PathVariable("id") Long newsId, @PathVariable("id") Long questionId) {
+    @DeleteMapping("{newsId}/questions/{id}")
+    public void deleteQuestion(@PathVariable("newsId") Long newsId, @PathVariable("id") Long questionId) {
         if (questionService.questionBelongToNews(newsId, questionId)){
             questionService.deleteQuestionWithAnswersAndResults(questionId);
         } else {

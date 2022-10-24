@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <news
+            id="101"
+            date="2022-10-17 16:37:23"
+            html_body="body"
+            rubric="2"
+            title="title"
+    />
+    <question
+            id='100'
+            position='1'
+            question='question'
+            news_id='101'
+    />
+    <question
+            id='101'
+            position='1'
+            question='question'
+            news_id='101'
+    />
+    <answer
+            id='103'
+            answer='answer'
+            is_right='true'
+            question_id='101'
+    />
+    <result
+            id='104'
+            count_right_answer='1'
+            result='result'
+            question_id='101'
+    />
+</dataset>
