@@ -7,6 +7,7 @@ import com.kata.cinema.base.mappers.UserMapper;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.security.UserValidator;
 import com.kata.cinema.base.security.jwt.JwtUtil;
+import com.kata.cinema.base.service.entity.RegistrationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,16 +27,16 @@ import java.util.Map;
 public class AuthRegistrationRequestController {
 
     private final UserMapper userMapper;
-    private final RegistrationUserDao registrationUserDao;
+    private final RegistrationUserService registrationUserService;
     private final JwtUtil jwtUtil;
     private final UserValidator userValidator;
 
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator) {
+    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserService registrationUserService, JwtUtil jwtUtil, UserValidator userValidator) {
       this.userMapper = userMapper;
-      this.registrationUserDao = registrationUserDao;
+      this.registrationUserService = registrationUserService;
       this.jwtUtil = jwtUtil;
       this.userValidator = userValidator;
     }
@@ -52,7 +53,7 @@ public class AuthRegistrationRequestController {
         throw new BadCredentialsException("Registration error");
       }
 
-      registrationUserDao.register(user);
+        registrationUserService.register(user);
       return ResponseEntity.ok(requestDto);
     }
 
