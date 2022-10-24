@@ -11,8 +11,6 @@ import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.RegistrationUserService;
-import com.kata.cinema.base.service.entity.RoleService;
-import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
