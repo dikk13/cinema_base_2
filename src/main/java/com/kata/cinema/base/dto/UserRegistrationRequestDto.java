@@ -47,13 +47,4 @@ public class UserRegistrationRequestDto {
         this.confirmPassword = confirmPassword;
         this.birthday = birthday;
     }
-
-
-//    private String username;
-//    private String password;
-//
-//    public UserRegistrationRequestDto(String username, String password) {
-//        this.username = username;
-//        this.password = password;
-//    }
 }

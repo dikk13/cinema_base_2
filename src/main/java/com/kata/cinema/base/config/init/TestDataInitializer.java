@@ -110,30 +110,6 @@ public class TestDataInitializer {
             collections.get(i).setMovies(proxyMovieList);
             collectionService.create(collections.get(i));
         }
-
-//        Random random = new Random();
-//        Collection collection = new Collection();
-//        System.out.println("CP1");
-//        List<Boolean> collectionList;
-//        for (int i = 0; i < countCollection; i++) {
-//            System.out.println("i = " + i);
-//            if (i < 5) {
-//                collectionList = Collections.singletonList(false);
-//                System.out.println(collectionList);
-//            } else {
-//                collectionList = Collections.singletonList(true);
-//                System.out.println(collectionList);
-//            }
-//            collection.setName(String.valueOf(collectionList));
-//            System.out.println(collection);
-//        }
-//        List<Movie> collectMovieList = new ArrayList<>();
-//        for (int i = 0; i < countCollection; i++) {
-//            i = random.nextInt(5, 16);
-//            collection.setMovies(collectMovieList);
-//        }
-//        collectionService.create(collection);
-
     }
 
     public void roleInit() {
