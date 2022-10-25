@@ -7,7 +7,6 @@ import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.kata.cinema.base.dto.AnswerRequestDto;
 import com.kata.cinema.base.dto.QuestionRequestDto;
 import com.kata.cinema.base.dto.ResultRequestDto;
-import com.kata.cinema.base.models.News;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,9 +19,6 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 

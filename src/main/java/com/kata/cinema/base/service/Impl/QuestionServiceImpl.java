@@ -21,23 +21,12 @@ public class QuestionServiceImpl extends AbstractServiceImpl <Long, Question> im
 
     @Override
     @Transactional
-    public void deleteQuestionWithAnswersAndResults(Long questionId){
-         questionDao.deleteQuestionWithAnswersAndResultsById(questionId);
-
-    }
-    @Override
-    @Transactional
-    public boolean questionBelongToNews(Long newsId, Long questionId) {
+    public void deleteQuestionWithAnswersAndResults(Long newsId, Long questionId){
         Optional<Question> question = questionDao.getById(questionId);
-        Optional<Question> news = questionDao.getById(newsId);
-        if (question.isPresent() && news.isPresent()) {
-            System.out.println(question.get().getNews().getId());
-            System.out.println(newsId);
-            return question.get().getNews().getId().equals(newsId);
+        if (question.orElseThrow().getNews().getId().equals(newsId)) {
+            questionDao.deleteQuestionWithAnswersAndResultsById(questionId);
         } else {
             throw new NullPointerException();
         }
-
-
     }
 }

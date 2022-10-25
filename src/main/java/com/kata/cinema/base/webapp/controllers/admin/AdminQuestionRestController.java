@@ -41,11 +41,6 @@ public class AdminQuestionRestController {
 
     @DeleteMapping("{newsId}/questions/{id}")
     public void deleteQuestion(@PathVariable("newsId") Long newsId, @PathVariable("id") Long questionId) {
-        if (questionService.questionBelongToNews(newsId, questionId)){
-            questionService.deleteQuestionWithAnswersAndResults(questionId);
-        } else {
-            throw new RuntimeException();
-        }
-
+            questionService.deleteQuestionWithAnswersAndResults(newsId, questionId);
     }
 }

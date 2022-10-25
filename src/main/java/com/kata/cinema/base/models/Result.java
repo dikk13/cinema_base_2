@@ -16,17 +16,17 @@ public class Result {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_result_id")
     @SequenceGenerator(name = "seq_result_id", sequenceName = "SEQ_RESULT_ID", allocationSize = 1)
-    Long id;
+    private Long id;
 
     @Column(name = "count_right_answer")
-    Integer countRightAnswer;
+    private Integer countRightAnswer;
 
     @Column(name = "result")
-    String result;
+    private String result;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")
-    Question question ;
+    private Question question ;
 
     @Override
     public boolean equals(Object o) {
