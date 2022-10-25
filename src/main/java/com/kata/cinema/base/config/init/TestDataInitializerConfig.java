@@ -17,5 +17,4 @@ public class TestDataInitializerConfig {
     public TestDataInitializer initTestData(GenreService genreService, MovieService movieService, CollectionService collectionService) {
         return new TestDataInitializer(genreService, movieService, collectionService);
     }
-
 }
