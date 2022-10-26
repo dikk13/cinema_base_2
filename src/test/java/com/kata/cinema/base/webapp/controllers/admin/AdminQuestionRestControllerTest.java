@@ -1,12 +1,12 @@
-package com.kata.cinema.base.webapp.controllers.user;
-
+package com.kata.cinema.base.webapp.controllers.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-
-import com.kata.cinema.base.dto.CommentsRequestDto;
+import com.kata.cinema.base.dto.AnswerRequestDto;
+import com.kata.cinema.base.dto.QuestionRequestDto;
+import com.kata.cinema.base.dto.ResultRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,45 +18,53 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.time.LocalDateTime;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Transactional
-@DatabaseSetup("/dataset.xml")
+@DatabaseSetup("/dataset_for_question_contr.xml")
 @DatabaseTearDown("/empty_dataset.xml")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-class UserNewsRestControllerTest {
+public class AdminQuestionRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
-    void addComments() throws Exception {
-        CommentsRequestDto requestDto = new CommentsRequestDto(
-                //text
-                "added test text",
-                //date
-                LocalDateTime.parse("2022-06-16T18:37:11")
-        );
-        this.mockMvc.perform(post("/api/user/news/100/comments?userId=100")
-                        .content(objectMapper.writeValueAsString(requestDto))
+    void addQuestions() throws Exception{
+        List <AnswerRequestDto> answers = new ArrayList<>();
+        List <ResultRequestDto> results = new ArrayList<>();
+        QuestionRequestDto questionRequestDto = new QuestionRequestDto(1,"question", answers,results);
+        List<QuestionRequestDto> questionRequestDtoList = new ArrayList<>();
+        questionRequestDtoList.add(questionRequestDto);
+        this.mockMvc.perform(post("/api/admin/news/101/questions")
+                        .content(objectMapper.writeValueAsString(questionRequestDtoList))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void deleteQuestion() throws Exception{
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/admin/news/101/questions/{id}", "100")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
     }
 }
