@@ -15,6 +15,7 @@ import com.kata.cinema.base.service.dto.ExcertionResponseDtoService;
 import com.kata.cinema.base.service.dto.MovieViewResponseDtoService;
 import com.kata.cinema.base.service.dto.ReviewResponseDtoService;
 import com.kata.cinema.base.service.entity.ExcertionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,23 +26,14 @@ import java.util.Map;
 
 
 @RestController
+@AllArgsConstructor
 public class MovieRestController {
 
     private final ReviewResponseDtoService responseDtoService;
     private final MovieViewResponseDtoService movieViewResponseDtoService;
     private final ExcertionResponseDtoService excertionResponseDtoService;
-
-    @Autowired
-    public MovieRestController(ReviewResponseDtoService responseDtoService,
-                               ExcertionResponseDtoService excertionResponseDtoService, MovieViewResponseDtoService movieViewResponseDtoService,
-                               ExcertionService excertionService,
-                               ExcertionMapper excertionMapper) {
-        this.responseDtoService = responseDtoService;
-        this.excertionResponseDtoService = excertionResponseDtoService;
-        this.movieViewResponseDtoService = movieViewResponseDtoService;
-        this.excertionService = excertionService;
-        this.excertionMapper = excertionMapper;
-    }
+    private final ExcertionService excertionService;
+    private final ExcertionMapper excertionMapper;
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
     public PageDto<ReviewResponseDto> getReview(
@@ -63,13 +55,9 @@ public class MovieRestController {
         return new ResponseEntity<>(movieViewResponseDtoService.getMovieViewResponseDtoByMovieId(movieId), HttpStatus.OK);
     }
 
-
-    private final ExcertionService excertionService;
-    private final ExcertionMapper excertionMapper;
-
     @PostMapping("/api/movies/{id}/excertions")
     public ResponseEntity<HttpStatus> createMovieExcertion(@PathVariable("id") Long movieId,
-                                     @RequestBody ExcertionRequestDto excertionRequestDto) {
+                                                           @RequestBody ExcertionRequestDto excertionRequestDto) {
         Movie movie = excertionResponseDtoService.findMovieById(movieId);
         Excertion newExcertion = excertionMapper.toExcertion(excertionRequestDto);
         newExcertion.setMovie(movie);
@@ -85,3 +73,4 @@ public class MovieRestController {
         parameters.put("movieId", movieId);
         return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
     }
+}
