@@ -29,6 +29,15 @@ public class TestDataInitializer {
     @Autowired
     private FolderMovieService folderMovieService;
 
+    @Autowired
+    private ProductionStudioService productionStudioService;
+
+    @Autowired
+    private ProductionMovieStudioService productionMovieStudioService;
+
+    @Autowired
+    private StudioPerformanceService studioPerformanceService;
+
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
     private static final int countMovieList = 100;
@@ -36,6 +45,7 @@ public class TestDataInitializer {
 
     private static final int countUser = 25;
     private static final int countGenre = 10;
+    private static final int countProductionStudio = 20;
     private static final int ELEVEN_MONTHS = 11;
     private static final int ONE_MONTH = 1;
     private static final int TWENTY_SEVEN_DAYS = 27;
@@ -208,6 +218,56 @@ public class TestDataInitializer {
         }
     }
 
+    public void studioProductionInit() {
+        StudioPerformance studioProduction = new StudioPerformance();
+        studioProduction.setName("Производство");
+        studioPerformanceService.create(studioProduction);
+        StudioPerformance studioSpecialEffects = new StudioPerformance();
+        studioSpecialEffects.setName("Спецэффекты");
+        studioPerformanceService.create(studioSpecialEffects);
+        StudioPerformance studioRental = new StudioPerformance();
+        studioRental.setName("Прокат");
+        studioPerformanceService.create(studioRental);
+        StudioPerformance studioDubbing = new StudioPerformance();
+        studioDubbing.setName("Дубляж");
+        studioPerformanceService.create(studioDubbing);
+    }
+
+    public void productionStudioInit(){
+        String description = " Описание студии описание студии описание студии описание студии описание студии описание студии описание студии";
+        int minDay = (int) LocalDate.of(1960, 1, 1).toEpochDay();
+        int maxDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
+        long randomDay = minDay + random.nextInt(maxDay - minDay);
+        LocalDate randomDateFoundation = LocalDate.ofEpochDay(randomDay);
+
+        for (int i = 1; i <= countProductionStudio; i++) {
+            ProductionStudio productionStudio = new ProductionStudio();
+            productionStudio.setName(String.format("Студия%s", i));
+            productionStudio.setDescription(description);
+            productionStudio.setDateFoundation(randomDateFoundation);
+            int index = random.nextInt(studioPerformanceService.getAll().size());
+            productionStudio.setPerformance(studioPerformanceService.getAll().get(index));
+            productionStudioService.create(productionStudio);
+        }
+
+    }
+    public void productionStudioMovieInit(){
+        for (int i = 0; i < 3; i++){
+            int index = random.nextInt(movieService.getAll().size());
+            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
+            if (!productionStudioMovie.getMovie().equals(movieService.getAll().get(index))) {
+                productionStudioMovie.setMovie(movieService.getAll().get(index));
+            }
+            for (int q = 0; q < 3; q++) {
+                int index2 = random.nextInt(productionStudioService.getAll().size());
+                if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
+                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+                }
+            }
+        }
+
+    }
+
     private void init() {
         roleInit();
         genreInit();
@@ -215,5 +275,8 @@ public class TestDataInitializer {
         collectionInit();
         userInit();
         folderMovieInit();
+        studioProductionInit();
+        productionStudioInit();
+        productionStudioMovieInit();
     }
 }

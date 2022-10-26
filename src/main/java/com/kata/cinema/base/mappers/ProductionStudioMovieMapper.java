@@ -13,7 +13,6 @@ public interface ProductionStudioMovieMapper {
 
     @Mapping(source = "studio.name", target = "name")
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "performance", target = "performance")
     ProductionMovieStudioResponseDto productionStudioMovieToProductionMovieStudioResponseDto(ProductionStudioMovie productionStudioMovie);
 
 }
