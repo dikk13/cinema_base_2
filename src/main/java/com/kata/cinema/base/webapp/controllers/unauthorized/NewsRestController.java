@@ -16,7 +16,6 @@ import java.util.List;
 public class NewsRestController {
 
     private final CommentsService commentsService;
-
     private final CommentsMapper commentsMapper;
 
     public NewsRestController(CommentsService commentsService, CommentsMapper commentsMapper) {

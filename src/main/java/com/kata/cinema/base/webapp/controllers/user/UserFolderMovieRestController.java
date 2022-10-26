@@ -14,6 +14,7 @@ import com.kata.cinema.base.models.enums.SortMovieFolderType;
 import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.entity.FolderMovieService;
 import com.kata.cinema.base.service.dto.MovieResponseDtoService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,19 +27,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user/folders")
+@AllArgsConstructor
 public class UserFolderMovieRestController {
 
     private final FolderMovieResponsDtoService folderMovieResponsDtoService;
     private final MovieResponseDtoService movieResponseDtoService;
     private final FolderMovieResponsDtoMapper folderMovieResponsDtoMapper;
     private final FolderMovieService folderMovieService;
-
-    public UserFolderMovieRestController(FolderMovieResponsDtoService folderMovieResponsDtoService, MovieResponseDtoService movieResponseDtoService, FolderMovieResponsDtoMapper folderMovieResponsDtoMapper, FolderMovieService folderMovieService) {
-        this.folderMovieResponsDtoService = folderMovieResponsDtoService;
-        this.movieResponseDtoService = movieResponseDtoService;
-        this.folderMovieResponsDtoMapper = folderMovieResponsDtoMapper;
-        this.folderMovieService = folderMovieService;
-    }
 
     @GetMapping("/movies")
     public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
@@ -73,8 +68,9 @@ public class UserFolderMovieRestController {
     }
 
     @PostMapping("/movies")
-    public void createNewFolderByMovie(@RequestBody FolderMovieResponsDto folder,
-             @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
+    public void createNewFolderByMovie(
+            @RequestBody FolderMovieResponsDto folder,
+            @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
         FolderMovie folderMovie = folderMovieResponsDtoMapper.toFolder(folder);
         folderMovie.setName(name);
         folderMovie.setCategory(Category.valueOf("CUSTOM"));

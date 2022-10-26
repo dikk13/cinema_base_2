@@ -28,6 +28,7 @@ import java.util.Map;
 public class MovieRestController {
 
     private final ReviewResponseDtoService responseDtoService;
+    private final MovieViewResponseDtoService movieViewResponseDtoService;
     private final ExcertionResponseDtoService excertionResponseDtoService;
 
     @Autowired
@@ -43,7 +44,12 @@ public class MovieRestController {
     }
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
-    public PageDto<ReviewResponseDto> getReview(@PathVariable("id") Long movieId, @PathVariable("pageNumber") Integer pageNumber, @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage, @RequestParam(value = "typeReview", required = false) TypeReview typeReview, @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType) {
+    public PageDto<ReviewResponseDto> getReview(
+            @PathVariable("id") Long movieId,
+            @PathVariable("pageNumber") Integer pageNumber,
+            @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage,
+            @RequestParam(value = "typeReview", required = false) TypeReview typeReview,
+            @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("movieId", movieId);
         parameters.put("typeReview", typeReview);
@@ -51,8 +57,6 @@ public class MovieRestController {
         return responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    private final MovieViewResponseDtoService movieViewResponseDtoService;
 
     @GetMapping("/api/movies/{id}")
     public ResponseEntity<MovieViewResponseDto> getMovie(@PathVariable("id") Long movieId) {
@@ -81,6 +85,3 @@ public class MovieRestController {
         parameters.put("movieId", movieId);
         return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
     }
-
-}
-

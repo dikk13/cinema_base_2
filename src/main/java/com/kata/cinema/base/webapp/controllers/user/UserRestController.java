@@ -6,6 +6,7 @@ import com.kata.cinema.base.dto.response.UserResponseDto;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.dto.UserDtoService;
 import com.kata.cinema.base.service.entity.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +14,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserProfileRestController {
+@AllArgsConstructor
+public class UserRestController {
 
     private final UserDtoService userDtoService;
     private final UserService userService;
 
-    public UserProfileRestController(UserDtoService userDtoService, UserService userService) {
-        this.userDtoService = userDtoService;
-        this.userService = userService;
-    }
 
     @GetMapping("/profile")
     public UserResponseDto getUserProfileInfo(

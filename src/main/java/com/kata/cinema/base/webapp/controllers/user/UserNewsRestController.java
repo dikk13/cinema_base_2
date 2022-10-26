@@ -7,20 +7,16 @@ import com.kata.cinema.base.models.Comments;
 import com.kata.cinema.base.models.News;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.entity.CommentsService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user/news")
+@AllArgsConstructor
 public class UserNewsRestController {
 
     private final CommentsService commentsService;
-
     private final CommentsMapper commentsMapper;
-
-    public UserNewsRestController(CommentsService commentsService, CommentsMapper commentsMapper) {
-        this.commentsService = commentsService;
-        this.commentsMapper = commentsMapper;
-    }
 
     @PostMapping("/{id}/comments")
     void addComments(@PathVariable("id") long newsId, @RequestParam("userId") long userId,
