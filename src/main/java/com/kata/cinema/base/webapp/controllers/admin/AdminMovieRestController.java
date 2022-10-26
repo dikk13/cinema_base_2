@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 @RestController
-@RequestMapping("/api/admin/movie")
+@RequestMapping("/api/admin/movies")
 @RequiredArgsConstructor
 public class AdminMovieRestController {
 

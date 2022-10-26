@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.kata.cinema.base.dto.AnswerRequestDto;
-import com.kata.cinema.base.dto.QuestionRequestDto;
-import com.kata.cinema.base.dto.ResultRequestDto;
+import com.kata.cinema.base.dto.request.AnswerRequestDto;
+import com.kata.cinema.base.dto.request.QuestionRequestDto;
+import com.kata.cinema.base.dto.request.ResultRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,8 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@DatabaseSetup("/dataset_for_question_contr.xml")
-@DatabaseTearDown("/empty_dataset.xml")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
@@ -45,6 +43,8 @@ public class AdminQuestionRestControllerTest {
 
 
     @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
     void addQuestions() throws Exception{
         List <AnswerRequestDto> answers = new ArrayList<>();
         List <ResultRequestDto> results = new ArrayList<>();
@@ -60,6 +60,8 @@ public class AdminQuestionRestControllerTest {
     }
 
     @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
     void deleteQuestion() throws Exception{
         this.mockMvc.perform(MockMvcRequestBuilders
                         .delete("/api/admin/news/101/questions/{id}", "100")

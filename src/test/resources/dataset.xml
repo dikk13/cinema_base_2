@@ -6,7 +6,7 @@
             email='email@mail.com'
             first_name='Name'
             last_name='Last'
-            password='1'
+            password='$2a$12$Pykg48WVp0MCCn01AVYMi.Y/GisNZoocBmq4ofOkVGLl9I7V6K.aq'
             avatar_url='url'
     />
     <users
@@ -15,12 +15,12 @@
             email='email2@mail.com'
             first_name='Name2'
             last_name='Last2'
-            password='1'
+            password='$2a$12$Pykg48WVp0MCCn01AVYMi.Y/GisNZoocBmq4ofOkVGLl9I7V6K.aq'
             avatar_url='url2'
     />
     <role
             id="100"
-            role="ROLE"
+            role="USER"
     />
     <user_roles
             user_id="100"

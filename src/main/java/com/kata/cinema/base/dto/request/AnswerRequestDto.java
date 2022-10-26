@@ -1,4 +1,4 @@
-package com.kata.cinema.base.dto;
+package com.kata.cinema.base.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

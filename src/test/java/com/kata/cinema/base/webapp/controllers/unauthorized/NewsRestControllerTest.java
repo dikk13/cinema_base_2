@@ -22,9 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Transactional
-@DatabaseTearDown(value = "/empty_dataset.xml")
-@DatabaseSetup("/dataset.xml")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
@@ -36,12 +33,13 @@ public class NewsRestControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @DatabaseTearDown(value = "/empty_dataset.xml")
+    @DatabaseSetup("/dataset.xml")
     public void getCommentsResponseDtoById() throws Exception {
         this.mockMvc.perform(get("/api/news/100/comments"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(100))
                 .andExpect(jsonPath("$.[0].dateTime").value("2022-06-17 16:37:23"));
-//        .andExpect(jsonPath("$.[0].dateTime").value("2022-06-17T16:37:23"));
     }
 }

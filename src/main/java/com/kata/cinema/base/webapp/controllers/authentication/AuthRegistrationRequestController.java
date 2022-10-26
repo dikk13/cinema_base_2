@@ -8,12 +8,11 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.security.UserValidator;
 import com.kata.cinema.base.security.jwt.JwtUtil;
 import com.kata.cinema.base.service.entity.RegistrationUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -26,6 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class AuthRegistrationRequestController {
 
     private final UserMapper userMapper;
@@ -34,23 +34,13 @@ public class AuthRegistrationRequestController {
     private final UserValidator userValidator;
     private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public AuthRegistrationRequestController(UserMapper userMapper, RegistrationUserDao registrationUserDao, JwtUtil jwtUtil, UserValidator userValidator, AuthenticationManager authenticationManager) {
-        this.userMapper = userMapper;
-        this.registrationUserDao = registrationUserDao;
-        this.jwtUtil = jwtUtil;
-        this.userValidator = userValidator;
-        this.authenticationManager = authenticationManager;
-    }
-
-
     @PostMapping("/registration")
     public ResponseEntity<UserRegistrationRequestDto> registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
         User user = userMapper.toUser(requestDto);
       userValidator.validate(user, result);
       try {
           if (!result.hasErrors()) {
-            registrationUserDao.register(user);
+              registrationUserService.register(user);
           }
       } catch (AuthenticationException e) {
         throw new BadCredentialsException("Registration error");

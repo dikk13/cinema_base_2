@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductionStudioRestController {
 
     private final ProductionMovieStudioService productionMovieStudioService;
-
     private final ProductionStudioMovieMapper productionStudioMovieMapper;
 
     public ProductionStudioRestController(ProductionMovieStudioService productionMovieStudioService,
@@ -27,5 +26,4 @@ public class ProductionStudioRestController {
         return productionStudioMovieMapper.productionStudioMovieToProductionMovieStudioResponseDto(
                 productionMovieStudioService.getStudioByMovieId(id));
     }
-
 }

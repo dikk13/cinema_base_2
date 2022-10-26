@@ -1,6 +1,7 @@
-package com.kata.cinema.base.dao.Impl;
+package com.kata.cinema.base.dao.entity.Impl;
 
-import com.kata.cinema.base.dao.abstracts.NewsDao;
+import com.kata.cinema.base.dao.entity.Impl.AbstractDaoImpl;
+import com.kata.cinema.base.dao.entity.NewsDao;
 import com.kata.cinema.base.models.News;
 import org.springframework.stereotype.Repository;
 

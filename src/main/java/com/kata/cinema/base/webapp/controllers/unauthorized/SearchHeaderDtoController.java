@@ -26,7 +26,6 @@ public class SearchHeaderDtoController {
 
     @GetMapping("/api/search")
     public ResponseEntity<SearchResponseDto> getAllMoviesPersonsCollection(@RequestParam(value = "filterPattern") String filter) {
-
         return new ResponseEntity<>(new SearchResponseDto(movieService.titleMovie(filter),
                 collectionService.titleCollection(filter),
                 personService.namePerson(filter)), HttpStatus.OK);

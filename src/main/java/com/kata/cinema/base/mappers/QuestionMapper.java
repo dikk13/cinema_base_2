@@ -1,8 +1,8 @@
 package com.kata.cinema.base.mappers;
 
-import com.kata.cinema.base.dto.AnswerRequestDto;
-import com.kata.cinema.base.dto.QuestionRequestDto;
-import com.kata.cinema.base.dto.ResultRequestDto;
+import com.kata.cinema.base.dto.request.AnswerRequestDto;
+import com.kata.cinema.base.dto.request.QuestionRequestDto;
+import com.kata.cinema.base.dto.request.ResultRequestDto;
 import com.kata.cinema.base.models.Answer;
 import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.models.Result;

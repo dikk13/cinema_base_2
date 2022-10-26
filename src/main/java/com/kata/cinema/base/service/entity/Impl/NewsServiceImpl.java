@@ -1,14 +1,15 @@
-package com.kata.cinema.base.service.Impl;
+package com.kata.cinema.base.service.entity.Impl;
 
-import com.kata.cinema.base.dao.abstracts.NewsDao;
+import com.kata.cinema.base.dao.entity.NewsDao;
 import com.kata.cinema.base.models.News;
-import com.kata.cinema.base.service.abstracts.NewsService;
+import com.kata.cinema.base.service.entity.AbstractServiceImpl;
+import com.kata.cinema.base.service.entity.NewsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class NewsServiceImpl extends AbstractServiceImpl <Long, News> implements NewsService {
+public class NewsServiceImpl extends AbstractServiceImpl<Long, News> implements NewsService {
     private final NewsDao newsDao;
 
 
