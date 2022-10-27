@@ -44,7 +44,7 @@ public class Movie {
     private MPAA mpaa;
 
     @Column(name = "time")
-    private String time;
+    private int time;
 
     @Column(name = "description")
     private String description;

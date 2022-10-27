@@ -91,7 +91,7 @@ public class TestDataInitializer {
             int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
             int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
             movie.setDateRelease(LocalDate.of(year, month, day));
-            movie.setTime(String.valueOf(random.ints(100, 181)));
+            movie.setTime(random.nextInt(100, 181));
             movie.setMpaa(MPAA.values()[random.nextInt(MPAA.values().length)]);
             movie.setRars(RARS.values()[random.nextInt(RARS.values().length)]);
             movie.setGenres(genreListMovie);
