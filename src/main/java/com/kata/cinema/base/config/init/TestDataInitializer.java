@@ -8,10 +8,13 @@ import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.service.abstracts.StudioPerformanceService;
 import com.kata.cinema.base.service.entity.CollectionService;
 import com.kata.cinema.base.service.entity.FolderMovieService;
 import com.kata.cinema.base.service.entity.GenreService;
 import com.kata.cinema.base.service.entity.MovieService;
+import com.kata.cinema.base.service.entity.ProductionMovieStudioService;
+import com.kata.cinema.base.service.entity.ProductionStudioService;
 import com.kata.cinema.base.service.entity.RoleService;
 import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -257,19 +260,19 @@ public class TestDataInitializer {
 
     }
     public void productionStudioMovieInit(){
-        for (int i = 0; i < 3; i++){
-            int index = random.nextInt(movieService.getAll().size());
-            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
-            if (!productionStudioMovie.getMovie().equals(movieService.getAll().get(index))) {
-                productionStudioMovie.setMovie(movieService.getAll().get(index));
-            }
-            for (int q = 0; q < 3; q++) {
-                int index2 = random.nextInt(productionStudioService.getAll().size());
-                if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
-                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
-                }
-            }
-        }
+//        for (int i = 0; i < 3; i++){
+//            int index = random.nextInt(movieService.getAll().size());
+//            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
+//            if (!productionStudioMovie.getMovie().getId().equals(movieService.getAll().get(index).getId())) {
+//                productionStudioMovie.setMovie(movieService.getAll().get(index));
+//            }
+//            for (int q = 0; q < 3; q++) {
+//                int index2 = random.nextInt(productionStudioService.getAll().size());
+//                if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
+//                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+//                }
+//            }
+//        }
 
     }
 
