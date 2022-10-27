@@ -9,14 +9,7 @@ import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.RARS;
 import com.kata.cinema.base.service.abstracts.StudioPerformanceService;
-import com.kata.cinema.base.service.entity.CollectionService;
-import com.kata.cinema.base.service.entity.FolderMovieService;
-import com.kata.cinema.base.service.entity.GenreService;
-import com.kata.cinema.base.service.entity.MovieService;
-import com.kata.cinema.base.service.entity.ProductionMovieStudioService;
-import com.kata.cinema.base.service.entity.ProductionStudioService;
-import com.kata.cinema.base.service.entity.RoleService;
-import com.kata.cinema.base.service.entity.UserService;
+import com.kata.cinema.base.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -45,6 +38,15 @@ public class TestDataInitializer {
 
     @Autowired
     private StudioPerformanceService studioPerformanceService;
+
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
+    private ProfessionService professionService;
+
+    @Autowired
+    private MoviePersonService moviePersonService;
 
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
@@ -276,6 +278,133 @@ public class TestDataInitializer {
 
     }
 
+    private void personInit() {
+        final int PERSON_COUNT = 50;
+        final int START_YEAR = 1970;
+        final int LAST_YEAR = 2010;
+        final double MIN_HEIGHT = 1.50;
+        final double MAX_HEIGHT = 2.20;
+        final String photoUrl = "/uploads/persons/photos/%s";
+
+        for (int personNumber = 1; personNumber <= PERSON_COUNT; personNumber++) {
+            Person person = new Person();
+            person.setFirstName(String.format("Имя%s", personNumber));
+            person.setLastName(String.format("Фамилия%s", personNumber));
+            person.setOriginalFirstName(String.format("Name%s", personNumber));
+            person.setOriginalLastName(String.format("lastName%s", personNumber));
+            person.setHeight(random.nextDouble(MIN_HEIGHT, MAX_HEIGHT));
+            int year = random.nextInt(LAST_YEAR - START_YEAR) + START_YEAR;
+            int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+            int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+            person.setDateOfBirth(LocalDate.of(year, month, day));
+            personService.create(person);
+            Optional<Person> personOptional = personService.getById((long) personNumber);
+            if (personOptional.isPresent()) {
+                person.setPhotoUrl(String.format(photoUrl, personOptional.get().getId()));
+                personService.update(person);
+            }
+
+        }
+
+    }
+
+    private void professionInit() {
+        Profession professionDirector = new Profession();
+        professionDirector.setName("Режиссер");
+        professionService.create(professionDirector);
+
+        Profession professionScreenwriter = new Profession();
+        professionScreenwriter.setName("Сценарист");
+        professionService.create(professionScreenwriter);
+
+        Profession professionProducer = new Profession();
+        professionProducer.setName("Продюсер");
+        professionService.create(professionProducer);
+
+        Profession professionOperator = new Profession();
+        professionOperator.setName("Оператор");
+        professionService.create(professionOperator);
+
+        Profession professionComposer = new Profession();
+        professionComposer.setName("Композитор");
+        professionService.create(professionComposer);
+
+        Profession professionArtist = new Profession();
+        professionArtist.setName("Художник");
+        professionService.create(professionArtist);
+
+        Profession professionEditor = new Profession();
+        professionEditor.setName("Монтажер");
+        professionService.create(professionEditor);
+
+        Profession professionActor = new Profession();
+        professionActor.setName("Актер");
+        professionService.create(professionActor);
+    }
+
+    private void moviePersonInit() {
+
+        final int MAIN_CHARACTER = 3;
+        final int MINOR_CHARACTER = 3;
+        final int NO_CHARACTER_MOVIE = 4;
+
+        List <Person> persons;
+        List <Profession> professions;
+        List <Movie> movies = movieService.getAll();
+
+
+        for (Movie movie : movies) {
+            professions = professionService.getAll();
+            persons = personService.getAll();
+            Profession actor = null;
+            for (Profession profession : professions) {
+                if (profession.getName().equals("Актер")) {
+                    actor = profession;
+                }
+            }
+
+            for (int mainCharacterCount = 1; mainCharacterCount <= MAIN_CHARACTER; mainCharacterCount++) {
+                MoviePerson mainMovieActor = new MoviePerson();
+                mainMovieActor.setProfession(actor);
+                mainMovieActor.setMovie(movie);
+                int randomPersonId = random.nextInt(persons.size() - 1);
+                mainMovieActor.setPerson(persons.get(randomPersonId));
+                persons.remove(randomPersonId);
+                mainMovieActor.setNameRole("MAIN_CHARACTER");
+                moviePersonService.create(mainMovieActor);
+            }
+
+            for (int minorCharacterCount = 1; minorCharacterCount <= MINOR_CHARACTER; minorCharacterCount++) {
+                MoviePerson minorMovieActor = new MoviePerson();
+                minorMovieActor.setProfession(actor);
+                minorMovieActor.setMovie(movie);
+                int randomPersonId = random.nextInt(persons.size() - 1);
+                minorMovieActor.setPerson(persons.get(randomPersonId));
+                persons.remove(randomPersonId);
+                minorMovieActor.setNameRole("MINOR_CHARACTER");
+                moviePersonService.create(minorMovieActor);
+            }
+
+            for (int notAnActorCount = 1; notAnActorCount <= NO_CHARACTER_MOVIE; notAnActorCount++) {
+                MoviePerson moviePerson = new MoviePerson();
+                Profession notAnActorProfession = null;
+                for (Profession profession : professions) {
+                    if (!profession.getName().equals("Актер")) {
+                        notAnActorProfession = profession;
+                        professions.remove(profession);
+                    }
+                }
+                moviePerson.setProfession(notAnActorProfession);
+                moviePerson.setMovie(movie);
+                int randomPersonId = random.nextInt(persons.size() - 1);
+                moviePerson.setPerson(persons.get(randomPersonId));
+                persons.remove(randomPersonId);
+                moviePerson.setNameRole("NO_CHARACTER_MOVIE");
+                moviePersonService.create(moviePerson);
+            }
+        }
+    }
+
     private void init() {
         roleInit();
         genreInit();
@@ -286,5 +415,8 @@ public class TestDataInitializer {
         studioProductionInit();
         productionStudioInit();
         productionStudioMovieInit();
+        personInit();
+        professionInit();
+        moviePersonInit();
     }
 }
