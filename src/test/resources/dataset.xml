@@ -210,7 +210,22 @@
             movie_id="100"
             genre_id="101"
     />
-
-
-
+    <excertion
+            id="100"
+            description="test text"
+            movie_id="100"
+            person_id="100"
+    />
+    <excertion
+            id="101"
+            description="test text 2"
+            movie_id="101"
+            person_id="101"
+    />
+    <excertion
+            id="102"
+            description="test text 3"
+            movie_id="101"
+            person_id="101"
+    />
 </dataset>
