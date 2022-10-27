@@ -30,10 +30,6 @@ public class ProductionStudioMovie {
     @JoinColumn(name = "productionStudio_id")
     private ProductionStudio studio;
 
-    @ManyToOne
-    @JoinColumn(name = "studioPerformance_id")
-    private StudioPerformance performance;
-
     @Override
     public int hashCode() {
         return getClass().hashCode();
