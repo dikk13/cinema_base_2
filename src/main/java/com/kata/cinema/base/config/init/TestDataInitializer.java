@@ -2,26 +2,19 @@ package com.kata.cinema.base.config.init;
 
 
 import com.kata.cinema.base.models.*;
-
-import com.kata.cinema.base.models.Collection;
-import com.kata.cinema.base.models.enums.Category;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.Privacy;
-import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.models.enums.*;
 import com.kata.cinema.base.service.abstracts.StudioPerformanceService;
-import com.kata.cinema.base.service.entity.CollectionService;
-import com.kata.cinema.base.service.entity.FolderMovieService;
-import com.kata.cinema.base.service.entity.GenreService;
-import com.kata.cinema.base.service.entity.MovieService;
-import com.kata.cinema.base.service.entity.ProductionMovieStudioService;
-import com.kata.cinema.base.service.entity.ProductionStudioService;
-import com.kata.cinema.base.service.entity.RoleService;
-import com.kata.cinema.base.service.entity.UserService;
+import com.kata.cinema.base.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class TestDataInitializer {
 
@@ -46,6 +39,15 @@ public class TestDataInitializer {
     @Autowired
     private StudioPerformanceService studioPerformanceService;
 
+    @Autowired
+    private NewsService newsService;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private ScoreService scoreService;
+
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
     private static final int countMovieList = 100;
@@ -54,11 +56,13 @@ public class TestDataInitializer {
     private static final int countUser = 25;
     private static final int countGenre = 10;
     private static final int countProductionStudio = 20;
+    private static final int countNews = 20;
     private static final int ELEVEN_MONTHS = 11;
     private static final int ONE_MONTH = 1;
     private static final int TWENTY_SEVEN_DAYS = 27;
     private static final int ONE_DAY = 1;
     private static final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
+    private static final String HTML_DESCRIPTION = "html страница html страница html страница html страница html страница html страница";
 
     private static final Random random = new Random();
 
@@ -123,7 +127,7 @@ public class TestDataInitializer {
             collections.get(i).setName("Подборка " + i);
             collections.get(i).setEnable(i >= 5);
             for (int j = 0; j < countMovieList / 4; j++) {
-                proxyMovieList.add(foldingMovieList.remove(random.nextInt(0, foldingMovieList.size()-1)));
+                proxyMovieList.add(foldingMovieList.remove(random.nextInt(0, foldingMovieList.size() - 1)));
             }
             collections.get(i).setMovies(proxyMovieList);
             collectionService.create(collections.get(i));
@@ -241,7 +245,7 @@ public class TestDataInitializer {
         studioPerformanceService.create(studioDubbing);
     }
 
-    public void productionStudioInit(){
+    public void productionStudioInit() {
         String description = " Описание студии описание студии описание студии описание студии описание студии описание студии описание студии";
         int minDay = (int) LocalDate.of(1960, 1, 1).toEpochDay();
         int maxDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
@@ -259,7 +263,8 @@ public class TestDataInitializer {
         }
 
     }
-    public void productionStudioMovieInit(){
+
+    public void productionStudioMovieInit() {
 //        for (int i = 0; i < 3; i++){
 //            int index = random.nextInt(movieService.getAll().size());
 //            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
@@ -276,6 +281,56 @@ public class TestDataInitializer {
 
     }
 
+    public void newsInit() {
+
+        for (int i = 1; i <= countNews; i++) {
+            News news = new News();
+
+            LocalDateTime end = LocalDateTime.now();
+            long days = ChronoUnit.DAYS.between(LocalDateTime.now().minusWeeks(1), end);
+            LocalDateTime randomDate = end.minusDays(new Random().nextInt((int) days));
+            news.setDate(randomDate);
+            int randomNumber = new Random().nextInt(Rubric.values().length);
+            news.setRubric(Rubric.values()[randomNumber]);
+            news.setTitle(String.format("Заголовок %s", i));
+            news.setHtmlBody(HTML_DESCRIPTION);
+
+            newsService.create(news);
+        }
+    }
+
+    public void reviewInit() {
+        int increment = 0;
+        for (int k = 1; k <= countMovieList; k++) {
+            int[] typeReviewNumbers = new int[]{0, 0, 1, 1, 2};
+            for (int i = 1; i <= 5; i++) {
+                Review review = new Review();
+                LocalDate end = LocalDate.now();
+                long days = ChronoUnit.DAYS.between(LocalDate.now().minusMonths(1), end);
+                LocalDate randomDate = end.minusDays(new Random().nextInt((int) days));
+                review.setTitle(String.format("Заголовок %s", ++increment));
+                review.setDescription(DESCRIPTION);
+                review.setDate(randomDate);
+                review.setUser(userService.getAll().get(i - 1));
+                review.setMovie(movieService.getAll().get(k - 1));
+                review.setTypeReview(TypeReview.values()[typeReviewNumbers[i - 1]]);
+                reviewService.create(review);
+            }
+        }
+    }
+
+    public void scoreInit() {
+        for (int k = 1; k <= countMovieList; k++) {
+            for (int i = 1; i <= 20; i++) {
+                Score score = new Score();
+                score.setScore(random.nextInt(1, 11));
+                score.setUser(userService.getAll().get(i - 1));
+                score.setMovie(movieService.getAll().get(k - 1));
+                scoreService.create(score);
+            }
+        }
+    }
+
     private void init() {
         roleInit();
         genreInit();
@@ -286,5 +341,8 @@ public class TestDataInitializer {
         studioProductionInit();
         productionStudioInit();
         productionStudioMovieInit();
+        newsInit();
+        reviewInit();
+        scoreInit();
     }
 }

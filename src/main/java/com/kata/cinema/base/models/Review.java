@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,6 +33,8 @@ public class Review {
     private String title;
 
     @Column(nullable = false)
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     @Column(nullable = false)
