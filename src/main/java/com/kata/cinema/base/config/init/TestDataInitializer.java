@@ -123,7 +123,7 @@ public class TestDataInitializer {
             collections.get(i).setName("Подборка " + i);
             collections.get(i).setEnable(i >= 5);
             for (int j = 0; j < countMovieList / 4; j++) {
-                proxyMovieList.add(foldingMovieList.remove(random.nextInt(0, foldingMovieList.size()-1)));
+                proxyMovieList.add(foldingMovieList.remove(random.nextInt(0, foldingMovieList.size() - 1)));
             }
             collections.get(i).setMovies(proxyMovieList);
             collectionService.create(collections.get(i));
@@ -241,14 +241,14 @@ public class TestDataInitializer {
         studioPerformanceService.create(studioDubbing);
     }
 
-    public void productionStudioInit(){
+    public void productionStudioInit() {
         String description = " Описание студии описание студии описание студии описание студии описание студии описание студии описание студии";
         int minDay = (int) LocalDate.of(1960, 1, 1).toEpochDay();
         int maxDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
-        long randomDay = minDay + random.nextInt(maxDay - minDay);
-        LocalDate randomDateFoundation = LocalDate.ofEpochDay(randomDay);
 
         for (int i = 1; i <= countProductionStudio; i++) {
+            long randomDay = minDay + random.nextInt(maxDay - minDay);
+            LocalDate randomDateFoundation = LocalDate.ofEpochDay(randomDay);
             ProductionStudio productionStudio = new ProductionStudio();
             productionStudio.setName(String.format("Студия%s", i));
             productionStudio.setDescription(description);
@@ -259,20 +259,21 @@ public class TestDataInitializer {
         }
 
     }
-    public void productionStudioMovieInit(){
-//        for (int i = 0; i < 3; i++){
-//            int index = random.nextInt(movieService.getAll().size());
-//            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
-//            if (!productionStudioMovie.getMovie().getId().equals(movieService.getAll().get(index).getId())) {
-//                productionStudioMovie.setMovie(movieService.getAll().get(index));
-//            }
-//            for (int q = 0; q < 3; q++) {
-//                int index2 = random.nextInt(productionStudioService.getAll().size());
-//                if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
-//                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
-//                }
-//            }
-//        }
+
+    public void productionStudioMovieInit() {
+        int index = random.nextInt(movieService.getAll().size());
+        for (int i = 0; i < 3; i++) {
+            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
+            productionStudioMovie.setMovie(movieService.getAll().get(index));
+            int index2 = random.nextInt(productionStudioService.getAll().size());
+            if (productionStudioMovie.getStudio() == null) {
+                productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+            } else if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
+                productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+            }
+            productionMovieStudioService.create(productionStudioMovie);
+        }
+
 
     }
 
