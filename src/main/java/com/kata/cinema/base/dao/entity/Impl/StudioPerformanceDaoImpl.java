@@ -1,7 +1,6 @@
-package com.kata.cinema.base.dao.Impl;
+package com.kata.cinema.base.dao.entity.Impl;
 
-import com.kata.cinema.base.dao.abstracts.StudioPerformanceDao;
-import com.kata.cinema.base.dao.entity.Impl.AbstractDaoImpl;
+import com.kata.cinema.base.dao.entity.StudioPerformanceDao;
 import com.kata.cinema.base.models.StudioPerformance;
 import org.springframework.stereotype.Repository;
 

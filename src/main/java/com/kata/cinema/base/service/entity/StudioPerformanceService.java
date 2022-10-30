@@ -1,4 +1,4 @@
-package com.kata.cinema.base.service.abstracts;
+package com.kata.cinema.base.service.entity;
 
 import com.kata.cinema.base.models.StudioPerformance;
 import com.kata.cinema.base.service.entity.AbstractService;

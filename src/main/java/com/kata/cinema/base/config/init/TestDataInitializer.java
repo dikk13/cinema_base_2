@@ -5,10 +5,11 @@ import com.kata.cinema.base.models.*;
 
 import com.kata.cinema.base.models.Collection;
 import com.kata.cinema.base.models.enums.Category;
+import com.kata.cinema.base.models.enums.CharacterType;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.RARS;
-import com.kata.cinema.base.service.abstracts.StudioPerformanceService;
+import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import com.kata.cinema.base.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -345,6 +346,7 @@ public class TestDataInitializer {
 
     private void moviePersonInit() {
 
+        //TODO добавиь префикс COUNT_ к наименованию
         final int MAIN_CHARACTER = 3;
         final int MINOR_CHARACTER = 3;
         final int NO_CHARACTER_MOVIE = 4;
@@ -353,17 +355,19 @@ public class TestDataInitializer {
         List <Profession> professions;
         List <Movie> movies = movieService.getAll();
 
-
         for (Movie movie : movies) {
             professions = professionService.getAll();
             persons = personService.getAll();
             Profession actor = null;
+
+            //TODO вместо цикла реализовать запрос, доставать сразу профессию по имени
             for (Profession profession : professions) {
                 if (profession.getName().equals("Актер")) {
                     actor = profession;
                 }
             }
 
+            //TODO начинать все счетчики от 0
             for (int mainCharacterCount = 1; mainCharacterCount <= MAIN_CHARACTER; mainCharacterCount++) {
                 MoviePerson mainMovieActor = new MoviePerson();
                 mainMovieActor.setProfession(actor);
@@ -371,7 +375,7 @@ public class TestDataInitializer {
                 int randomPersonId = random.nextInt(persons.size() - 1);
                 mainMovieActor.setPerson(persons.get(randomPersonId));
                 persons.remove(randomPersonId);
-                mainMovieActor.setNameRole("MAIN_CHARACTER");
+                mainMovieActor.setType(CharacterType.MAIN_CHARACTER);
                 moviePersonService.create(mainMovieActor);
             }
 
@@ -382,17 +386,19 @@ public class TestDataInitializer {
                 int randomPersonId = random.nextInt(persons.size() - 1);
                 minorMovieActor.setPerson(persons.get(randomPersonId));
                 persons.remove(randomPersonId);
-                minorMovieActor.setNameRole("MINOR_CHARACTER");
+                minorMovieActor.setType(CharacterType.MINOR_CHARACTER);
                 moviePersonService.create(minorMovieActor);
             }
 
             for (int notAnActorCount = 1; notAnActorCount <= NO_CHARACTER_MOVIE; notAnActorCount++) {
                 MoviePerson moviePerson = new MoviePerson();
                 Profession notAnActorProfession = null;
+
                 for (Profession profession : professions) {
                     if (!profession.getName().equals("Актер")) {
                         notAnActorProfession = profession;
                         professions.remove(profession);
+                        break;
                     }
                 }
                 moviePerson.setProfession(notAnActorProfession);
@@ -400,7 +406,7 @@ public class TestDataInitializer {
                 int randomPersonId = random.nextInt(persons.size() - 1);
                 moviePerson.setPerson(persons.get(randomPersonId));
                 persons.remove(randomPersonId);
-                moviePerson.setNameRole("NO_CHARACTER_MOVIE");
+                moviePerson.setType(CharacterType.NO_CHARACTER_MOVIE);
                 moviePersonService.create(moviePerson);
             }
         }

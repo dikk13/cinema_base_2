@@ -12,7 +12,6 @@ import java.util.Optional;
 public class NewsServiceImpl extends AbstractServiceImpl<Long, News> implements NewsService {
     private final NewsDao newsDao;
 
-
     public NewsServiceImpl(NewsDao newsDao) {
         super(newsDao);
         this.newsDao = newsDao;

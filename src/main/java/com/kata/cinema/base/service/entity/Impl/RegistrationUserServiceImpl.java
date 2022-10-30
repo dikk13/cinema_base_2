@@ -1,6 +1,5 @@
 package com.kata.cinema.base.service.entity.Impl;
 
-import com.kata.cinema.base.dao.entity.RegistrationUserDao;
 import com.kata.cinema.base.dao.entity.RoleDao;
 import com.kata.cinema.base.dao.entity.UserDao;
 import com.kata.cinema.base.models.FolderMovie;
@@ -27,17 +26,18 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired
-    protected RegistrationUserServiceImpl(RegistrationUserDao registrationUserDao, UserDao userDao, RoleDao roleDao) {
-        super(registrationUserDao);
+    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao) {
+        super(userDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
     }
 
     @Override
     public void register(User user) {
-        Optional<Role> roleUser = roleDao.getByName("ROLE_USER");
+        Optional<Role> roleUser = roleDao.getByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser.orElse(null));
+        //TODO вынести в приватный метод
         for(Category category: Category.values()) {
             if (!category.equals(Category.CUSTOM)) {
                 FolderMovie folderMovie = new FolderMovie();

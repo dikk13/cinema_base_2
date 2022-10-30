@@ -40,14 +40,4 @@ public class Answer {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "id=" + id +
-                ", answer='" + answer + '\'' +
-                ", isRight=" + isRight +
-                ", question=" + question +
-                '}';
-    }
 }

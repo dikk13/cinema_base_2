@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ScoreDaoImpl extends AbstractDaoImpl<Long, Score> implements ScoreDao {
+
     @Override
     public Integer getScoreByMovieIdAndUserId(Long movieId, Long userId) {
         return (Integer) entityManager.createQuery("select s.score from Score s where s.movie.id =: movieId " +

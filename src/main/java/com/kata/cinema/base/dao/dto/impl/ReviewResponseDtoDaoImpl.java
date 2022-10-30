@@ -14,7 +14,7 @@ import java.util.Map;
 public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
 
     @PersistenceContext
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<ReviewResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {

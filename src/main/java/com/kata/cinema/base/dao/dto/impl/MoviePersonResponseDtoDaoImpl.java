@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class MoviePersonResponseDtoDaoImpl implements MoviePersonResponseDtoDao {
 
-    //TODO метод не реализован
+    //TODO метод не реализован, удалить если не используется
     @Override
     public List<MoviePersonResponseDto> getMoviePersonResponseDtoListByMovieId(Long id) {
         return null;

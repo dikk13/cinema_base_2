@@ -47,21 +47,14 @@ public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoServ
     public MovieViewResponseDto getMovieViewResponseDtoByMovieId(Long movieId) {
 
         if (!movieService.existById(movieId)) throw new MovieIdNotFoundException("Фильм не найден");
-
         List<MoviePersonResponseDto> persons = moviePersonResponseDtoService.getMoviePersonResponseDtoListByMovieId(movieId);
-
         List<CastResponseDto> casts = castResponseDtoService.getCastResponseDtoWithMoviePersonDtosListByMovieId(movieId, persons);
-
         String genres = genreService.getGenresOfMovieByMovieId(movieId);
-
         Integer myScore = null;
-//Нет проверки аутентификации
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Object auth = new Object();
         if (auth != null) {
             String username = auth.getName();
             try {
-//              String username = "email@mail.com";
                 User user = userService.getByEmail(username).get();
                 myScore = scoreService.getScoreByMovieIdAndUserId(movieId, user.getId());
             } catch (UsernameNotFoundException ex) {
@@ -70,11 +63,9 @@ public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoServ
         }
 
         MovieViewResponseDto movieViewResponseDto = movieViewResponseDtoDao.getMovieViewResponseDtoByMovieId(movieId);
-
         movieViewResponseDto.setGenres(genres);
         movieViewResponseDto.setMyScore(myScore);
         movieViewResponseDto.setCasts(casts);
-
         return movieViewResponseDto;
     }
 }
