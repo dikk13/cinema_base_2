@@ -6,13 +6,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table(name = "Comments")
+@Table(name = "Comment")
 @Entity
 @Setter
 @ToString
 @Getter
 @NoArgsConstructor
-public class Comments {
+public class Comment {
 
     @Id
     @Column(name = "id")
@@ -20,8 +20,8 @@ public class Comments {
     @SequenceGenerator(name = "seq_comments_id", sequenceName = "SEQ_COMMENTS_ID", allocationSize = 1)
     private Long id;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "message")
+    private String message;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -36,6 +36,12 @@ public class Comments {
     @JoinColumn(name = "news_id", nullable = false, updatable = false)
     private News news;
 
+    @Column(name = "parent_id")
+    private Long parentId;
+
+    @Column(name = "level")
+    private Integer level;
+
     @Override
     public int hashCode() {
         return getClass().hashCode();
@@ -45,7 +51,7 @@ public class Comments {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Comments comments = (Comments) obj;
-        return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
+        Comment comment = (Comment) obj;
+        return Objects.equals(id, comment.id) && Objects.equals(message, comment.message) && Objects.equals(date, comment.date);
     }
 }

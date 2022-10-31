@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CommentsResponseDto implements Serializable {
     private Long id;
     @NotBlank
-    private String text;
+    private String message;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTime;
 }

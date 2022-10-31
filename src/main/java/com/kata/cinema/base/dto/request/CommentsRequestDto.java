@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 @ToString
 public class CommentsRequestDto {
     @NotBlank
-    private String text;
+    private String message;
     private LocalDateTime date;
 }
