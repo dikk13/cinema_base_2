@@ -2,6 +2,7 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 
 import com.kata.cinema.base.dto.response.CommentsResponseDto;
+import com.kata.cinema.base.dto.response.NewsBodyResponseDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
 import com.kata.cinema.base.service.entity.CommentsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,4 +28,11 @@ public class NewsRestController {
     public List<CommentsResponseDto> getCommentsResponseDtoById(@PathVariable("id") long newsId) {
         return commentsMapper.toDTOList(commentsService.getAllCommentsByNewsId(newsId));
     }
+
+    @GetMapping("/{id}")
+    public NewsBodyResponseDto getNewsResponseDtoById(@PathVariable("id") long id) {
+        return new NewsBodyResponseDto
+    }
+
 }
+//1.	GET /api/news/{id} возвращает NewsBodyResponseDto

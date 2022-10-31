@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class CommentsRequestDto {
+
+    @NotBlank
+    private Long id;
     @NotBlank
     private String message;
+    private Integer level;
     private LocalDateTime date;
 }
