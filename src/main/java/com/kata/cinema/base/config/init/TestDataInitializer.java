@@ -2,17 +2,7 @@ package com.kata.cinema.base.config.init;
 
 
 import com.kata.cinema.base.models.*;
-
-import com.kata.cinema.base.models.Collection;
-import com.kata.cinema.base.models.enums.Category;
-import com.kata.cinema.base.models.enums.CharacterType;
-import com.kata.cinema.base.models.enums.MPAA;
-import com.kata.cinema.base.models.enums.Privacy;
-import com.kata.cinema.base.models.enums.RARS;
-import com.kata.cinema.base.service.entity.StudioPerformanceService;
-import com.kata.cinema.base.service.entity.*;
 import com.kata.cinema.base.models.enums.*;
-import com.kata.cinema.base.service.abstracts.StudioPerformanceService;
 import com.kata.cinema.base.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
