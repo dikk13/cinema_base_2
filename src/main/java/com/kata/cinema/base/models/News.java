@@ -47,7 +47,7 @@ public class News {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = true, updatable = false)
     protected User user;
 
     @ToString.Exclude

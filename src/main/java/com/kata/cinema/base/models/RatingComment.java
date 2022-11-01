@@ -31,5 +31,4 @@ public class RatingComment {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-
 }
