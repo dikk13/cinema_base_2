@@ -21,23 +21,23 @@ public class MoviePerson {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "movie_id", insertable = false, updatable = false)
-    protected Movie movie;
+    @JoinColumn (name = "movie_id")
+    private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "profession_id", insertable = false, updatable = false)
-    protected Profession profession;
+    @JoinColumn (name = "profession_id")
+    private Profession profession;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "person_id", insertable = false, updatable = false)
-    protected Person person;
+    @JoinColumn (name = "person_id")
+    private Person person;
 
     @Column (name = "type_character", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    protected CharacterType type;
+    private CharacterType type;
 
     @Column (name = "name_role", length = 100)
-    protected String nameRole;
+    private String nameRole;
 
 
     @Override
