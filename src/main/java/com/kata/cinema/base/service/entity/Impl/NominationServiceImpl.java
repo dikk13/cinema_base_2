@@ -2,6 +2,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.NominationDao;
 
+import com.kata.cinema.base.dto.response.NominationResponseDto;
 import com.kata.cinema.base.models.AwardCeremonyResult;
 import com.kata.cinema.base.models.Nomination;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
@@ -33,6 +34,11 @@ public class NominationServiceImpl extends AbstractServiceImpl<Long, Nomination>
         } else {
             throw new NullPointerException("Фильм не найден");
         }
+    }
+
+    @Override
+    public List<NominationResponseDto> toDtoList() {
+        return nominationDao.toDtoList();
     }
 
     @Override

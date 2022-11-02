@@ -1,7 +1,6 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 import com.kata.cinema.base.dto.response.NominationResponseDto;
-import com.kata.cinema.base.mappers.NominationMapper;
 import com.kata.cinema.base.models.Nomination;
 import com.kata.cinema.base.service.entity.NominationService;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +12,12 @@ import java.util.List;
 public class AdminNominationRestController {
 
     private final NominationService nominationService;
-    private final NominationMapper nominationMapper;
 
-    public AdminNominationRestController(NominationService nominationService, NominationMapper nominationMapper) {
+    public AdminNominationRestController(NominationService nominationService) {
         this.nominationService = nominationService;
-        this.nominationMapper = nominationMapper;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public void addNomination(@RequestParam (name = "name") String nominationName){
         Nomination nomination = new Nomination();
         nomination.setName(nominationName);
@@ -39,9 +36,9 @@ public class AdminNominationRestController {
         nominationService.update(nomination);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List <NominationResponseDto> getNominationList(){
-        return nominationMapper.toDtoList(nominationService.getAll());
+        return nominationService.toDtoList();
     }
 
 }
