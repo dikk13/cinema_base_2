@@ -18,4 +18,9 @@ public class CommentsRequestDto {
     private String message;
     private Integer level;
     private LocalDateTime date;
+
+    public CommentsRequestDto(String message, LocalDateTime date) {
+        this.message = message;
+        this.date = date;
+    }
 }
