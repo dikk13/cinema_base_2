@@ -356,28 +356,25 @@ public class TestDataInitializer {
     private void moviePersonInit() {
 
         //TODO добавиь префикс COUNT_ к наименованию
-        final int MAIN_CHARACTER = 3;
-        final int MINOR_CHARACTER = 3;
-        final int NO_CHARACTER_MOVIE = 4;
+        final int COUNT_MAIN_CHARACTER = 3;
+        final int COUNT_MINOR_CHARACTER = 3;
+        final int COUNT_NO_CHARACTER_MOVIE = 4;
 
         List <Person> persons;
-        List <Profession> professions;
+        List <Profession> professions = professionService.getAll();
+        Profession actor = professionService.getByName("Актер").orElseThrow();
+        professions.removeIf(profession -> profession.getName().equals("Актер"));
+
         List <Movie> movies = movieService.getAll();
 
         for (Movie movie : movies) {
-            professions = professionService.getAll();
+
             persons = personService.getAll();
-            Profession actor = null;
 
             //TODO вместо цикла реализовать запрос, доставать сразу профессию по имени
-            for (Profession profession : professions) {
-                if (profession.getName().equals("Актер")) {
-                    actor = profession;
-                }
-            }
 
             //TODO начинать все счетчики от 0
-            for (int mainCharacterCount = 1; mainCharacterCount <= MAIN_CHARACTER; mainCharacterCount++) {
+            for (int mainCharacterCount = 0; mainCharacterCount < COUNT_MAIN_CHARACTER; mainCharacterCount++) {
                 MoviePerson mainMovieActor = new MoviePerson();
                 mainMovieActor.setProfession(actor);
                 mainMovieActor.setMovie(movie);
@@ -388,7 +385,7 @@ public class TestDataInitializer {
                 moviePersonService.create(mainMovieActor);
             }
 
-            for (int minorCharacterCount = 1; minorCharacterCount <= MINOR_CHARACTER; minorCharacterCount++) {
+            for (int minorCharacterCount = 0; minorCharacterCount < COUNT_MINOR_CHARACTER; minorCharacterCount++) {
                 MoviePerson minorMovieActor = new MoviePerson();
                 minorMovieActor.setProfession(actor);
                 minorMovieActor.setMovie(movie);
@@ -399,18 +396,10 @@ public class TestDataInitializer {
                 moviePersonService.create(minorMovieActor);
             }
 
-            for (int notAnActorCount = 1; notAnActorCount <= NO_CHARACTER_MOVIE; notAnActorCount++) {
+            for (int notAnActorCount = 0; notAnActorCount < COUNT_NO_CHARACTER_MOVIE; notAnActorCount++) {
                 MoviePerson moviePerson = new MoviePerson();
-                Profession notAnActorProfession = null;
-
-                for (Profession profession : professions) {
-                    if (!profession.getName().equals("Актер")) {
-                        notAnActorProfession = profession;
-                        professions.remove(profession);
-                        break;
-                    }
-                }
-                moviePerson.setProfession(notAnActorProfession);
+                int index = random.nextInt(professions.size());
+                moviePerson.setProfession(professions.get(index));
                 moviePerson.setMovie(movie);
                 int randomPersonId = random.nextInt(persons.size() - 1);
                 moviePerson.setPerson(persons.get(randomPersonId));
