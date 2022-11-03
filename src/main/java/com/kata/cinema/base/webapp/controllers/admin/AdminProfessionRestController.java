@@ -20,13 +20,13 @@ public class AdminProfessionRestController {
     private final ProfessionMapper professionMapper;
     private final MoviePersonService moviePersonService;
 
-    @PostMapping("/name={string}")
-    public void addNewProfession(@PathVariable String string) {
+    @PostMapping("/")
+    public void addNewProfession(@RequestParam(name = "string") String string) {
         professionService.create(professionMapper.toProfessionFromString(string));
     }
 
-    @PutMapping("/{id}?name={string}")
-    public void updateProfession(@PathVariable Long id, @PathVariable String string) {
+    @PutMapping("/{id}")
+    public void updateProfession(@PathVariable Long id, @RequestParam(name = "string") String string) {
         professionService.updateById(id, string);
     }
 
