@@ -1,17 +1,14 @@
 package com.kata.cinema.base.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kata.cinema.base.models.Movie;
-import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.models.enums.Rubric;
-import lombok.*;
-import org.hibernate.annotations.Type;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * A DTO for the {@link com.kata.cinema.base.models.News} entity

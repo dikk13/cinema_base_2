@@ -5,6 +5,7 @@ import com.kata.cinema.base.dto.response.CommentNewsResponseDto;
 import com.kata.cinema.base.dto.response.CommentsResponseDto;
 import com.kata.cinema.base.dto.response.NewsBodyResponseDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
+import com.kata.cinema.base.service.dto.CommentNewsResponseDtoService;
 import com.kata.cinema.base.service.dto.NewsBodyResponseDtoService;
 import com.kata.cinema.base.service.entity.CommentsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +22,15 @@ public class NewsRestController {
     private final CommentsService commentsService;
     private final CommentsMapper commentsMapper;
     private final NewsBodyResponseDtoService newsBodyResponseDtoService;
+    private final CommentNewsResponseDtoService commentNewsResponseDtoService;
 
     public NewsRestController(CommentsService commentsService, CommentsMapper commentsMapper,
-                              NewsBodyResponseDtoService newsBodyResponseDtoService) {
+                              NewsBodyResponseDtoService newsBodyResponseDtoService,
+                              CommentNewsResponseDtoService commentNewsResponseDtoService) {
         this.commentsService = commentsService;
         this.commentsMapper = commentsMapper;
         this.newsBodyResponseDtoService = newsBodyResponseDtoService;
+        this.commentNewsResponseDtoService = commentNewsResponseDtoService;
     }
 
     @GetMapping("/{id}/comments")
@@ -39,9 +43,9 @@ public class NewsRestController {
         return newsBodyResponseDtoService.getNewsBodyResponseDtoById(id);
     }
 
-//    @GetMapping("/{id}/comments")
-//    public List<CommentNewsResponseDto> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
-//        return null;
-//    }
+    @GetMapping("/{id}/comments/body")
+    public List<CommentNewsResponseDto> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
+        return commentNewsResponseDtoService.getCommentNewsResponseDtoListByNewsId(id);
+    }
 
 }

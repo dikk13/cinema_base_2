@@ -5,14 +5,13 @@ import com.kata.cinema.base.dto.response.NewsBodyResponseDto;
 import com.kata.cinema.base.exception.NewsIdNotFoundException;
 import com.kata.cinema.base.service.dto.NewsBodyResponseDtoService;
 import com.kata.cinema.base.service.entity.NewsService;
-import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NewsBodyResponseDtoServiceImpl implements NewsBodyResponseDtoService {
 
-    NewsBodyResponseDtoDao newsBodyResponseDtoDao;
-    NewsService newsService;
+    private final NewsBodyResponseDtoDao newsBodyResponseDtoDao;
+    private final NewsService newsService;
 
     public NewsBodyResponseDtoServiceImpl(NewsBodyResponseDtoDao newsBodyResponseDtoDao,
                                           NewsService newsService) {
@@ -27,4 +26,5 @@ public class NewsBodyResponseDtoServiceImpl implements NewsBodyResponseDtoServic
         }
         return newsBodyResponseDtoDao.getNewsBodyResponseDtoByNewsId(id);
     }
+
 }

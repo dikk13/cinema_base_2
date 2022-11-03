@@ -4,4 +4,5 @@ import com.kata.cinema.base.dto.response.NewsBodyResponseDto;
 
 public interface NewsBodyResponseDtoService {
     NewsBodyResponseDto getNewsBodyResponseDtoById(Long id);
+
 }
