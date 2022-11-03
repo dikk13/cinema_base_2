@@ -34,7 +34,7 @@
             title="title"
             user_id="100"
     />
-    <comments
+    <comment
             id="100"
             date="2022-06-17 16:37:23"
             text="text"
