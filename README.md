@@ -91,7 +91,7 @@
 ## 7. Подключение к тестовой БД при тестировании в режиме Debug, используя Docker
 Запускаем интересующий нас тест в режиме Debug, перед этим наследуем класс от IntegrationTestBase (1)
 ![Connect_to_test_DB(1).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(1).png)
-Переходим в Docker Desktop и открываем многоточие и выбираем View Details (2)
+Переходим в Docker Desktop и открываем многоточие, выбираем View Details (2)
 ![Connect_to_test_DB(2).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(2).png)
 Переходим во вкладку Inspect (3), прокручиваем к самому низу страницы и копируем сгенерированный докером порт (4),
 хост всегда будет 0.0.0.0
