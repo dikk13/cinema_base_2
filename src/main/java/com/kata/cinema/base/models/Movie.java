@@ -96,6 +96,10 @@ public class Movie {
     @ToString.Exclude
     private List<Genre> genres;
 
+    @OneToOne(optional = false)
+    @JoinColumn(name = "available_online_movie_id")
+    private AvailableOnlineMovie availableOnlineMovie;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

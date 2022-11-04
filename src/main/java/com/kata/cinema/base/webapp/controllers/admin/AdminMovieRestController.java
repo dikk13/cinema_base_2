@@ -1,7 +1,10 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
+import com.kata.cinema.base.models.AvailableOnlineMovie;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +60,27 @@ public class AdminMovieRestController {
         } else {
             return "Не удалось загрузить файл: файл пустой";
         }
+    }
+
+    @PostMapping("/api/admin/movies/{id}/online")
+    public String availableOnlineMovieRequestDto (@PathVariable(name = "id") Long id, @RequestParam AvailableOnlineMovieRequestDto availableOnlineMovieRequestDto) {
+
+        if (availableOnlineMovieRequestDto.getAvailablePlus() == null) {
+            throw new NullPointerException() ;
+        } else {
+            availableOnlineMovieRequestDto.getAvailablePlus();
+        }
+        return String.valueOf(availableOnlineMovieRequestDto);
+    }
+    @PatchMapping("/api/admin/movies/{id}/online/deactivate")
+    public boolean deactivate(AvailableOnlineMovie availableOnlineMovie) {
+        availableOnlineMovie.setEnabled(false);
+        return false;
+    }
+    @PatchMapping("/api/admin/movies/{id}/online/activate")
+    public boolean activate (AvailableOnlineMovie availableOnlineMovie){
+        availableOnlineMovie.setEnabled(true);
+        return true;
     }
 }
 

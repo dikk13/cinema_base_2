@@ -1,19 +1,34 @@
 package com.kata.cinema.base.config.init;
 
 
-import com.kata.cinema.base.models.*;
-import com.kata.cinema.base.models.enums.*;
+import com.kata.cinema.base.models.AvailableOnlineMovie;
+import com.kata.cinema.base.models.FolderMovie;
+import com.kata.cinema.base.models.Genre;
+import com.kata.cinema.base.models.Movie;
+import com.kata.cinema.base.models.MoviePerson;
+import com.kata.cinema.base.models.Person;
+import com.kata.cinema.base.models.ProductionStudio;
+import com.kata.cinema.base.models.ProductionStudioMovie;
+import com.kata.cinema.base.models.Profession;
+import com.kata.cinema.base.models.PurchasedMovie;
+import com.kata.cinema.base.models.Role;
+import com.kata.cinema.base.models.StudioPerformance;
+import com.kata.cinema.base.models.User;
+
+import com.kata.cinema.base.models.Collection;
+import com.kata.cinema.base.models.enums.Category;
+import com.kata.cinema.base.models.enums.CharacterType;
+import com.kata.cinema.base.models.enums.MPAA;
+import com.kata.cinema.base.models.enums.Privacy;
+import com.kata.cinema.base.models.enums.PurchaseType;
+import com.kata.cinema.base.models.enums.RARS;
+import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import com.kata.cinema.base.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class TestDataInitializer {
 
@@ -43,18 +58,12 @@ public class TestDataInitializer {
 
     @Autowired
     private ProfessionService professionService;
-
+    @Autowired
+    private AvailableOnlineMovieService availableOnlineMovieService;
+    @Autowired
+    private PurchasedMovieService purchasedMovieService;
     @Autowired
     private MoviePersonService moviePersonService;
-
-    @Autowired
-    private NewsService newsService;
-
-    @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private ScoreService scoreService;
 
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
@@ -64,13 +73,11 @@ public class TestDataInitializer {
     private static final int countUser = 25;
     private static final int countGenre = 10;
     private static final int countProductionStudio = 20;
-    private static final int countNews = 20;
     private static final int ELEVEN_MONTHS = 11;
     private static final int ONE_MONTH = 1;
     private static final int TWENTY_SEVEN_DAYS = 27;
     private static final int ONE_DAY = 1;
     private static final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
-    private static final String HTML_DESCRIPTION = "html страница html страница html страница html страница html страница html страница";
 
     private static final Random random = new Random();
 
@@ -356,25 +363,31 @@ public class TestDataInitializer {
     private void moviePersonInit() {
 
         //TODO добавиь префикс COUNT_ к наименованию
-        final int COUNT_MAIN_CHARACTER = 3;
-        final int COUNT_MINOR_CHARACTER = 3;
-        final int COUNT_NO_CHARACTER_MOVIE = 4;
+        final int MAIN_CHARACTER = 3;
+        final int MINOR_CHARACTER = 3;
+        final int NO_CHARACTER_MOVIE = 4;
+
 
         List <Person> persons;
-        List <Profession> professions = professionService.getAll();
-        Profession actor = professionService.getByName("Актер").orElseThrow();
-        professions.removeIf(profession -> profession.getName().equals("Актер"));
-
+        List <Profession> professions;
         List <Movie> movies = movieService.getAll();
 
-        for (Movie movie : movies) {
 
+        for (Movie movie : movies) {
+            professions = professionService.getAll();
             persons = personService.getAll();
+            Profession actor = null;
 
             //TODO вместо цикла реализовать запрос, доставать сразу профессию по имени
 
+            for (Profession profession : professions) {
+                if (profession.getName().equals("Актер")) {
+                    actor = profession;
+                }
+            }
+
             //TODO начинать все счетчики от 0
-            for (int mainCharacterCount = 0; mainCharacterCount < COUNT_MAIN_CHARACTER; mainCharacterCount++) {
+            for (int mainCharacterCount = 0; mainCharacterCount <= MAIN_CHARACTER; mainCharacterCount++) {
                 MoviePerson mainMovieActor = new MoviePerson();
                 mainMovieActor.setProfession(actor);
                 mainMovieActor.setMovie(movie);
@@ -385,7 +398,7 @@ public class TestDataInitializer {
                 moviePersonService.create(mainMovieActor);
             }
 
-            for (int minorCharacterCount = 0; minorCharacterCount < COUNT_MINOR_CHARACTER; minorCharacterCount++) {
+            for (int minorCharacterCount = 0; minorCharacterCount <= MINOR_CHARACTER; minorCharacterCount++) {
                 MoviePerson minorMovieActor = new MoviePerson();
                 minorMovieActor.setProfession(actor);
                 minorMovieActor.setMovie(movie);
@@ -396,10 +409,18 @@ public class TestDataInitializer {
                 moviePersonService.create(minorMovieActor);
             }
 
-            for (int notAnActorCount = 0; notAnActorCount < COUNT_NO_CHARACTER_MOVIE; notAnActorCount++) {
+            for (int notAnActorCount = 0; notAnActorCount <= NO_CHARACTER_MOVIE; notAnActorCount++) {
                 MoviePerson moviePerson = new MoviePerson();
-                int index = random.nextInt(professions.size());
-                moviePerson.setProfession(professions.get(index));
+                Profession notAnActorProfession = null;
+
+                for (Profession profession : professions) {
+                    if (!profession.getName().equals("Актер")) {
+                        notAnActorProfession = profession;
+                        professions.remove(profession);
+                        break;
+                    }
+                }
+                moviePerson.setProfession(notAnActorProfession);
                 moviePerson.setMovie(movie);
                 int randomPersonId = random.nextInt(persons.size() - 1);
                 moviePerson.setPerson(persons.get(randomPersonId));
@@ -409,56 +430,30 @@ public class TestDataInitializer {
             }
         }
     }
+    private void availableOnlineMovieInit(){
+        List<User> userAll =userService.getAll();
+        AvailableOnlineMovie availableOnlineMovie=new AvailableOnlineMovie();
+        availableOnlineMovie.setRentalPrice(2000);
+        availableOnlineMovie.setBuyPrice(3000);
+        availableOnlineMovie.setAvailablePlus(true);
+        availableOnlineMovie.setEnabled(true);
+        availableOnlineMovie.setMovie(movieService.getAll().get(userAll.indexOf(1)));
+        availableOnlineMovieService.create(availableOnlineMovie);
 
-    public void newsInit() {
 
-        for (int i = 1; i <= countNews; i++) {
-            News news = new News();
+    }
+    private void purchasedMovieInit(){
+        List<User> userAll =userService.getAll();
+        PurchasedMovie purchasedMovie=new PurchasedMovie();
+        purchasedMovie.setUser((User) userAll);
+        purchasedMovie.setAvailableOnlineMovie(new AvailableOnlineMovie());
+        purchasedMovie.setEndDate(LocalDate.ofYearDay(2022,12));
+        purchasedMovie.setPurchase(PurchaseType.BUY);
+        purchasedMovieService.create(purchasedMovie);
 
-            LocalDateTime end = LocalDateTime.now();
-            long days = ChronoUnit.DAYS.between(LocalDateTime.now().minusWeeks(1), end);
-            LocalDateTime randomDate = end.minusDays(new Random().nextInt((int) days));
-            news.setDate(randomDate);
-            int randomNumber = new Random().nextInt(Rubric.values().length);
-            news.setRubric(Rubric.values()[randomNumber]);
-            news.setTitle(String.format("Заголовок %s", i));
-            news.setHtmlBody(HTML_DESCRIPTION);
 
-            newsService.create(news);
-        }
     }
 
-    public void reviewInit() {
-        int increment = 0;
-        for (int k = 1; k <= countMovieList; k++) {
-            int[] typeReviewNumbers = new int[]{0, 0, 1, 1, 2};
-            for (int i = 1; i <= 5; i++) {
-                Review review = new Review();
-                LocalDate end = LocalDate.now();
-                long days = ChronoUnit.DAYS.between(LocalDate.now().minusMonths(1), end);
-                LocalDate randomDate = end.minusDays(new Random().nextInt((int) days));
-                review.setTitle(String.format("Заголовок %s", ++increment));
-                review.setDescription(DESCRIPTION);
-                review.setDate(randomDate);
-                review.setUser(userService.getAll().get(i - 1));
-                review.setMovie(movieService.getAll().get(k - 1));
-                review.setTypeReview(TypeReview.values()[typeReviewNumbers[i - 1]]);
-                reviewService.create(review);
-            }
-        }
-    }
-
-    public void scoreInit() {
-        for (int k = 1; k <= countMovieList; k++) {
-            for (int i = 1; i <= 20; i++) {
-                Score score = new Score();
-                score.setScore(random.nextInt(1, 11));
-                score.setUser(userService.getAll().get(i - 1));
-                score.setMovie(movieService.getAll().get(k - 1));
-                scoreService.create(score);
-            }
-        }
-    }
 
     private void init() {
         roleInit();
@@ -473,8 +468,7 @@ public class TestDataInitializer {
         personInit();
         professionInit();
         moviePersonInit();
-        newsInit();
-        reviewInit();
-        scoreInit();
+        purchasedMovieInit();
+        availableOnlineMovieInit();
     }
 }
