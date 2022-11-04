@@ -88,6 +88,21 @@
 В файл db.changelog-master.yaml (10) добавляем нашу новую дирректорию с миграцией
 ![6_jpa_4.png](src/main/resources/static/images/git_tutor/6_jpa_4.png)
 
+## 7. Подключение к тестовой БД при тестировании в режиме Debug, используя Docker
+Запускаем интересующий нас тест в режиме Debug, перед этим наследуем класс от IntegrationTestBase (1)
+![Connect_to_test_DB(1).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(1).png)
+Переходим в Docker Desktop и открываем многоточие и выбираем View Details (2)
+![Connect_to_test_DB(2).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(2).png)
+Переходим во вкладку Inspect (3), прокручиваем к самому низу страницы и копируем сгенерированный докером порт (4),
+хост всегда будет 0.0.0.0
+![Connect_to_test_DB(3).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(3).png)
+Переходим в Idea и добавляем базу данных Postgresql, хост 0.0.0.0 (5), в поле порта (6) указываем порт,
+скопируемый ранее из докера. БД называется test, пароль и юзернейм указаны в IntegrationTestBase,
+в пакете test.java.com.kata.cinema.base.webapp.util. Проверяем соединение и подключаемся.
+![Connect_to_test_DB(4).png](src/main/resources/static/images/git_tutor/Connect_to_test_DB(4).png)
+
+
+
 ## 7. Правила написания интеграционных тестов
 * Тесты создаются согласно методам в рест контроллерах, на каждый рест контроллер создается свой пакет, на каждлый метод в рест контроллере создается класс в котором на этот самый метод пишутся тесты с разными случаями отработки, в датасетах также на каждый контроллер создается свой пакет, в этом пакете на каждый метод создается еще один пакет в котором уже и пишутся датасеты, допускатеся создангие разных пакетов на один метод в случае необходимости
 * Датасеты пишутся в виде xml файлов
