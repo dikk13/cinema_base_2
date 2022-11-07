@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.dto.response.GenreResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +45,17 @@ public class Person {
 
     @Column(name = "photo_url")
     private String photoUrl;
+
+    @Column(name = "count_movie", nullable = true, length = 50)
+    private Long countMovie;
+
+    @Transient
+    @Column(name = "genres")
+    private List<GenreResponseDto> genres;
+
+//    @Transient
+//    @Column(name = "professions")
+//    private List<ProfessionResponseDto> professions;
 
     @OneToMany(mappedBy = "person")
     private List<PersonMarriage> personMarriagesPerson;

@@ -3,6 +3,7 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.request.ExcertionRequestDto;
 import com.kata.cinema.base.dto.response.ExcertionResponseDto;
+import com.kata.cinema.base.dto.response.PersonViewResponseDto;
 import com.kata.cinema.base.mappers.ExcertionMapper;
 import com.kata.cinema.base.models.Excertion;
 import com.kata.cinema.base.models.Person;
@@ -52,5 +53,10 @@ public class PersonRestController {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("personId", personId);
         return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+    }
+
+    @GetMapping("/{id}")
+    public PersonViewResponseDto getPerson(@PathVariable("id") Long id) {
+        return new PersonViewResponseDto();
     }
 }
