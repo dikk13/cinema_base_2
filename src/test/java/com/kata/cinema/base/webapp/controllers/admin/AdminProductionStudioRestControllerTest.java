@@ -7,6 +7,8 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.kata.cinema.base.dto.request.ProductionStudioRequestDto;
 
+import com.kata.cinema.base.security.jwt.JwtUtil;
+import com.kata.cinema.base.service.entity.ProductionStudioService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,14 +43,14 @@ class AdminProductionStudioRestControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private EntityManager entityManager;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private JwtUtil jwtUtil;
 
 
     @Test
-    @DatabaseSetup("/empty_dataset.xml")
+    @DatabaseSetup("/dataset_for_question_contr.xml")
     @DatabaseTearDown(value = "/empty_dataset.xml")
     void createProductionStudio() throws Exception {
         ProductionStudioRequestDto requestDto = new ProductionStudioRequestDto(
@@ -58,13 +60,14 @@ class AdminProductionStudioRestControllerTest {
         );
         this.mockMvc.perform(post("/api/admin/studios")
                         .content(objectMapper.writeValueAsString(requestDto))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DatabaseSetup("/empty_dataset.xml")
+    @DatabaseSetup("/dataset_for_question_contr.xml")
     @DatabaseTearDown(value = "/empty_dataset.xml")
     void updateProductionStudio() throws Exception {
         ProductionStudioRequestDto requestDto = new ProductionStudioRequestDto(
@@ -74,17 +77,18 @@ class AdminProductionStudioRestControllerTest {
         );
         this.mockMvc.perform(put("/api/admin/studios/100")
                         .content(objectMapper.writeValueAsString(requestDto))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).
                 andExpect(status().isOk());
     }
 
     @Test
-    @DatabaseSetup("/empty_dataset.xml")
+    @DatabaseSetup("/dataset_for_question_contr.xml")
     @DatabaseTearDown(value = "/empty_dataset.xml")
     void deleteProductionStudio() throws Exception {
-        entityManager.createQuery("delete from ProductionStudioMovie").executeUpdate();
         this.mockMvc.perform(delete("/api/admin/studios/100")
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).
                 andExpect(status().isOk());
