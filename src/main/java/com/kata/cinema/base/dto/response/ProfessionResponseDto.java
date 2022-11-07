@@ -20,10 +20,4 @@ public class ProfessionResponseDto {
 
     @NotBlank
     private String name;
-
-    public ProfessionResponseDto(Profession profession) {
-        id = getId();
-        name = getName();
-    }
-
 }
