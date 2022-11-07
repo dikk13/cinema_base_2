@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CommentsDao extends AbstractDao<Long, Comments> {
     List<Comments> getCommentsListByNewsId(long id);
+
+
 }

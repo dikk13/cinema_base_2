@@ -32,7 +32,11 @@ public class MovieRestController {
     }
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
-    public PageDto<ReviewResponseDto> getReview(@PathVariable("id") Long movieId, @PathVariable("pageNumber") Integer pageNumber, @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage, @RequestParam(value = "typeReview", required = false) TypeReview typeReview, @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType) {
+    public PageDto<ReviewResponseDto> getReview
+            (@PathVariable("id") Long movieId, @PathVariable("pageNumber") Integer pageNumber,
+             @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage,
+             @RequestParam(value = "typeReview", required = false) TypeReview typeReview,
+             @RequestParam(value = "reviewSortType", required = false, defaultValue = "DATE_ASC") ReviewSortType reviewSortType) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("movieId", movieId);
         parameters.put("typeReview", typeReview);

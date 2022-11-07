@@ -36,6 +36,9 @@ public class Comments {
     @JoinColumn(name = "news_id", nullable = false, updatable = false)
     private News news;
 
+    @Column(name = "isModerate")
+    private Boolean isModerate = false;
+
     @Override
     public int hashCode() {
         return getClass().hashCode();

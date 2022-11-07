@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoService {
+public class  MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoService {
 
     private final GenreService genreService;
     private final UserService userService;
