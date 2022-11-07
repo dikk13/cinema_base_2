@@ -37,7 +37,7 @@
     <comment
             id="100"
             date="2022-06-17 16:37:23"
-            text="text"
+            message="text"
             news_id="100"
             user_id="100"
     />
@@ -98,7 +98,7 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="01:00:00"
+            time="1"
             type="MOVIES"
     />
     <movie
@@ -110,13 +110,12 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="01:00:00"
+            time="1"
             type="MOVIES"
     />
     <production_studio_movie
             id="100"
             movie_id="100"
-            studio_performance_id="100"
             production_studio_id="100"
     />
     <movie_person
