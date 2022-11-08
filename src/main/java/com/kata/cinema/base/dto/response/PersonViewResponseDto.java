@@ -24,6 +24,6 @@ public class PersonViewResponseDto {
     String originalFullName;
     Long countMovie;
     List<GenreResponseDto> genres;
-    //List<ProfessionResponseDto> profession;
+    List<ProfessionResponseDto> profession;
 
 }
