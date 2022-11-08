@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudioPerformanceRequestDto {
-//    private Long id;
+
     private String name;
 }
