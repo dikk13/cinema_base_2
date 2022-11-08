@@ -9,6 +9,7 @@ import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,11 @@ public class AdminStudioPerformanceRestController {
 
     @DeleteMapping("/{id}")
     public void deleteStudioPerformanceById(@PathVariable("id") long id) {
-        studioPerformanceService.deleteById(id);
+        try {
+            studioPerformanceService.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("вероятно существует связь в ProductionsStudio");
+        }
     }
 
 }
