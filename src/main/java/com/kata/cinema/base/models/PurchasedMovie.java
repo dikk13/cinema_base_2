@@ -4,12 +4,13 @@ import com.kata.cinema.base.models.enums.PurchaseType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,19 +26,20 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class PurchasedMovie { //купленный фильм
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_purchased_movie_id")
     @SequenceGenerator(name = "seq_purchased_movie_id", sequenceName = "SEQ_PURCHASED_MOVIE_ID", allocationSize = 1)
-    Long id;
+    @Column(name = "id")
+    private Long id;
 
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "available_online_movie_id")
     private AvailableOnlineMovie availableOnlineMovie;
 

@@ -8,6 +8,8 @@ import com.kata.cinema.base.service.entity.AvailableOnlineMovieService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Service
 public class AvailableOnlineMovieServiceImpl extends AbstractServiceImpl<Long, AvailableOnlineMovie> implements AvailableOnlineMovieService {
@@ -15,5 +17,10 @@ public class AvailableOnlineMovieServiceImpl extends AbstractServiceImpl<Long, A
     protected AvailableOnlineMovieServiceImpl(AbstractDao<Long, AvailableOnlineMovie> abstractDao, AvailableOnlineMovieDAO availableOnlineMovieDAO) {
         super(abstractDao);
         this.availableOnlineMovieDAO = availableOnlineMovieDAO;
+    }
+
+    @Override
+    public List<AvailableOnlineMovie> getAvailableMovie() {
+        return availableOnlineMovieDAO.getAvailableMovie();
     }
 }

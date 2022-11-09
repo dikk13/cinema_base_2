@@ -368,9 +368,9 @@ public class TestDataInitializer {
         final int NO_CHARACTER_MOVIE = 4;
 
 
-        List <Person> persons;
-        List <Profession> professions;
-        List <Movie> movies = movieService.getAll();
+        List<Person> persons;
+        List<Profession> professions;
+        List<Movie> movies = movieService.getAll();
 
 
         for (Movie movie : movies) {
@@ -430,31 +430,44 @@ public class TestDataInitializer {
             }
         }
     }
-    private void availableOnlineMovieInit(){
-        List<User> userAll =userService.getAll();
-        AvailableOnlineMovie availableOnlineMovie=new AvailableOnlineMovie();
-        availableOnlineMovie.setRentalPrice(2000);
-        availableOnlineMovie.setBuyPrice(3000);
-        availableOnlineMovie.setAvailablePlus(true);
-        availableOnlineMovie.setEnabled(true);
-        availableOnlineMovie.setMovie(movieService.getAll().get(userAll.indexOf(1)));
-        availableOnlineMovieService.create(availableOnlineMovie);
 
-
-    }
-    private void purchasedMovieInit(){
-        List<User> userAll =userService.getAll();
-        PurchasedMovie purchasedMovie=new PurchasedMovie();
-        purchasedMovie.setUser((User) userAll);
-        purchasedMovie.setAvailableOnlineMovie(new AvailableOnlineMovie());
-        purchasedMovie.setEndDate(LocalDate.ofYearDay(2022,12));
-        purchasedMovie.setPurchase(PurchaseType.BUY);
-        purchasedMovieService.create(purchasedMovie);
-
-
+    private void availableOnlineMovieInit() {
+        int index = random.nextInt(movieService.getAll().size());
+        for (int count = 1; count <= countMovieList; count++) {
+            AvailableOnlineMovie availableOnlineMovie = new AvailableOnlineMovie();
+            availableOnlineMovie.setMovie(movieService.getAll().get(index));
+            availableOnlineMovie.setRentalPrice(2000);
+            availableOnlineMovie.setBuyPrice(3000);
+            availableOnlineMovie.setAvailablePlus(true);
+            availableOnlineMovie.setEnabled(true);
+            availableOnlineMovieService.create(availableOnlineMovie);
+        }
     }
 
+    private void purchasedMovieInit() {
 
+        int index = random.nextInt(userService.getAll().size());
+        for (int count1 = 1; count1 <= countUser; count1++) {
+            PurchasedMovie purchasedMovie = new PurchasedMovie();
+            purchasedMovie.setUser(userService.getAll().get(index));
+            for (int i = 1; i == 5; i++) {
+                User user = new User();
+                user.setPurchasedMovie((List<PurchasedMovie>) purchasedMovie);
+
+                int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
+                purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAvailableMovie().get(index1));
+                int year = random.nextInt(2022);
+                int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+                int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+                purchasedMovie.setEndDate(LocalDate.of(year, month, day));
+                purchasedMovie.setPurchase(PurchaseType.values()[random.nextInt(PurchaseType.values().length)]);
+                purchasedMovieService.create(purchasedMovie);
+
+
+            }
+        }
+
+    }
     private void init() {
         roleInit();
         genreInit();
@@ -468,7 +481,9 @@ public class TestDataInitializer {
         personInit();
         professionInit();
         moviePersonInit();
-        purchasedMovieInit();
         availableOnlineMovieInit();
+        purchasedMovieInit();
     }
 }
+
+
