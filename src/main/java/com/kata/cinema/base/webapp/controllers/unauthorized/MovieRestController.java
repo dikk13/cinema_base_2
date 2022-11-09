@@ -27,6 +27,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/movies")
 public class MovieRestController {
 
     private final ReviewResponseDtoService responseDtoService;
@@ -35,7 +36,7 @@ public class MovieRestController {
     private final ExcertionService excertionService;
     private final ExcertionMapper excertionMapper;
 
-    @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
+    @GetMapping("/{id}/reviews/page/{pageNumber}")
     public PageDto<ReviewResponseDto> getReview(
             @PathVariable("id") Long movieId,
             @PathVariable("pageNumber") Integer pageNumber,
@@ -50,12 +51,12 @@ public class MovieRestController {
     }
 
 
-    @GetMapping("/api/movies/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MovieViewResponseDto> getMovie(@PathVariable("id") Long movieId) {
         return new ResponseEntity<>(movieViewResponseDtoService.getMovieViewResponseDtoByMovieId(movieId), HttpStatus.OK);
     }
 
-    @PostMapping("/api/movies/{id}/excertions")
+    @PostMapping("/{id}/excertions")
     public ResponseEntity<HttpStatus> createMovieExcertion(@PathVariable("id") Long movieId,
                                                            @RequestBody ExcertionRequestDto excertionRequestDto) {
         Movie movie = excertionResponseDtoService.findMovieById(movieId);
@@ -65,7 +66,7 @@ public class MovieRestController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping("/api/movies/{id}/excertions/page/{pageNumber}")
+    @GetMapping("/{id}/excertions/page/{pageNumber}")
     public PageDto<ExcertionResponseDto> getMovieExcertion(@PathVariable("id") long movieId,
                                                            @PathVariable("pageNumber") Integer pageNumber,
                                                            @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
