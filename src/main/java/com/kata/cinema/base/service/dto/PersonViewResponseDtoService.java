@@ -5,5 +5,5 @@ import com.kata.cinema.base.models.Person;
 import com.kata.cinema.base.service.entity.AbstractService;
 
 public interface PersonViewResponseDtoService extends AbstractService<Long, Person> {
-    PersonViewResponseDto getPersonViewResponseDto(Person targetPerson);
+    PersonViewResponseDto getPersonViewResponseDto(Long id);
 }

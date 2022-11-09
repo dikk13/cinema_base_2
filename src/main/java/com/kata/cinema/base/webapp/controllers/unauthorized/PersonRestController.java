@@ -8,6 +8,7 @@ import com.kata.cinema.base.mappers.ExcertionMapper;
 import com.kata.cinema.base.models.Excertion;
 import com.kata.cinema.base.models.Person;
 import com.kata.cinema.base.service.dto.ExcertionResponseDtoService;
+import com.kata.cinema.base.service.dto.PersonViewResponseDtoService;
 import com.kata.cinema.base.service.entity.ExcertionService;
 import com.kata.cinema.base.service.entity.PersonService;
 import org.springframework.http.HttpStatus;
@@ -25,14 +26,16 @@ public class PersonRestController {
     private final ExcertionService excertionService;
     private final ExcertionMapper excertionMapper;
     private final ExcertionResponseDtoService excertionResponseDtoService;
+    private final PersonViewResponseDtoService personViewResponseDtoService;
 
     public PersonRestController(PersonService personService, ExcertionService excertionService,
                                 ExcertionMapper excertionMapper,
-                                ExcertionResponseDtoService excertionResponseDtoService) {
+                                ExcertionResponseDtoService excertionResponseDtoService, PersonViewResponseDtoService personViewResponseDtoService) {
         this.personService = personService;
         this.excertionService = excertionService;
         this.excertionMapper = excertionMapper;
         this.excertionResponseDtoService = excertionResponseDtoService;
+        this.personViewResponseDtoService = personViewResponseDtoService;
     }
 
     @PostMapping("/{id}/excertions")
@@ -57,6 +60,6 @@ public class PersonRestController {
 
     @GetMapping("/{id}")
     public PersonViewResponseDto getPerson(@PathVariable("id") Long id) {
-        return new PersonViewResponseDto();
+        return personViewResponseDtoService.getPersonViewResponseDto(id);
     }
 }

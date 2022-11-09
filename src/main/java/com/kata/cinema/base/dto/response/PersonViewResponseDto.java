@@ -14,16 +14,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonViewResponseDto {
-    Long id;
-    Double height;
+    private Long id;
+    private Double height;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    LocalDate birthday;
-    String placeBirthday;
-    String photoUrl;
-    String fullName;
-    String originalFullName;
-    Long countMovie;
-    List<GenreResponseDto> genres;
-    List<ProfessionResponseDto> profession;
+    private LocalDate birthday;
+    private String placeBirthday;
+    private String photoUrl;
+    private String fullName;
+    private String originalFullName;
+    private Long countMovie;
+    private List<GenreResponseDto> genres;
+    private List<ProfessionResponseDto> profession;
 
+
+    public PersonViewResponseDto(
+            Long id, Double height, LocalDate birthday, String placeBirthday
+            , String photoUrl, String firstName, String lastName
+            , String originalFirstName, String originalLastName) {
+        this.id = id;
+        this.height = height;
+        this.birthday = birthday;
+        this.placeBirthday = placeBirthday;
+        this.photoUrl = photoUrl;
+        this.fullName = firstName + " " + lastName;
+        this.originalFullName = originalFirstName + " " + originalLastName;
+    }
 }
