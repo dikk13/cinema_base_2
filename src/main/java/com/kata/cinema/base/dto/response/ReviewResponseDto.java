@@ -20,6 +20,8 @@ public class ReviewResponseDto {
     private String description;
     private String fullName;
     private LocalDate date;
+    private Integer countRatingLike;
+    private Integer countRatingDislike;
 
 
 
