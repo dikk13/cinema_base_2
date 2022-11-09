@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin/professions")
@@ -32,15 +33,15 @@ public class AdminProfessionRestController {
 
     @DeleteMapping("/{id}")
     public void deleteProfessionById(@PathVariable Long id) {
-        List<MoviePerson> moviePersonList = moviePersonService.getAll();
-        for (MoviePerson moviePerson : moviePersonList) {
-            if (moviePerson.getProfession().equals(professionService.getById(id).get())) {
-                throw new ProfessionIsBeingUsedException("Невозможно удалить выбранную провессию" +
+        Optional<Profession> professionToDelete = professionService.getById(id);
+        if (professionToDelete.isPresent()) {
+            MoviePerson moviePerson = moviePersonService.getMoviePersonByProfession(professionToDelete.get());
+            if (moviePerson != null) {
+                throw new ProfessionIsBeingUsedException("Невозможно удалить выбранную профессию" +
                         ", так как её уже используют.");
             } else {
                 professionService.deleteById(id);
             }
-
         }
     }
 
