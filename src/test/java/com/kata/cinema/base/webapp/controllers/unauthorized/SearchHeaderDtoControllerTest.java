@@ -5,7 +5,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.kata.cinema.base.dto.request.ExcertionRequestDto;
-import com.kata.cinema.base.webapp.util.IntegrationTestBase;
+import com.kata.cinema.base.dto.request.SearchMovieRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,12 +18,15 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,35 +36,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-class MovieRestControllerTest {
+public class SearchHeaderDtoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     @DatabaseSetup("/dataset.xml")
     @DatabaseTearDown("/empty_dataset.xml")
-    void createMovieExcertion() throws Exception {
-        ExcertionRequestDto excertionRequestDto = new ExcertionRequestDto("test text");
-        this.mockMvc.perform(post("/api/movies/{id}/excertions", 100)
-                        .content(objectMapper.writeValueAsString(excertionRequestDto))
+    void getAuthors() throws Exception {
+        List<Long> personsId = Arrays.asList(100L, 101L, 103L);
+        SearchMovieRequestDto searchMovieRequestDto = new SearchMovieRequestDto(100L, personsId);
+        this.mockMvc.perform(post("/api/search/movies/{id}/authors/page/{pageNumber}", 100, 1)
+                        .content(objectMapper.writeValueAsString(searchMovieRequestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.count").value(2))
+                .andExpect(jsonPath("$.entities.[0].professionId").value(100))
+                .andExpect(jsonPath("$.entities.[0].personId").value(100))
+                .andExpect(jsonPath("$.entities.[0].fullName").value("Name Last"))
+                .andExpect(jsonPath("$.entities.[0].originalFullName").value("OName OLast"))
+                .andExpect(jsonPath("$.entities.[0].type").value("NO_CHARACTER_MOVIE"))
+                .andExpect(jsonPath("$.entities.[0].nameCharacter").value("role1"))
+                .andExpect(jsonPath("$.entities.[0].photoUrl").value("/url_photo_person100"))
+
+                .andExpect(jsonPath("$.entities.[1].professionId").value(100))
+                .andExpect(jsonPath("$.entities.[1].personId").value(101))
+                .andExpect(jsonPath("$.entities.[1].fullName").value("Name2 Last2"))
+                .andExpect(jsonPath("$.entities.[1].originalFullName").value("OName2 OLast2"))
+                .andExpect(jsonPath("$.entities.[1].type").value("NO_CHARACTER_MOVIE"))
+                .andExpect(jsonPath("$.entities.[1].nameCharacter").value("role2"))
+                .andExpect(jsonPath("$.entities.[1].photoUrl").value("/url_photo_person102"));
     }
 
-    @Test
-    @DatabaseSetup("/dataset.xml")
-    @DatabaseTearDown("/empty_dataset.xml")
-    void getMovieExcertion() throws Exception {
-        this.mockMvc.perform(get("/api/movies/{id}/excertions/page/1?itemsOnPage=1", 100))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count").value(1))
-                .andExpect(jsonPath("$.entities.[0].id").value(100))
-                .andExpect(jsonPath("$.entities.[0].description").value("test text"));
-    }
 }
