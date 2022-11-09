@@ -31,6 +31,7 @@ public class ReactionReview {
     @SequenceGenerator(name = "seq_reactionReview_id", sequenceName = "SEQ_REACTIONREVIEW_ID", allocationSize = 1)
     private Long id;
 
+    @Column(name = "rating")
     @Enumerated(EnumType.STRING)
     private TypeRating rating;
 
