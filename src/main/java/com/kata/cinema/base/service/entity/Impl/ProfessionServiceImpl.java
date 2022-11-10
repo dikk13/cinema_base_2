@@ -1,6 +1,7 @@
 package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.ProfessionDao;
+import com.kata.cinema.base.exception.ProfessionNotFountException;
 import com.kata.cinema.base.models.Profession;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.ProfessionService;
@@ -34,6 +35,8 @@ public class ProfessionServiceImpl extends AbstractServiceImpl<Long, Profession>
             profession.setId(id);
             profession.setName(name);
             professionDao.update(profession);
+        } else {
+            throw new ProfessionNotFountException("Profession not found.");
         }
     }
 }

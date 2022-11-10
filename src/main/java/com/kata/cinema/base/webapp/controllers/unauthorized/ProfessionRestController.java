@@ -4,6 +4,8 @@ import com.kata.cinema.base.dto.response.ProfessionResponseDto;
 import com.kata.cinema.base.mappers.ProfessionMapper;
 import com.kata.cinema.base.service.entity.ProfessionService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,13 @@ public class ProfessionRestController {
     private final ProfessionMapper professionMapper;
 
     @GetMapping
-    public List<ProfessionResponseDto> getProfession() {
-        return professionMapper.toDTOList(professionService.getAll());
+    public ResponseEntity<?> getAllProfessions() {
+        try {
+            List<ProfessionResponseDto> toDTOList = professionMapper.toDTOList(professionService.getAll());
+            return new ResponseEntity<>(toDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }

@@ -35,8 +35,8 @@ public class AdminProfessionRestController {
     public void deleteProfessionById(@PathVariable Long id) {
         Optional<Profession> professionToDelete = professionService.getById(id);
         if (professionToDelete.isPresent()) {
-            MoviePerson moviePerson = moviePersonService.getMoviePersonByProfession(professionToDelete.get());
-            if (moviePerson != null) {
+            boolean isProfessionIsBeingUsed = moviePersonService.isProfessionIsBeingUsed(professionToDelete.get());
+            if (isProfessionIsBeingUsed) {
                 throw new ProfessionIsBeingUsedException("Невозможно удалить выбранную профессию" +
                         ", так как её уже используют.");
             } else {

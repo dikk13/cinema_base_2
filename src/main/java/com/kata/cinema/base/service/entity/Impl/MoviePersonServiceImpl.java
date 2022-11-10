@@ -21,7 +21,7 @@ public class MoviePersonServiceImpl extends AbstractServiceImpl<Long, MoviePerso
         this.moviePersonDao = moviePersonDao;
     }
 
-    public MoviePerson getMoviePersonByProfession(Profession profession) {
-        return moviePersonDao.getMoviePersonByProfession(profession);
+    public boolean isProfessionIsBeingUsed(Profession profession) {
+        return moviePersonDao.isProfessionIsBeingUsed(profession);
     }
 }

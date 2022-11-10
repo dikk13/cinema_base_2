@@ -98,7 +98,7 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="01:00:00"
+            time="180"
             type="MOVIES"
     />
     <movie
@@ -110,7 +110,7 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="01:00:00"
+            time="180"
             type="MOVIES"
     />
     <production_studio_movie

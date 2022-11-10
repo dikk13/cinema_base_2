@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MoviePersonDaoImpl extends AbstractDaoImpl<Long, MoviePerson> implements MoviePersonDao {
 
-    public MoviePerson getMoviePersonByProfession(Profession profession) {
-        return (MoviePerson) entityManager.createQuery("select m from MoviePerson m " +
+    public boolean isProfessionIsBeingUsed(Profession profession) {
+        return (boolean) entityManager.createQuery("select count(m) > 0 from MoviePerson m " +
                         "where m.profession = :profession")
                 .setParameter("profession", profession)
                 .getSingleResult();
