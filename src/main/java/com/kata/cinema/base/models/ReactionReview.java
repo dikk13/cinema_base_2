@@ -2,6 +2,7 @@ package com.kata.cinema.base.models;
 
 
 import com.kata.cinema.base.models.enums.TypeRating;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,12 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Table
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReactionReview {
 
     @Id
@@ -43,5 +46,16 @@ public class ReactionReview {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReactionReview that = (ReactionReview) o;
+        return Objects.equals(id, that.id) && rating == that.rating && Objects.equals(review, that.review) && Objects.equals(user, that.user);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, rating, review, user);
+    }
 }

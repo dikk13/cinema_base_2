@@ -54,6 +54,9 @@ public class TestDataInitializer {
     private ReviewService reviewService;
 
     @Autowired
+    private ReactionReviewService reactionReviewService;
+
+    @Autowired
     private ScoreService scoreService;
 
     private final CollectionService collectionService;
@@ -448,6 +451,16 @@ public class TestDataInitializer {
         }
     }
 
+    public void reactionReviewInit() {
+        for (int i = 1; i <= 5; i++) {
+            ReactionReview reactionReview = new ReactionReview();
+            reactionReview.setRating(TypeRating.LIKE);
+            reactionReview.setUser(userService.getAll().get(i - 1));
+            reactionReview.setReview(reviewService.getAll().get(0));
+            reactionReviewService.create(reactionReview);
+        }
+    }
+
     public void scoreInit() {
         for (int k = 1; k <= countMovieList; k++) {
             for (int i = 1; i <= 20; i++) {
@@ -475,6 +488,7 @@ public class TestDataInitializer {
         moviePersonInit();
         newsInit();
         reviewInit();
+        reactionReviewInit();
         scoreInit();
     }
 }
