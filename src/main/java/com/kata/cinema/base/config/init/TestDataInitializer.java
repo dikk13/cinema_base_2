@@ -51,6 +51,15 @@ public class TestDataInitializer {
     private NewsService newsService;
 
     @Autowired
+    private QuestionService questionService;
+
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private ResultService resultService;
+
+    @Autowired
     private ReviewService reviewService;
 
     @Autowired
@@ -64,7 +73,10 @@ public class TestDataInitializer {
     private static final int countUser = 25;
     private static final int countGenre = 10;
     private static final int countProductionStudio = 20;
-    private static final int countNews = 20;
+    private static final int countNews = 25;
+    private static final int countQuestion = 5;
+    private static final int countAnswer = 4;
+    private static final int countResult = 4;
     private static final int ELEVEN_MONTHS = 11;
     private static final int ONE_MONTH = 1;
     private static final int TWENTY_SEVEN_DAYS = 27;
@@ -360,12 +372,12 @@ public class TestDataInitializer {
         final int COUNT_MINOR_CHARACTER = 3;
         final int COUNT_NO_CHARACTER_MOVIE = 4;
 
-        List <Person> persons;
-        List <Profession> professions = professionService.getAll();
+        List<Person> persons;
+        List<Profession> professions = professionService.getAll();
         Profession actor = professionService.getByName("Актер").orElseThrow();
         professions.removeIf(profession -> profession.getName().equals("Актер"));
 
-        List <Movie> movies = movieService.getAll();
+        List<Movie> movies = movieService.getAll();
 
         for (Movie movie : movies) {
 
@@ -414,17 +426,62 @@ public class TestDataInitializer {
 
         for (int i = 1; i <= countNews; i++) {
             News news = new News();
-
             LocalDateTime end = LocalDateTime.now();
             long days = ChronoUnit.DAYS.between(LocalDateTime.now().minusWeeks(1), end);
             LocalDateTime randomDate = end.minusDays(new Random().nextInt((int) days));
             news.setDate(randomDate);
             int randomNumber = new Random().nextInt(Rubric.values().length);
-            news.setRubric(Rubric.values()[randomNumber]);
+            if (i <= 20) {
+                news.setRubric(Rubric.values()[randomNumber]);
+            } else {
+                news.setRubric(Rubric.valueOf("TESTS"));
+            }
             news.setTitle(String.format("Заголовок %s", i));
             news.setHtmlBody(HTML_DESCRIPTION);
-
             newsService.create(news);
+        }
+    }
+
+    public void questionInit() {
+        List<News> listNews = newsService.getAll().stream()
+                .filter(i -> i.getRubric().equals(Rubric.valueOf("TESTS"))).toList();
+
+        for (News news : listNews) {
+            for (int i = 1; i <= countQuestion; i++) {
+                Question question = new Question();
+                question.setPosition(i);
+                question.setQuestion(String.format("Вопрос %s", i));
+                question.setNews(news);
+                questionService.create(question);
+            }
+        }
+    }
+
+    public void answerInit() {
+        List<Question> listQuestion = questionService.getAll();
+
+        for (Question question : listQuestion) {
+            for (int i = 1; i <= countAnswer; i++) {
+                Answer answer = new Answer();
+                answer.setIsRight(i == 1);
+                answer.setAnswer(String.format("Ответ %s", i));
+                answer.setQuestion(question);
+                answerService.create(answer);
+            }
+        }
+    }
+
+    public void resultInit() {
+        List<Question> listQuestion = questionService.getAll();
+
+        for (Question question : listQuestion) {
+            for (int i = 1; i <= countResult; i++) {
+                Result result = new Result();
+                result.setCountRightAnswer(i);
+                result.setResult(String.format("Результат %s", i));
+                result.setQuestion(question);
+                resultService.create(result);
+            }
         }
     }
 
@@ -474,6 +531,9 @@ public class TestDataInitializer {
         professionInit();
         moviePersonInit();
         newsInit();
+        questionInit();
+        answerInit();
+        resultInit();
         reviewInit();
         scoreInit();
     }
