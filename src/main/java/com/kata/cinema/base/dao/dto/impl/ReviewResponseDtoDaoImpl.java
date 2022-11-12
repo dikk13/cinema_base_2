@@ -23,9 +23,9 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                                 "(r.id,r.typeReview,r.title,r.description," +
                                 "concat(r.user.first_name,' ', r.user.last_name)," +
                                 "r.date," +
-                                "(select count (rr) from ReactionReview rr where rr.rating = :like)," +
-                                "(select count (rr) from ReactionReview rr where rr.rating = :dislike))" +
-                                "FROM Review r " +
+                                "(select count (rr) from rr where rr.rating = :like)," +
+                                "(select count (rr) from rr where rr.rating = :dislike)) " +
+                                "FROM Review r left join ReactionReview rr ON r.id = rr.review.id " +
                                 "where r.movie.id = :movieId AND r.typeReview = :typeReview"
                         , ReviewResponseDto.class)
                 .setParameter("like", TypeRating.LIKE)
