@@ -20,10 +20,10 @@ public class ReviewMovieResponseDtoDaoImpl implements ReviewMovieResponseDtoDao 
     public List<ReviewMovieResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
         return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.ReviewMovieResponseDto" +
                                 "(" +
-                                "(select count (r) from r)," +
-                                "(select count (r) from r where typeReview = :positive)," +
-                                "(select count (r) from r where typeReview = :negative)," +
-                                "(select count (r) from r where typeReview = :neutral)" +
+                                "(count (*))," +
+                                "(select count (r) from Review r where r.typeReview = :positive and r.movie.id = :movieId)," +
+                                "(select count (r) from Review r where r.typeReview = :negative and r.movie.id = :movieId)," +
+                                "(select count (r) from Review r where r.typeReview = :neutral and r.movie.id = :movieId)" +
                                 ") " +
                                 "FROM Review r " +
                                 "where r.movie.id = :movieId AND r.typeReview = :typeReview"
