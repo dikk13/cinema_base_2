@@ -59,7 +59,13 @@ public class PersonRestController {
     }
 
     @GetMapping("/{id}")
-    public PersonViewResponseDto getPerson(@PathVariable("id") Long id) {
-        return personViewResponseDtoService.getPersonViewResponseDto(id);
+    public ResponseEntity<?> getPerson(@PathVariable("id") Long id) {
+        try{
+            PersonViewResponseDto person = personViewResponseDtoService.getPersonViewResponseDto(id);
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }
