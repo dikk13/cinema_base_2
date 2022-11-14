@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class News {
     private Long id;
 
     @Column(name = "rubric")
+    @Enumerated(EnumType.STRING)
     private Rubric rubric;
 
     @Column(name = "date")
@@ -35,6 +37,8 @@ public class News {
     @Column(name = "title")
     private String title;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "html_body")
     private String htmlBody;
 
@@ -43,7 +47,7 @@ public class News {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = true, updatable = false)
     protected User user;
 
     @ToString.Exclude

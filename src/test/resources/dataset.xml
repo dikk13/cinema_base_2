@@ -34,10 +34,10 @@
             title="title"
             user_id="100"
     />
-    <comments
+    <comment
             id="100"
             date="2022-06-17 16:37:23"
-            text="text"
+            message="text"
             news_id="100"
             user_id="100"
     />
@@ -60,6 +60,7 @@
             original_first_name="OName"
             original_last_name="OLast"
             place_of_birth="Earth"
+            photo_url="/url_photo_person100"
     />
     <persons
             id="101"
@@ -70,6 +71,7 @@
             original_first_name="OName2"
             original_last_name="OLast2"
             place_of_birth="Earth"
+            photo_url="/url_photo_person102"
     />
     <persons
             id="102"
@@ -80,6 +82,7 @@
             original_first_name="OName3"
             original_last_name="OLast3"
             place_of_birth="Earth"
+            photo_url="/url_photo_person103"
     />
     <professions
             id="100"
@@ -98,7 +101,7 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="180"
+            time="1"
             type="MOVIES"
     />
     <movie
@@ -110,13 +113,12 @@
             name="MName"
             original_name="MOName"
             rars="ZERO_PLUS"
-            time="180"
+            time="1"
             type="MOVIES"
     />
     <production_studio_movie
             id="100"
             movie_id="100"
-            studio_performance_id="100"
             production_studio_id="100"
     />
     <movie_person

@@ -1,10 +1,10 @@
 package com.kata.cinema.base.service.entity;
 
-import com.kata.cinema.base.models.Comments;
+import com.kata.cinema.base.models.Comment;
 
 import java.util.List;
 
-public interface CommentsService extends AbstractService<Long, Comments> {
+public interface CommentsService extends AbstractService<Long, Comment> {
 
-    List<Comments> getAllCommentsByNewsId(long id);
+    List<Comment> getAllCommentsByNewsId(long id);
 }
