@@ -8,6 +8,8 @@ import com.kata.cinema.base.service.entity.ReactionReviewService;
 import com.kata.cinema.base.service.entity.ReviewService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +29,9 @@ public class UserReviewsRestController {
     private final ReviewService reviewService;
 
     @PostMapping("/{id}")
-    public void addReactionReview(@PathVariable("id") Long reviewId,
-                                  @RequestParam(value = "TypeRating") String rating,
-                                  @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Void> addReactionReview(@PathVariable("id") Long reviewId,
+                                            @RequestParam(value = "TypeRating") String rating,
+                                            @AuthenticationPrincipal User currentUser) {
 
         Review review = reviewService.getAll().get((int)(reviewId - 1));
 
@@ -41,9 +43,11 @@ public class UserReviewsRestController {
             newReactionReview.setReview(review);
             newReactionReview.setRating(TypeRating.valueOf(rating.toUpperCase()));
             reactionReviewService.create(newReactionReview);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             reactionReview.get().setRating(TypeRating.valueOf(rating.toUpperCase()));
             reactionReviewService.update(reactionReview.get());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
 
