@@ -4,6 +4,7 @@ import com.kata.cinema.base.dto.request.ProductionStudioRequestDto;
 import com.kata.cinema.base.mappers.ProductionStudioMapper;
 import com.kata.cinema.base.service.entity.ProductionStudioService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,18 +17,21 @@ public class AdminProductionStudioRestController {
     private final ProductionStudioMapper productionStudioMapper;
 
     @PostMapping
-    public void createProductionStudio(@RequestBody ProductionStudioRequestDto productionStudioRequestDto) {
+    public ResponseEntity<Void> createProductionStudio(@RequestBody ProductionStudioRequestDto productionStudioRequestDto) {
         productionStudioService.create(productionStudioMapper.productionStudioRequestDtoToProductionStudio(productionStudioRequestDto));
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProductionStudio(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteProductionStudio(@PathVariable("id") Long id) {
         productionStudioService.deleteById(id);
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("/{id}")
-    public void updateProductionStudio(@PathVariable("id") Long id,
-                                       @RequestBody ProductionStudioRequestDto productionStudioRequestDto) {
+    public ResponseEntity<Void> updateProductionStudio(@PathVariable("id") Long id,
+                                                       @RequestBody ProductionStudioRequestDto productionStudioRequestDto) {
         productionStudioService.updateById(id, productionStudioMapper.productionStudioRequestDtoToProductionStudio(productionStudioRequestDto));
+        return ResponseEntity.ok(null);
     }
 }

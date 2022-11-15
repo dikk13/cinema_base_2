@@ -7,6 +7,7 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.dto.UserDtoService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,30 +23,33 @@ public class UserRestController {
 
 
     @GetMapping("/profile")
-    public UserResponseDto getUserProfileInfo(
+    public ResponseEntity<UserResponseDto> getUserProfileInfo(
             @AuthenticationPrincipal User currentUser) {
         Optional<User> targetUser = userService.getById(currentUser.getId());
-        return targetUser.map(userDtoService::getUserResponseDto).orElse(null);
+        return ResponseEntity.ok(targetUser.map(userDtoService::getUserResponseDto).orElse(null));
     }
 
     @PutMapping("/profile")
-    public void changeUserDetails(
+    public ResponseEntity<Void> changeUserDetails(
             @RequestBody UserRequestDto userRequestDto,
             @AuthenticationPrincipal User currentUser) {
         userService.changeUserDetails(userRequestDto, currentUser);
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("/profile/password")
-    public void changeUserPassword(
+    public ResponseEntity<Void> changeUserPassword(
             @RequestBody PasswordChangeRequestDto passwordChangeRequestDto,
             @AuthenticationPrincipal User currentUser) {
         Optional<User> targetUser = userService.getById(currentUser.getId());
         targetUser.ifPresent(user -> userService.changePassword(passwordChangeRequestDto, user));
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/profile")
-    public void disableUser(@AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Void> disableUser(@AuthenticationPrincipal User currentUser) {
         userService.disableUser(currentUser);
+        return ResponseEntity.ok(null);
     }
 
 }
