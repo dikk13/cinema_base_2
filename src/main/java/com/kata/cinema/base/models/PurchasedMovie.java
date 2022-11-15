@@ -44,7 +44,7 @@ public class PurchasedMovie { //купленный фильм
     private AvailableOnlineMovie availableOnlineMovie;
 
     @Column
-    LocalDate endDate;
+    private LocalDate endDate;
 
 
     @Column

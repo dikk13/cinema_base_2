@@ -2,11 +2,14 @@ package com.kata.cinema.base.webapp.controllers.admin;
 
 
 import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
+import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
 import com.kata.cinema.base.models.AvailableOnlineMovie;
+import com.kata.cinema.base.service.entity.AvailableOnlineMovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,12 +18,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/admin/movies")
 @RequiredArgsConstructor
 public class AdminMovieRestController {
-
+    private final AvailableOnlineMovieService availableOnlineMovieService;
+    private final AvailableOnlineMovieMapper availableOnlineMovieMapper;
     @PostMapping("/{id}/uploadPreview")
     public String upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
 
@@ -61,24 +67,30 @@ public class AdminMovieRestController {
             return "Не удалось загрузить файл: файл пустой";
         }
     }
-
     @PostMapping("/api/admin/movies/{id}/online")
-    public String availableOnlineMovieRequestDto (@PathVariable(name = "id") Long id, @RequestParam AvailableOnlineMovieRequestDto availableOnlineMovieRequestDto) {
+    public void availableOnlineMovieRequestDto (@PathVariable("id") Long id,
+                                                @RequestBody AvailableOnlineMovieRequestDto
+                                                        availableOnlineMovieRequestDto) {
+    Optional<AvailableOnlineMovie> availableOnlineMovie1=
+         availableOnlineMovieService.getById(id);
 
-        if (availableOnlineMovieRequestDto.getAvailablePlus() == null) {
-            throw new NullPointerException() ;
-        } else {
-            availableOnlineMovieRequestDto.getAvailablePlus();
-        }
-        return String.valueOf(availableOnlineMovieRequestDto);
+    if (availableOnlineMovie1.isPresent()){
+        availableOnlineMovie1.get();
+        availableOnlineMovieService.create(availableOnlineMovieMapper.toAvailableOnlineMovie(availableOnlineMovieRequestDto));
+    } else {
+        throw new NullPointerException();
     }
+    }
+
     @PatchMapping("/api/admin/movies/{id}/online/deactivate")
-    public boolean deactivate(AvailableOnlineMovie availableOnlineMovie) {
+    public boolean deactivate(@PathVariable("id") Long id,@RequestBody AvailableOnlineMovie availableOnlineMovie) {
+       Optional<AvailableOnlineMovie> availableOnlineMovieDeactivate=availableOnlineMovieService.getById(id);
         availableOnlineMovie.setEnabled(false);
         return false;
     }
     @PatchMapping("/api/admin/movies/{id}/online/activate")
-    public boolean activate (AvailableOnlineMovie availableOnlineMovie){
+    public boolean activate (@PathVariable("id") Long id,@RequestBody AvailableOnlineMovie availableOnlineMovie){
+        Optional<AvailableOnlineMovie> availableOnlineMovieActivate=availableOnlineMovieService.getById(id);
         availableOnlineMovie.setEnabled(true);
         return true;
     }

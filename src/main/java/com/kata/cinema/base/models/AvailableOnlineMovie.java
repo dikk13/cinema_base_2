@@ -32,11 +32,11 @@ public class AvailableOnlineMovie {
     @Column(name = "id")
     private Long id;
     @Column(name="rental_price")
-    Integer rentalPrice;//стоимость аренды
+    private Integer rentalPrice;//стоимость аренды
     @Column(name="buy_price")
-    Integer buyPrice;//цена покупки
+    private Integer buyPrice;//цена покупки
     @Column(name = "available_plus")
-    Boolean availablePlus;//имеет доступ
+    private Boolean availablePlus;//имеет доступ
     @Column(name = "enabled",nullable = false, columnDefinition = "boolean default true")
     private boolean enabled = Boolean.TRUE;
 

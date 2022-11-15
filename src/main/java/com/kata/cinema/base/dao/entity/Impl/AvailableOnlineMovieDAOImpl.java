@@ -21,8 +21,3 @@ public class AvailableOnlineMovieDAOImpl extends AbstractDaoImpl<Long, Available
 
     }
 }
-//   public List<GenreResponseDto> getAllGenreResponseDto() {
-//        return entityManager.
-//                createQuery("select new com.kata.cinema.base." +
-//                        "dto.response.GenreResponseDto(g.id, g.name)" +
-//                        " from Genre g ", GenreResponseDto.class).getResultList();

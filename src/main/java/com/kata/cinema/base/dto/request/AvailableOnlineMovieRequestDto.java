@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AvailableOnlineMovieRequestDto {
-    Integer rentalPrice;
-    Integer buyPrice;
-    Boolean availablePlus;
+    private Integer rentalPrice;
+    private Integer buyPrice;
+    private Boolean availablePlus;
 
 }
