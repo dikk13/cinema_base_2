@@ -27,24 +27,27 @@ public class AdminStudioPerformanceRestController {
     }
 
     @PostMapping
-    public void addNewStudioPerformance(@RequestBody StudioPerformanceRequestDto studioPerformanceRequestDto) {
+    public ResponseEntity<Void> addNewStudioPerformance(@RequestBody StudioPerformanceRequestDto studioPerformanceRequestDto) {
         studioPerformanceService.create(studioPerformanceMapper.toStudioPerformance(studioPerformanceRequestDto));
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("/{id}")
-    public void updateStudioPerformance(@RequestParam(name = "name") String studioPerformanceName, @PathVariable("id") long id) {
+    public ResponseEntity<Void> updateStudioPerformance(@RequestParam(name = "name") String studioPerformanceName, @PathVariable("id") long id) {
         Optional<StudioPerformance> studioPerformanceContainer = studioPerformanceService.getById(id);
         studioPerformanceContainer.get().setName(studioPerformanceName);
         studioPerformanceService.update(studioPerformanceContainer.get());
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudioPerformanceById(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteStudioPerformanceById(@PathVariable("id") long id) {
         try {
             studioPerformanceService.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("вероятно существует связь в ProductionsStudio");
         }
+        return ResponseEntity.ok(null);
     }
 
 }

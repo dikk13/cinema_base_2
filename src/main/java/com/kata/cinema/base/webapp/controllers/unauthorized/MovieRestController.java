@@ -16,7 +16,6 @@ import com.kata.cinema.base.service.dto.MovieViewResponseDtoService;
 import com.kata.cinema.base.service.dto.ReviewResponseDtoService;
 import com.kata.cinema.base.service.entity.ExcertionService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class MovieRestController {
     private final ExcertionMapper excertionMapper;
 
     @GetMapping("/api/movies/{id}/reviews/page/{pageNumber}")
-    public PageDto<ReviewResponseDto> getReview(
+    public ResponseEntity<PageDto<ReviewResponseDto>> getReview(
             @PathVariable("id") Long movieId,
             @PathVariable("pageNumber") Integer pageNumber,
             @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage,
@@ -46,7 +45,7 @@ public class MovieRestController {
         parameters.put("movieId", movieId);
         parameters.put("typeReview", typeReview);
         parameters.put("reviewSortType", reviewSortType);
-        return responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return ResponseEntity.ok(responseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
 
 
@@ -66,11 +65,11 @@ public class MovieRestController {
     }
 
     @GetMapping("/api/movies/{id}/excertions/page/{pageNumber}")
-    public PageDto<ExcertionResponseDto> getMovieExcertion(@PathVariable("id") long movieId,
-                                                           @PathVariable("pageNumber") Integer pageNumber,
-                                                           @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
+    public ResponseEntity<PageDto<ExcertionResponseDto>> getMovieExcertion(@PathVariable("id") long movieId,
+                                                                           @PathVariable("pageNumber") Integer pageNumber,
+                                                                           @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("movieId", movieId);
-        return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return ResponseEntity.ok(excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
 }

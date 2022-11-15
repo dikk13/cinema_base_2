@@ -9,6 +9,7 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.entity.CommentsService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -24,8 +25,8 @@ public class UserNewsRestController {
     private final UserService userService;
 
     @PostMapping("/{id}/comments")
-    void addComments(@PathVariable("id") long newsId, Principal principal,
-                     @RequestBody CommentsRequestDto commentsRequestDto) {
+    ResponseEntity<Void> addComments(@PathVariable("id") long newsId, Principal principal,
+                                     @RequestBody CommentsRequestDto commentsRequestDto) {
         Comment comment = commentsMapper.toComments(commentsRequestDto);
         String username = principal.getName();
         User user = userService.getByEmail(username).get();
@@ -34,5 +35,6 @@ public class UserNewsRestController {
         comment.setUser(user);
         comment.setNews(news);
         commentsService.create(comment);
+        return ResponseEntity.ok(null);
     }
 }

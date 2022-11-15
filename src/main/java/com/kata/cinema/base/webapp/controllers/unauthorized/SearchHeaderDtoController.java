@@ -42,15 +42,15 @@ public class SearchHeaderDtoController {
 
     //TODO @RequestParam (Map<Long, List<Long>>)
     @PostMapping("api/search/movies/{id}/authors/page/{pageNumber}")
-    public PageDto<SearchMovieResponseDto> getAuthors(@PathVariable("id") long movieId,
-                                                      @PathVariable("pageNumber") Integer pageNumber,
-                                                      @RequestParam(value = "itemsOnPage", defaultValue = "10") Integer itemsOnPage,
-                                                      @RequestBody SearchMovieRequestDto searchMovieRequestDto) {
+    public ResponseEntity<PageDto<SearchMovieResponseDto>> getAuthors(@PathVariable("id") long movieId,
+                                                                      @PathVariable("pageNumber") Integer pageNumber,
+                                                                      @RequestParam(value = "itemsOnPage", defaultValue = "10") Integer itemsOnPage,
+                                                                      @RequestBody SearchMovieRequestDto searchMovieRequestDto) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("professionId", searchMovieRequestDto.getProfessionId());
         parameters.put("personsId", searchMovieRequestDto.getPersonsId());
         parameters.put("movieId", movieId);
-        return searchMovieResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return ResponseEntity.ok(searchMovieResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
 
 }

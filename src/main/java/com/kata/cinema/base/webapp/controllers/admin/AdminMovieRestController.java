@@ -2,6 +2,7 @@ package com.kata.cinema.base.webapp.controllers.admin;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.io.FileOutputStream;
 public class AdminMovieRestController {
 
     @PostMapping("/{id}/uploadPreview")
-    public String upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
+    public ResponseEntity<String> upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
 
         String location = "uploads";
         String location2 = "movies";
@@ -50,12 +51,12 @@ public class AdminMovieRestController {
                 stream.write(bytes);
                 stream.close();
 
-                return "Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath();
+                return ResponseEntity.ok("Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath());
             } catch (Exception e) {
-                return "Не удалось загрузить файл: " + e.getMessage();
+                return ResponseEntity.ok("Не удалось загрузить файл: " + e.getMessage());
             }
         } else {
-            return "Не удалось загрузить файл: файл пустой";
+            return ResponseEntity.ok("Не удалось загрузить файл: файл пустой");
         }
     }
 }
