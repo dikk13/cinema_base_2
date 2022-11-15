@@ -43,9 +43,6 @@ public class Person {
     @Column(name = "place_of_birth", nullable = true, length = 50)
     protected String placeOfBirth;
 
-    @Column(name = "photo_url")
-    private String photoUrl;
-
     @OneToMany(mappedBy = "person")
     private List<PersonMarriage> personMarriagesPerson;
 
