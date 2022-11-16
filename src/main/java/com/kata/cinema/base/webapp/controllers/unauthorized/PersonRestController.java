@@ -46,11 +46,11 @@ public class PersonRestController {
 
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
-    public PageDto<ExcertionResponseDto> getPersonExcertions(@PathVariable("id") long personId,
-                                                             @PathVariable("pageNumber") Integer pageNumber,
-                                                             @RequestParam(value = "itemsOnPage", defaultValue = "10") Integer itemsOnPage) {
+    public ResponseEntity<PageDto<ExcertionResponseDto>> getPersonExcertions(@PathVariable("id") long personId,
+                                                                             @PathVariable("pageNumber") Integer pageNumber,
+                                                                             @RequestParam(value = "itemsOnPage", defaultValue = "10") Integer itemsOnPage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("personId", personId);
-        return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return ResponseEntity.ok(excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
 }

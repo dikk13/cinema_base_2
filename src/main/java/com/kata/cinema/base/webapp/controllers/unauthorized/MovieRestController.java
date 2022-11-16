@@ -66,11 +66,11 @@ public class MovieRestController {
     }
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
-    public PageDto<ExcertionResponseDto> getMovieExcertion(@PathVariable("id") long movieId,
+    public ResponseEntity<PageDto<ExcertionResponseDto>> getMovieExcertion(@PathVariable("id") long movieId,
                                                            @PathVariable("pageNumber") Integer pageNumber,
                                                            @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("movieId", movieId);
-        return excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
+        return ResponseEntity.ok(excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
 }
