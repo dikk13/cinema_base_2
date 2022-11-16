@@ -4,6 +4,7 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 import com.kata.cinema.base.dto.request.ExcertionRequestDto;
 import com.kata.cinema.base.mappers.ExcertionMapper;
 import com.kata.cinema.base.service.entity.ExcertionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,13 +20,15 @@ public class ExcertionRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteExcertion(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteExcertion(@PathVariable("id") long id) {
         excertionService.deleteById(id);
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("/{id}")
-    public void updateExcertion(@PathVariable("id") long id, @RequestBody ExcertionRequestDto excertionRequestDto) {
+    public ResponseEntity<Void> updateExcertion(@PathVariable("id") long id, @RequestBody ExcertionRequestDto excertionRequestDto) {
             excertionService.updateById(id, excertionMapper.toExcertion(excertionRequestDto));
+        return ResponseEntity.ok(null);
     }
 
 }

@@ -3,10 +3,12 @@ package com.kata.cinema.base.webapp.controllers.admin;
 
 import com.kata.cinema.base.dto.request.QuestionRequestDto;
 import com.kata.cinema.base.mappers.QuestionMapper;
-import com.kata.cinema.base.models.*;
+import com.kata.cinema.base.models.News;
+import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.service.entity.NewsService;
 import com.kata.cinema.base.service.entity.QuestionService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,19 +24,21 @@ public class AdminQuestionRestController {
     private final QuestionMapper questionMapper;
 
     @PostMapping("/{id}/questions")
-    public void addQuestions(@PathVariable("id") Long newsId, @RequestBody List <QuestionRequestDto> questionList) {
+    public ResponseEntity<Void> addQuestions(@PathVariable("id") Long newsId, @RequestBody List<QuestionRequestDto> questionList) {
         News news = newsService.getNewsById(newsId);
-        for (QuestionRequestDto questionRequestDto: questionList){
+        for (QuestionRequestDto questionRequestDto : questionList) {
             Question question = questionMapper.toQuestion(questionRequestDto);
             question.setNews(news);
             question.setAnswers(questionMapper.answerRequestDtoListToAnswerList(questionRequestDto.getAnswers()));
             question.setResults(questionMapper.resultRequestDtoListToResultList(questionRequestDto.getResults()));
             questionService.create(question);
         }
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("{newsId}/questions/{id}")
-    public void deleteQuestion(@PathVariable("newsId") Long newsId, @PathVariable("id") Long questionId) {
-            questionService.deleteQuestionWithAnswersAndResults(newsId, questionId);
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("newsId") Long newsId, @PathVariable("id") Long questionId) {
+        questionService.deleteQuestionWithAnswersAndResults(newsId, questionId);
+        return ResponseEntity.ok(null);
     }
 }

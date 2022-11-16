@@ -1,9 +1,9 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
+import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.response.FolderResponseDto;
 import com.kata.cinema.base.dto.response.MovieResponseDto;
-import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.mappers.FolderMovieResponsDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.models.User;
@@ -12,8 +12,8 @@ import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.ShowType;
 import com.kata.cinema.base.models.enums.SortMovieFolderType;
 import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
-import com.kata.cinema.base.service.entity.FolderMovieService;
 import com.kata.cinema.base.service.dto.MovieResponseDtoService;
+import com.kata.cinema.base.service.entity.FolderMovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +68,7 @@ public class UserFolderMovieRestController {
     }
 
     @PostMapping("/movies")
-    public void createNewFolderByMovie(
+    public ResponseEntity<Void> createNewFolderByMovie(
             @RequestBody FolderMovieResponsDto folder,
             @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
         FolderMovie folderMovie = folderMovieResponsDtoMapper.toFolder(folder);
@@ -76,6 +76,6 @@ public class UserFolderMovieRestController {
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
-
+        return ResponseEntity.ok(null);
     }
 }
