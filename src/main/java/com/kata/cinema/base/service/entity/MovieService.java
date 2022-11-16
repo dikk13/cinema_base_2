@@ -8,5 +8,6 @@ import java.util.List;
 public interface MovieService extends AbstractService<Long, Movie> {
 
     List<SearchMovieDto> titleMovie(String name);
+    void updateById(Long id, Movie movie);
 
 }
