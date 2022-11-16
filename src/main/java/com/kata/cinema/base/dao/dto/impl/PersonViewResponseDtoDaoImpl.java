@@ -35,25 +35,26 @@ public class PersonViewResponseDtoDaoImpl implements PersonViewResponseDtoDao {
                 "person.firstName," +
                 "person.lastName," +
                 "person.originalFirstName," +
-                "person.originalLastName) from Person as person where person.id = :personId")
+                "person.originalLastName) from Person as person where person.id = :personId"
+                        , PersonViewResponseDto.class)
                 .setParameter("personId", id)
                 .getSingleResult();
     }
 
     @Override
     public List<ProfessionResponseDto> getProfessionResponseDtoListByPerson(Person person) {
-        return professionMapper.toDTOList(
-                entityManager.createQuery("select " +
-                "distinct mp.profession " +
-                "from MoviePerson  mp where mp.person = :person")
+        return entityManager.createQuery("select distinct new " +
+                "com.kata.cinema.base.dto.response.ProfessionResponseDto(mp.profession.id, mp.profession.name) " +
+                "from  MoviePerson mp where mp.person = :person"
+                        , ProfessionResponseDto.class)
                 .setParameter("person", person)
-                .getResultList()
-        );
+                .getResultList();
     }
 
     @Override
     public Long getMovieCountByPerson(Person person) {
-        return (Long) entityManager.createQuery("select count(m.id) from MoviePerson m where m.person = :person")
+        return (Long) entityManager.createQuery("select count(m.id) from MoviePerson m where m.person = :person"
+                        , Long.class)
                 .setParameter("person", person)
                 .getSingleResult();
     }

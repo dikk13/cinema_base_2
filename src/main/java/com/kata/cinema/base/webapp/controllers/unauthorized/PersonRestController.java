@@ -60,12 +60,10 @@ public class PersonRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPerson(@PathVariable("id") Long id) {
-        try{
-            PersonViewResponseDto person = personViewResponseDtoService.getPersonViewResponseDto(id);
-            return new ResponseEntity<>(person, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        PersonViewResponseDto person = personViewResponseDtoService.getPersonViewResponseDto(id);
+        if (person == null) {
+            return new ResponseEntity<>("There's no such person exist.", HttpStatus.BAD_REQUEST);
         }
-
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 }
