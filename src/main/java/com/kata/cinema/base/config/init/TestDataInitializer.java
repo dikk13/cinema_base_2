@@ -326,7 +326,6 @@ public class TestDataInitializer {
             personService.create(person);
             Optional<Person> personOptional = personService.getById((long) personNumber);
             if (personOptional.isPresent()) {
-                person.setPhotoUrl(String.format(photoUrl, personOptional.get().getId()));
                 personService.update(person);
             }
 
