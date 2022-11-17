@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
 
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
+
 @Repository
 public class ScoreMovieDaoImpl implements ScoreMovieDao {
 
@@ -29,9 +31,9 @@ public class ScoreMovieDaoImpl implements ScoreMovieDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("select count (s) from Score s where s.user.id =: userId", Long.class)
-                .setParameter("userId", parameters.get("userId"))
-                .getSingleResult();
+        return jpaResultHelper(entityManager.createQuery("select count (s) from Score s where s.user.id =: userId", Long.class)
+                .setParameter("userId", parameters.get("userId")))
+                .orElse(null);
     }
 
     private String getSort(SortScoreType sortScoreType) {

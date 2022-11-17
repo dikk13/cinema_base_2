@@ -4,10 +4,10 @@ import com.kata.cinema.base.dao.dto.FolderMovieResponsDtoDao;
 import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.response.FolderResponseDto;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
 
 @Repository
 public class FolderMovieResponsDtoDaoImpl implements FolderMovieResponsDtoDao {
@@ -17,9 +17,8 @@ public class FolderMovieResponsDtoDaoImpl implements FolderMovieResponsDtoDao {
 
     @Override
     public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
-        return entityManager.createQuery("select new com.kata.cinema.base.dto.response.FolderMovieResponsDto(fm.id, fm.category, fm.privacy, fm.name, fm.description) from FolderMovie fm where fm.id =: id", FolderMovieResponsDto.class)
-                .setParameter("id", folderMovieId)
-                .getSingleResult();
+        return jpaResultHelper(entityManager.createQuery("select new com.kata.cinema.base.dto.response.FolderMovieResponsDto(fm.id, fm.category, fm.privacy, fm.name, fm.description) from FolderMovie fm where fm.id =: id", FolderMovieResponsDto.class)
+                .setParameter("id", folderMovieId)).orElse(null);
     }
     @Override
     public List<FolderResponseDto> getFolderByUser(Long userId) {

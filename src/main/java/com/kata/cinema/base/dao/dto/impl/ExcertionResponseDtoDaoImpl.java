@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
 
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
+
 @Repository
 public class ExcertionResponseDtoDaoImpl implements ExcertionResponseDtoDao {
 
@@ -31,11 +33,10 @@ public class ExcertionResponseDtoDaoImpl implements ExcertionResponseDtoDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("SELECT COUNT (e) FROM Excertion e " +
+        return jpaResultHelper(entityManager.createQuery("SELECT COUNT (e) FROM Excertion e " +
                         "WHERE e.person.id = :personId OR e.movie.id = :movieId", Long.class)
                 .setParameter("personId", parameters.get("personId"))
-                .setParameter("movieId", parameters.get("movieId"))
-                .getSingleResult();
+                .setParameter("movieId", parameters.get("movieId"))).orElse(null);
     }
 
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+
+
 @Repository
 public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
 
@@ -33,7 +35,7 @@ public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
                         "count(s.score)) from Movie m join m.scores s join m.contents c where m.id = :movieId " +
                         "and c.type = :type group by m.id, c.content_url")
                 .setParameter("movieId", movieId)
-                .setParameter("type", ContentType.PREVIEW)
-                .getSingleResult();
+                .setParameter("type", ContentType.PREVIEW).
+                getSingleResult();
     }
 }
