@@ -49,12 +49,11 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
            movieToUpdate.setTime(movie.getTime());
            movieToUpdate.setDescription(movie.getDescription());
            movieToUpdate.setOriginalName(movie.getOriginalName());
-           List<Genre> allGenresList = genreService.getAll();
            List<Genre> genresToUpdate = null;
-           for (Genre genre : allGenresList) {
-               if (movie.getGenreIds().contains(genre.getId())) {
-                   genresToUpdate.add(genre);
-               }
+           List<Long> genreIds = movie.getGenreIds();
+           for (Long genreId : genreIds) {
+               Optional<Genre> genre = genreService.getById(genreId);
+               genre.ifPresent(value -> genresToUpdate.add(value));
            }
            movieToUpdate.setGenres(genresToUpdate);
            movieDao.update(movieToUpdate);
