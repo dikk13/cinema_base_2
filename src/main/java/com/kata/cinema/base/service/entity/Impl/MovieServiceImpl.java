@@ -3,6 +3,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.MovieDao;
 import com.kata.cinema.base.dto.SearchMovieDto;
+import com.kata.cinema.base.dto.request.MovieRequestDto;
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
@@ -36,7 +37,7 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
 
     @Override
     @Transactional
-    public void updateById(Long id, Movie movie) {
+    public void updateById(Long id, MovieRequestDto movie) {
         Optional<Movie> optionalMovie = getById(id);
         if (optionalMovie.isPresent()) {
            Movie movieToUpdate = optionalMovie.get();
@@ -48,6 +49,14 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
            movieToUpdate.setTime(movie.getTime());
            movieToUpdate.setDescription(movie.getDescription());
            movieToUpdate.setOriginalName(movie.getOriginalName());
+           List<Genre> allGenresList = genreService.getAll();
+           List<Genre> genresToUpdate = null;
+           for (Genre genre : allGenresList) {
+               if (movie.getGenreIds().contains(genre.getId())) {
+                   genresToUpdate.add(genre);
+               }
+           }
+           movieToUpdate.setGenres(genresToUpdate);
            movieDao.update(movieToUpdate);
         }
     }
