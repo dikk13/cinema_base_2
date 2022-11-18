@@ -37,7 +37,7 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
 
     @Override
     @Transactional
-    public void updateById(Long id, MovieRequestDto movie) {
+    public void updateById(Long id, Movie movie) {
         Optional<Movie> optionalMovie = getById(id);
         if (optionalMovie.isPresent()) {
            Movie movieToUpdate = optionalMovie.get();
@@ -49,13 +49,7 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
            movieToUpdate.setTime(movie.getTime());
            movieToUpdate.setDescription(movie.getDescription());
            movieToUpdate.setOriginalName(movie.getOriginalName());
-           List<Genre> genresToUpdate = null;
-           List<Long> genreIds = movie.getGenreIds();
-           for (Long genreId : genreIds) {
-               Optional<Genre> genre = genreService.getById(genreId);
-               genre.ifPresent(value -> genresToUpdate.add(value));
-           }
-           movieToUpdate.setGenres(genresToUpdate);
+           movieToUpdate.setGenres(movie.getGenres());
            movieDao.update(movieToUpdate);
         }
     }

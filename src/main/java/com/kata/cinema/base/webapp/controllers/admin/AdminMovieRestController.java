@@ -7,11 +7,7 @@ import com.kata.cinema.base.service.entity.MovieService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -74,8 +70,9 @@ public class AdminMovieRestController {
         return ResponseEntity.ok(null);
     }
 
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
-        movieService.updateById(id, movieRequestDto);
+        movieService.updateById(id, movieMapper.toMovie(movieRequestDto));
         return ResponseEntity.ok(null);
     }
 
