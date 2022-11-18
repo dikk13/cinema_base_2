@@ -19,7 +19,6 @@ public class PersonViewResponseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate birthday;
     private String placeBirthday;
-    private String photoUrl;
     private String fullName;
     private String originalFullName;
     private Long countMovie;
@@ -29,13 +28,12 @@ public class PersonViewResponseDto {
 
     public PersonViewResponseDto(
             Long id, Double height, LocalDate birthday, String placeBirthday
-            , String photoUrl, String firstName, String lastName
+            , String firstName, String lastName
             , String originalFirstName, String originalLastName) {
         this.id = id;
         this.height = height;
         this.birthday = birthday;
         this.placeBirthday = placeBirthday;
-        this.photoUrl = photoUrl;
         this.fullName = firstName + " " + lastName;
         this.originalFullName = originalFirstName + " " + originalLastName;
     }
