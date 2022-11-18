@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.util.Optional;
+
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
 
 
 @Repository
@@ -19,8 +22,8 @@ public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
     }
 
     @Override
-    public MovieViewResponseDto getMovieViewResponseDtoByMovieId(Long movieId) {
-        return (MovieViewResponseDto) entityManager.createQuery("" +
+    public Optional<MovieViewResponseDto> getMovieViewResponseDtoByMovieId(Long movieId) {
+        return jpaResultHelper(entityManager.createQuery("" +
                         "select new com.kata.cinema.base.dto.response.MovieViewResponseDto(" +
                         "m.id, " +
                         "m.name, " +
@@ -33,9 +36,8 @@ public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
                         "c.content_url, " +
                         "avg(s.score), " +
                         "count(s.score)) from Movie m join m.scores s join m.contents c where m.id = :movieId " +
-                        "and c.type = :type group by m.id, c.content_url")
+                        "and c.type = :type group by m.id, c.content_url", MovieViewResponseDto.class)
                 .setParameter("movieId", movieId)
-                .setParameter("type", ContentType.PREVIEW).
-                getSingleResult();
+                .setParameter("type", ContentType.PREVIEW));
     }
 }

@@ -7,13 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
+
 @Repository
 public class UserDaoImpl extends AbstractDaoImpl<Long, User> implements UserDao {
     @Override
     public Optional<User> getByEmail(String email) {
         try {
-            return Optional.of(entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.role WHERE u.email=:email", User.class)
-                    .setParameter("email", email).getSingleResult());
+            return jpaResultHelper(entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.role WHERE u.email=:email", User.class)
+                    .setParameter("email", email));
         } catch (Exception e) {
             throw new UsernameNotFoundException("There is no such email");
         }

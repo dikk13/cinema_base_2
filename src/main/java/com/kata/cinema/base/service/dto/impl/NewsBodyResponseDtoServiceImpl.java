@@ -7,6 +7,8 @@ import com.kata.cinema.base.service.dto.NewsBodyResponseDtoService;
 import com.kata.cinema.base.service.entity.NewsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class NewsBodyResponseDtoServiceImpl implements NewsBodyResponseDtoService {
 
@@ -20,7 +22,7 @@ public class NewsBodyResponseDtoServiceImpl implements NewsBodyResponseDtoServic
     }
 
     @Override
-    public NewsBodyResponseDto getNewsBodyResponseDtoById(Long id) {
+    public Optional<NewsBodyResponseDto> getNewsBodyResponseDtoById(Long id) {
         if (newsService.getNewsById(id).getUser() == null) {
             throw new NewsIdNotFoundException("Запись не найдена");
         }

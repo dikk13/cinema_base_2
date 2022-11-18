@@ -9,8 +9,6 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
 
-import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
-
 @Repository
 public class SearchMovieResponseDtoDaoImpl implements SearchMovieResponseDtoDao {
 
@@ -34,10 +32,9 @@ public class SearchMovieResponseDtoDaoImpl implements SearchMovieResponseDtoDao 
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return jpaResultHelper(entityManager.createQuery("SELECT COUNT (mp) FROM MoviePerson mp WHERE mp.profession.id = :professionId AND mp.movie.id = :movieId AND mp.person.id IN (:personsId)", Long.class)
+        return entityManager.createQuery("SELECT COUNT (mp) FROM MoviePerson mp WHERE mp.profession.id = :professionId AND mp.movie.id = :movieId AND mp.person.id IN (:personsId)", Long.class)
                 .setParameter("professionId", parameters.get("professionId"))
                 .setParameter("personsId", parameters.get("personsId"))
-                .setParameter("movieId", parameters.get("movieId")))
-                .orElse(null);
+                .setParameter("movieId", parameters.get("movieId")).getSingleResult();
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
+
 import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
 
 @Repository
@@ -16,9 +18,9 @@ public class FolderMovieResponsDtoDaoImpl implements FolderMovieResponsDtoDao {
     EntityManager entityManager;
 
     @Override
-    public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
+    public Optional<FolderMovieResponsDto> getFolderMovieResponsDtoById(Long folderMovieId) {
         return jpaResultHelper(entityManager.createQuery("select new com.kata.cinema.base.dto.response.FolderMovieResponsDto(fm.id, fm.category, fm.privacy, fm.name, fm.description) from FolderMovie fm where fm.id =: id", FolderMovieResponsDto.class)
-                .setParameter("id", folderMovieId)).orElse(null);
+                .setParameter("id", folderMovieId));
     }
     @Override
     public List<FolderResponseDto> getFolderByUser(Long userId) {
