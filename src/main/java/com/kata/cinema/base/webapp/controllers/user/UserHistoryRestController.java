@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/user/history")
 @AllArgsConstructor
 public class UserHistoryRestController {
-
-    static final Logger LOGGER = Logger.getLogger(UserHistoryRestController.class.getName());
 
     private final HistoryResponseDtoService historyResponseDtoService;
     private final HistoryService historyService;
@@ -32,10 +29,9 @@ public class UserHistoryRestController {
         return new ResponseEntity<>(historyResponseDtoService.getHistoryResponseDtoListByUserId(currentUser.getId()), HttpStatus.OK);
     }
 
-    @Scheduled(initialDelayString = "PT1M", fixedDelayString = "PT5S")
+    @Scheduled(initialDelayString = "PT30S", fixedDelayString = "P1W")
     @DeleteMapping("/reset")
     private void resetHistory() {
-        LOGGER.info("Method start!");
         historyService.deleteHistoryIfPassed30Days();
     }
 
