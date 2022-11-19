@@ -1,6 +1,8 @@
 package com.kata.cinema.base.webapp.controllers.unauthorized;
 
+import com.kata.cinema.base.dto.response.ChapterResponseDto;
 import com.kata.cinema.base.models.Chapter;
+import com.kata.cinema.base.service.dto.ChapterResponseDtoService;
 import com.kata.cinema.base.service.entity.ChapterService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class ChapterRestController {
 
-    private final ChapterService chapterService;
+    private final ChapterResponseDtoService chapterResponseDtoService;
 
     @GetMapping
-    public ResponseEntity<List<Chapter>> getAllChapters() {
-        List<Chapter> chapters = chapterService.getAll();
+    public ResponseEntity<List<ChapterResponseDto>> getAllChapters() {
+        List<ChapterResponseDto> chapters = chapterResponseDtoService.getChapterResponseDtoList();
         return ResponseEntity.ok(chapters);
     }
 }
