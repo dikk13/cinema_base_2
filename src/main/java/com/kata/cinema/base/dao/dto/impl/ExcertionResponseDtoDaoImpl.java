@@ -34,8 +34,7 @@ public class ExcertionResponseDtoDaoImpl implements ExcertionResponseDtoDao {
         return entityManager.createQuery("SELECT COUNT (e) FROM Excertion e " +
                         "WHERE e.person.id = :personId OR e.movie.id = :movieId", Long.class)
                 .setParameter("personId", parameters.get("personId"))
-                .setParameter("movieId", parameters.get("movieId"))
-                .getSingleResult();
+                .setParameter("movieId", parameters.get("movieId")).getSingleResult();
     }
 
 }

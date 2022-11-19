@@ -7,6 +7,7 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.dto.UserDtoService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,34 +24,36 @@ public class UserRestController {
 
 
     @GetMapping("/profile")
-    public ResponseEntity<UserResponseDto> getUserProfileInfo(
-            @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<UserResponseDto> getUserProfileInfo(@AuthenticationPrincipal User currentUser) {
+        //TODO переписать метод, доставать id текущего пользователя из контеста, а дто из бд по id
+
         Optional<User> targetUser = userService.getById(currentUser.getId());
+        if (targetUser.isEmpty()) {
+            throw new RuntimeException("Неверно передан id, пользователя с таким ");
+        }
+
         return ResponseEntity.ok(targetUser.map(userDtoService::getUserResponseDto).orElse(null));
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<Void> changeUserDetails(
-            @RequestBody UserRequestDto userRequestDto,
-            @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Void> changeUserDetails(@RequestBody UserRequestDto userRequestDto,
+                                                  @AuthenticationPrincipal User currentUser) {
         userService.changeUserDetails(userRequestDto, currentUser);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/profile/password")
-    public ResponseEntity<Void> changeUserPassword(
-            @RequestBody PasswordChangeRequestDto passwordChangeRequestDto,
-            @AuthenticationPrincipal User currentUser) {
+    public ResponseEntity<Void> changeUserPassword(@RequestBody PasswordChangeRequestDto passwordChangeRequestDto,
+                                                   @AuthenticationPrincipal User currentUser) {
         Optional<User> targetUser = userService.getById(currentUser.getId());
         targetUser.ifPresent(user -> userService.changePassword(passwordChangeRequestDto, user));
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/profile")
     public ResponseEntity<Void> disableUser(@AuthenticationPrincipal User currentUser) {
         userService.disableUser(currentUser);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
 

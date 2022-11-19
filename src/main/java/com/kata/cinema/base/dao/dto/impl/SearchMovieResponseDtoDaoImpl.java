@@ -35,7 +35,6 @@ public class SearchMovieResponseDtoDaoImpl implements SearchMovieResponseDtoDao 
         return entityManager.createQuery("SELECT COUNT (mp) FROM MoviePerson mp WHERE mp.profession.id = :professionId AND mp.movie.id = :movieId AND mp.person.id IN (:personsId)", Long.class)
                 .setParameter("professionId", parameters.get("professionId"))
                 .setParameter("personsId", parameters.get("personsId"))
-                .setParameter("movieId", parameters.get("movieId"))
-                .getSingleResult();
+                .setParameter("movieId", parameters.get("movieId")).getSingleResult();
     }
 }
