@@ -36,7 +36,7 @@ public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
                         "c.contentUrl, " +
                         "avg(s.score), " +
                         "count(s.score)) from Movie m join m.scores s join m.contents c where m.id = :movieId " +
-                        "and c.type = :type group by m.id, c.contentUrl", MovieViewResponseDto.class)
+                        "and c.typeContent = :type group by m.id, c.contentUrl", MovieViewResponseDto.class)
                 .setParameter("movieId", movieId)
                 .setParameter("type", TypeContent.PREVIEW));
     }
