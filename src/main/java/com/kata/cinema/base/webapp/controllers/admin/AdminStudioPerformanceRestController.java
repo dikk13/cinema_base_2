@@ -1,12 +1,12 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
-
 import com.kata.cinema.base.dto.request.StudioPerformanceRequestDto;
 import com.kata.cinema.base.dto.response.StudioPerformanceResponseDto;
 import com.kata.cinema.base.mappers.StudioPerformanceMapper;
 import com.kata.cinema.base.models.StudioPerformance;
 import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,19 +35,19 @@ public class AdminStudioPerformanceRestController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateStudioPerformance(@RequestParam(name = "name") String studioPerformanceName, @PathVariable("id") long id) {
         Optional<StudioPerformance> studioPerformanceContainer = studioPerformanceService.getById(id);
-        studioPerformanceContainer.get().setName(studioPerformanceName);
-        studioPerformanceService.update(studioPerformanceContainer.get());
-        return ResponseEntity.ok(null);
+
+        if (studioPerformanceContainer.isEmpty()) {
+            throw new RuntimeException("такой студии нет");
+        }
+        StudioPerformance studioPerformance = studioPerformanceContainer.get();
+        studioPerformance.setName(studioPerformanceName);
+        studioPerformanceService.update(studioPerformance);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudioPerformanceById(@PathVariable("id") long id) {
-        try {
-            studioPerformanceService.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("вероятно существует связь в ProductionsStudio");
-        }
-        return ResponseEntity.ok(null);
+        studioPerformanceService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

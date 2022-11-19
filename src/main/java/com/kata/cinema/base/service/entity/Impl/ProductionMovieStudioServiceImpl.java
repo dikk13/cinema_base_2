@@ -6,6 +6,8 @@ import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.ProductionMovieStudioService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProductionMovieStudioServiceImpl extends AbstractServiceImpl<Long, ProductionStudioMovie>
         implements ProductionMovieStudioService {
@@ -18,7 +20,7 @@ public class ProductionMovieStudioServiceImpl extends AbstractServiceImpl<Long, 
     }
 
     @Override
-    public ProductionStudioMovie getStudioByMovieId(Long id) {
+    public Optional<ProductionStudioMovie> getStudioByMovieId(Long id) {
         return productionMovieStudioDao.getStudioByMovieId(id);
     }
 }

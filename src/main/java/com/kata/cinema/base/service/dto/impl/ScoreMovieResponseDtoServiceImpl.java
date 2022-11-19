@@ -19,7 +19,7 @@ public class ScoreMovieResponseDtoServiceImpl implements ScoreMovieResponseDtoSe
     }
 
     @Override
-    public Movie findMovie(Long movieId){
+    public Movie findMovie(Long movieId) {
         Optional<Movie> movie = movieService.getById(movieId);
         if (movie.isPresent()) {
             return movie.get();

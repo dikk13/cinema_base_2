@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.NoResultException;
+
 @RestController
 @RequestMapping("/api/movies")
 public class ProductionStudioRestController {
@@ -25,6 +27,6 @@ public class ProductionStudioRestController {
     @GetMapping("/{id}/studios")
     public ResponseEntity<ProductionMovieStudioResponseDto> getStudioMovie(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productionStudioMovieMapper.productionStudioMovieToProductionMovieStudioResponseDto(
-                productionMovieStudioService.getStudioByMovieId(id)));
+                productionMovieStudioService.getStudioByMovieId(id).orElseThrow(() -> new NoResultException("No entity found for query"))));
     }
 }

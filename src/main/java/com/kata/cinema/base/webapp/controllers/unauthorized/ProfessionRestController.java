@@ -22,12 +22,7 @@ public class ProfessionRestController {
 
     @GetMapping
     public ResponseEntity<?> getAllProfessions() {
-        try {
-            List<ProfessionResponseDto> toDTOList = professionMapper.toDTOList(professionService.getAll());
-            return new ResponseEntity<>(toDTOList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+        List<ProfessionResponseDto> toDTOList = professionMapper.toDTOList(professionService.getAll());
+        return new ResponseEntity<>(toDTOList, HttpStatus.OK);
     }
 }

@@ -11,6 +11,7 @@ import com.kata.cinema.base.service.dto.ExcertionResponseDtoService;
 import com.kata.cinema.base.service.dto.PersonViewResponseDtoService;
 import com.kata.cinema.base.service.entity.ExcertionService;
 import com.kata.cinema.base.service.entity.PersonService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +21,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/persons")
+@AllArgsConstructor
 public class PersonRestController {
 
-    private final PersonService personService;
     private final ExcertionService excertionService;
     private final ExcertionMapper excertionMapper;
     private final ExcertionResponseDtoService excertionResponseDtoService;
     private final PersonViewResponseDtoService personViewResponseDtoService;
-
-    public PersonRestController(PersonService personService, ExcertionService excertionService,
-                                ExcertionMapper excertionMapper,
-                                ExcertionResponseDtoService excertionResponseDtoService, PersonViewResponseDtoService personViewResponseDtoService) {
-        this.personService = personService;
-        this.excertionService = excertionService;
-        this.excertionMapper = excertionMapper;
-        this.excertionResponseDtoService = excertionResponseDtoService;
-        this.personViewResponseDtoService = personViewResponseDtoService;
-    }
 
     @PostMapping("/{id}/excertions")
     public ResponseEntity<HttpStatus> createPersonExcertion(@PathVariable("id") long personId,
@@ -47,7 +38,6 @@ public class PersonRestController {
         excertionService.create(newExcertion);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
     public ResponseEntity<PageDto<ExcertionResponseDto>> getPersonExcertions(@PathVariable("id") long personId,
