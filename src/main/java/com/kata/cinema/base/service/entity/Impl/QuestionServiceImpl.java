@@ -22,7 +22,7 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Long, Question> imp
 
     @Override
     @Transactional
-    public void deleteQuestionWithAnswersAndResults(Long newsId, Long questionId){
+    public void deleteQuestionWithAnswersAndResults(Long newsId, Long questionId) {
         Optional<Question> question = questionDao.getById(questionId);
         if (question.orElseThrow().getNews().getId().equals(newsId)) {
             questionDao.deleteQuestionWithAnswersAndResultsById(questionId);

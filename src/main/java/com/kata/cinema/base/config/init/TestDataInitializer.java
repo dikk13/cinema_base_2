@@ -11,9 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 public class TestDataInitializer {
 
@@ -189,26 +191,26 @@ public class TestDataInitializer {
         ROLE_ADMIN = roleAdminOptional.orElseGet(Role::new);
         ROLE_PUBLICIST = rolePublicistOptional.orElseGet(Role::new);
 
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(ROLE_USER);
 
         for (int userNumber = 1; userNumber <= countUser; userNumber++) {
             User user = new User();
             user.setEmail(String.format("email%s@mail.ru", userNumber));
-            user.setFirst_name(String.format("Имя%s", userNumber));
-            user.setLast_name(String.format("Фамилия%s", userNumber));
+            user.setFirstName(String.format("Имя%s", userNumber));
+            user.setLastName(String.format("Фамилия%s", userNumber));
             user.setPassword(encoder.encode("password"));
             int year = random.nextInt(LAST_YEAR - START_YEAR) + START_YEAR;
             int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
             int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
             user.setBirthday(LocalDate.of(year, month, day));
             if (userNumber == ONE_BEFORE_LAST_USER_IN_BASE) {
-                List<Role> oneBeforeLastUserRoles = new ArrayList<>();
+                Set<Role> oneBeforeLastUserRoles = new HashSet<>();
                 oneBeforeLastUserRoles.add(ROLE_USER);
                 oneBeforeLastUserRoles.add(ROLE_ADMIN);
                 user.setRole(oneBeforeLastUserRoles);
             } else if (userNumber == LAST_USER_IN_BASE) {
-                List<Role> lastUserRoles = new ArrayList<>();
+                Set<Role> lastUserRoles = new HashSet<>();
                 lastUserRoles.add(ROLE_USER);
                 lastUserRoles.add(ROLE_PUBLICIST);
                 user.setRole(lastUserRoles);
@@ -368,8 +370,6 @@ public class TestDataInitializer {
     }
 
     private void moviePersonInit() {
-
-        //TODO добавиь префикс COUNT_ к наименованию
         final int COUNT_MAIN_CHARACTER = 3;
         final int COUNT_MINOR_CHARACTER = 3;
         final int COUNT_NO_CHARACTER_MOVIE = 4;
@@ -385,9 +385,6 @@ public class TestDataInitializer {
 
             persons = personService.getAll();
 
-            //TODO вместо цикла реализовать запрос, доставать сразу профессию по имени
-
-            //TODO начинать все счетчики от 0
             for (int mainCharacterCount = 0; mainCharacterCount < COUNT_MAIN_CHARACTER; mainCharacterCount++) {
                 MoviePerson mainMovieActor = new MoviePerson();
                 mainMovieActor.setProfession(actor);

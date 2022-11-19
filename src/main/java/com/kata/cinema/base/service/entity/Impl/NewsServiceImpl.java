@@ -18,7 +18,7 @@ public class NewsServiceImpl extends AbstractServiceImpl<Long, News> implements 
     }
 
     @Override
-    public News getNewsById(Long newsId){
+    public News getNewsById(Long newsId) {
         Optional<News> news = newsDao.getById(newsId);
         if (news.isPresent()) {
             return news.get();

@@ -2,6 +2,8 @@ package com.kata.cinema.base.dao.dto;
 
 import com.kata.cinema.base.dto.response.MovieViewResponseDto;
 
+import java.util.Optional;
+
 public interface MovieViewResponseDtoDao {
-    MovieViewResponseDto getMovieViewResponseDtoByMovieId(Long movieId);
+    Optional<MovieViewResponseDto> getMovieViewResponseDtoByMovieId(Long movieId);
 }

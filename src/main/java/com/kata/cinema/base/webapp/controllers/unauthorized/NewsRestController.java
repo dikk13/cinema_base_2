@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,8 @@ public class NewsRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsBodyResponseDto> getNewsResponseDtoById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(newsBodyResponseDtoService.getNewsBodyResponseDtoById(id));
+        return ResponseEntity.ok(newsBodyResponseDtoService.getNewsBodyResponseDtoById(id)
+                .orElseThrow(() -> new NoResultException("No entity found for query")));
     }
 
     @GetMapping("/{id}/comments/body")

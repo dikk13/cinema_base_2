@@ -52,5 +52,4 @@ public class SearchHeaderDtoController {
         parameters.put("movieId", movieId);
         return ResponseEntity.ok(searchMovieResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
-
 }

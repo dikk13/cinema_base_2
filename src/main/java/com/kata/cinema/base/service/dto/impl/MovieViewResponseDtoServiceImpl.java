@@ -7,10 +7,10 @@ import com.kata.cinema.base.dto.response.MovieViewResponseDto;
 import com.kata.cinema.base.exception.MovieIdNotFoundException;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.dto.CastResponseDtoService;
-import com.kata.cinema.base.service.entity.GenreService;
 import com.kata.cinema.base.service.dto.MoviePersonResponseDtoService;
-import com.kata.cinema.base.service.entity.MovieService;
 import com.kata.cinema.base.service.dto.MovieViewResponseDtoService;
+import com.kata.cinema.base.service.entity.GenreService;
+import com.kata.cinema.base.service.entity.MovieService;
 import com.kata.cinema.base.service.entity.ScoreService;
 import com.kata.cinema.base.service.entity.UserService;
 import org.springframework.security.core.Authentication;
@@ -18,7 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.persistence.NoResultException;
+import java.util.List;
 
 @Service
 public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoService {
@@ -62,7 +63,8 @@ public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoServ
             }
         }
 
-        MovieViewResponseDto movieViewResponseDto = movieViewResponseDtoDao.getMovieViewResponseDtoByMovieId(movieId);
+        MovieViewResponseDto movieViewResponseDto = movieViewResponseDtoDao.getMovieViewResponseDtoByMovieId(movieId)
+                .orElseThrow(() -> new NoResultException("No entity found for query"));
         movieViewResponseDto.setGenres(genres);
         movieViewResponseDto.setMyScore(myScore);
         movieViewResponseDto.setCasts(casts);

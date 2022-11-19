@@ -15,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User> implements RegistrationUserService {
@@ -35,7 +37,7 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
     @Override
     public void register(User user) {
         Optional<Role> roleUser = roleDao.getByName("USER");
-        List<Role> userRoles = new ArrayList<>();
+        Set<Role> userRoles = new HashSet<>();
         userRoles.add(roleUser.orElse(null));
         //TODO вынести в приватный метод
         for(Category category: Category.values()) {

@@ -21,9 +21,10 @@ public class ProductionStudioServiceImpl extends AbstractServiceImpl<Long, Produ
     @Override
     @Transactional
     public void updateById(Long id, ProductionStudio productionStudio) {
-        if (this.getById(id).isPresent()) {
-            productionStudio.setId(id);
-            productionStudioDao.update(productionStudio);
+        if (!productionStudioDao.existById(id)) {
+            throw new RuntimeException("Неверно передан id");
         }
+        productionStudio.setId(id);
+        productionStudioDao.update(productionStudio);
     }
 }
