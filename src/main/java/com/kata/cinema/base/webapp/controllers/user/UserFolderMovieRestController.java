@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,8 @@ public class UserFolderMovieRestController {
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id), HttpStatus.OK);
+        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id)
+                .orElseThrow(() -> new NoResultException("No entity found for query")), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/movies/page/{pageNumber}")

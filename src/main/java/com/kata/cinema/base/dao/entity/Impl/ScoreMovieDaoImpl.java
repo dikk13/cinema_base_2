@@ -30,8 +30,7 @@ public class ScoreMovieDaoImpl implements ScoreMovieDao {
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
         return entityManager.createQuery("select count (s) from Score s where s.user.id =: userId", Long.class)
-                .setParameter("userId", parameters.get("userId"))
-                .getSingleResult();
+                .setParameter("userId", parameters.get("userId")).getSingleResult();
     }
 
     private String getSort(SortScoreType sortScoreType) {

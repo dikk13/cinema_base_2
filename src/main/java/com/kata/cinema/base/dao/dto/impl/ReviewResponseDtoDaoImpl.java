@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
 
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
+
 
 @Repository
 public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
@@ -39,8 +41,7 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("select count (r) from Review r where r.movie.id = :movieId", Long.class)
-                .setParameter("movieId", parameters.get("movieId"))
-                .getSingleResult();
+        return jpaResultHelper(entityManager.createQuery("select count (r) from Review r where r.movie.id = :movieId", Long.class)
+                .setParameter("movieId", parameters.get("movieId"))).orElse(null);
     }
 }

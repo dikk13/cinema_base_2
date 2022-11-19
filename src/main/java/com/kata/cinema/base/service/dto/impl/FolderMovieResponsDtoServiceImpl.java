@@ -10,6 +10,7 @@ import com.kata.cinema.base.service.entity.FolderMovieService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoService {
@@ -35,7 +36,7 @@ public class FolderMovieResponsDtoServiceImpl implements FolderMovieResponsDtoSe
     }
 
     @Override
-    public FolderMovieResponsDto getFolderMovieResponsDtoById(Long folderMovieId) {
+    public Optional<FolderMovieResponsDto> getFolderMovieResponsDtoById(Long folderMovieId) {
         return folderMovieResponsDtoDao.getFolderMovieResponsDtoById(folderMovieId);
     }
 
