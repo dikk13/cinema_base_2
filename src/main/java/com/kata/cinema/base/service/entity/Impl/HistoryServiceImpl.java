@@ -39,4 +39,9 @@ public class HistoryServiceImpl extends AbstractServiceImpl<Long, History> imple
         historyPersonDao.create(historyPerson);
     }
 
+    @Override
+    public void deleteHistoryIfPassed30Days() {
+        historyDao.deleteHistoryIfPassed30Days();
+    }
+
 }
