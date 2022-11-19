@@ -37,13 +37,9 @@ public class ScoreMovieDaoImpl implements ScoreMovieDao {
         StringBuilder sort = new StringBuilder();
         switch (sortScoreType) {
             case DATE_ASC -> sort.append(" order by s.date");
-
             case SCORE_ASC -> sort.append(" order by s.score");
-
             case NAME_ASC -> sort.append(" order by m.name");
-
             case COUNT_SCORE_ASC -> sort.append(" order by count (s)");
-
             case DATE_RELEASE_ASC -> sort.append(" order by m.dateRelease");
         }
         return sort.toString();

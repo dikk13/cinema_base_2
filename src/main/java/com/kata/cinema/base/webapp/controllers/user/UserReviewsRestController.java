@@ -33,8 +33,8 @@ public class UserReviewsRestController {
                                             @RequestParam(value = "TypeRating") String rating,
                                             @AuthenticationPrincipal User currentUser) {
 
+        //TODO доставать ревью по id
         Review review = reviewService.getAll().get((int)(reviewId - 1));
-
         Optional<ReactionReview> reactionReview = reactionReviewService.getReactionReviewByUserIdAndReviewId(currentUser.getId(), reviewId);
 
         if (reactionReview.isEmpty()) {

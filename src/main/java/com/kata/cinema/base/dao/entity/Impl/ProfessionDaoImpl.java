@@ -14,11 +14,7 @@ public class ProfessionDaoImpl extends AbstractDaoImpl<Long, Profession> impleme
 
     @Override
     public Optional<Profession> getByName(String profession) {
-        try {
-            return jpaResultHelper(entityManager.createQuery("SELECT u FROM Profession u WHERE u.name=:name", Profession.class)
-                    .setParameter("name", profession));
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("There is no such profession");
-        }
+        return jpaResultHelper(entityManager.createQuery("SELECT u FROM Profession u WHERE u.name=:name", Profession.class)
+                .setParameter("name", profession));
     }
 }

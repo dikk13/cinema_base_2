@@ -9,9 +9,10 @@ public class JpaResultHelper {
     public static <X> Optional<X> jpaResultHelper(TypedQuery<X> typedQuery) {
         try {
             return Optional.ofNullable(typedQuery.getSingleResult());
-        } catch (NoResultException ignore) {}
+        } catch (NoResultException ignore) {
+
+        }
         return Optional.empty();
     }
-
 
 }

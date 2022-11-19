@@ -37,7 +37,7 @@ public class UserFolderMovieRestController {
     private final FolderMovieService folderMovieService;
 
     @GetMapping("/movies")
-    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
     }
 
@@ -78,6 +78,6 @@ public class UserFolderMovieRestController {
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

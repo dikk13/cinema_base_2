@@ -25,7 +25,7 @@ public class ProductionStudioRestController {
     }
 
     @GetMapping("/{id}/studios")
-    public ResponseEntity<ProductionMovieStudioResponseDto> getStudioMovie(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<ProductionMovieStudioResponseDto> getStudioMovie(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productionStudioMovieMapper.productionStudioMovieToProductionMovieStudioResponseDto(
                 productionMovieStudioService.getStudioByMovieId(id).orElseThrow(() -> new NoResultException("No entity found for query"))));
     }
