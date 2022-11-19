@@ -4,7 +4,7 @@ package com.kata.cinema.base.service.entity.Impl;
 import com.kata.cinema.base.dao.entity.MovieDao;
 import com.kata.cinema.base.dto.SearchMovieDto;
 import com.kata.cinema.base.dto.request.MovieRequestDto;
-import com.kata.cinema.base.models.Genre;
+import com.kata.cinema.base.mappers.MovieMapper;
 import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.GenreService;
@@ -22,12 +22,14 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
 
     private final MovieDao movieDao;
     private final GenreService genreService;
+    private final MovieMapper movieMapper;
 
     @Autowired
-    protected MovieServiceImpl(MovieDao movieDao, GenreService genreService) {
+    protected MovieServiceImpl(MovieDao movieDao, GenreService genreService, MovieMapper movieMapper) {
         super(movieDao);
         this.movieDao = movieDao;
         this.genreService = genreService;
+        this.movieMapper = movieMapper;
     }
 
     @Override
@@ -37,19 +39,10 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
 
     @Override
     @Transactional
-    public void updateById(Long id, Movie movie) {
+    public void updateById(Long id, MovieRequestDto movie) {
         Optional<Movie> optionalMovie = getById(id);
         if (optionalMovie.isPresent()) {
-           Movie movieToUpdate = optionalMovie.get();
-           movieToUpdate.setName(movie.getName());
-           movieToUpdate.setCountries(movie.getCountries());
-           movieToUpdate.setDateRelease(movie.getDateRelease());
-           movieToUpdate.setRars(movie.getRars());
-           movieToUpdate.setMpaa(movie.getMpaa());
-           movieToUpdate.setTime(movie.getTime());
-           movieToUpdate.setDescription(movie.getDescription());
-           movieToUpdate.setOriginalName(movie.getOriginalName());
-           movieToUpdate.setGenres(movie.getGenres());
+           Movie movieToUpdate = movieMapper.toMovie(movie);
            movieDao.update(movieToUpdate);
         }
     }

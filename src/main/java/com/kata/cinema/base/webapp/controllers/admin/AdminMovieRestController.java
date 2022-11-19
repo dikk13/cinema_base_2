@@ -72,7 +72,7 @@ public class AdminMovieRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
-        movieService.updateById(id, movieMapper.toMovie(movieRequestDto));
+        movieService.updateById(id, movieRequestDto);
         return ResponseEntity.ok(null);
     }
 
