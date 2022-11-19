@@ -29,7 +29,7 @@ public class UserHistoryRestController {
         return new ResponseEntity<>(historyResponseDtoService.getHistoryResponseDtoListByUserId(currentUser.getId()), HttpStatus.OK);
     }
 
-    @Scheduled(initialDelayString = "PT30S", fixedDelayString = "P1W")
+    @Scheduled(initialDelayString = "PT30S", fixedDelayString = "P7D")
     @DeleteMapping("/reset")
     private void resetHistory() {
         historyService.deleteHistoryIfPassed30Days();
