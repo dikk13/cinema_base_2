@@ -23,12 +23,12 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
     public List<ReviewResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
         return entityManager.createQuery(" SELECT new com.kata.cinema.base.dto.response.ReviewResponseDto" +
                                 "(r.id,r.typeReview,r.title,r.description," +
-                                "concat(r.user.first_name,' ', r.user.last_name)," +
+                                "concat(r.user.firstName,' ', r.user.lastName)," +
                                 "r.date," +
                                 "(select count (rr) from ReactionReview rr where rr.rating = :like and rr.review.id = r.id)," +
                                 "(select count (rr) from ReactionReview rr where rr.rating = :dislike and rr.review.id = r.id)) " +
                                 "FROM Review r " +
-                                "where r.movie.id = :movieId AND r.typeReview = :typeReview"
+                                "where r.movie.id = :movieId AND (r.typeReview = :typeReview or :typeReview is null)"
                         , ReviewResponseDto.class)
                 .setParameter("like", TypeRating.LIKE)
                 .setParameter("dislike", TypeRating.DISLIKE)

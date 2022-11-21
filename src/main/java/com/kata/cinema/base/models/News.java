@@ -37,6 +37,9 @@ public class News {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "preview_url")
+    private String previewUrl;
+
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "html_body")
@@ -64,7 +67,7 @@ public class News {
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
         return Objects.equals(id, news.id) && Objects.equals(date, news.date) && Objects.equals(title, news.title) &&
-                Objects.equals(htmlBody, news.htmlBody);
+                Objects.equals(htmlBody, news.htmlBody) && Objects.equals(previewUrl, news.previewUrl);
     }
 
     @Override
