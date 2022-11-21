@@ -3,10 +3,12 @@ package com.kata.cinema.base.webapp.controllers.admin;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.kata.cinema.base.security.jwt.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -31,11 +33,17 @@ public class AdminChapterRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Test
     @DatabaseSetup("/dataset.xml")
     @DatabaseTearDown("/empty_dataset.xml")
     void createChapters() throws Exception {
-        this.mockMvc.perform(post("/api/admin/chapters?name=testChapter"))
+        this.mockMvc.perform(post("/api/admin/chapters?name=testChapter")
+                        .header("Authorization", "Bearer " +
+                                jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -44,7 +52,10 @@ public class AdminChapterRestControllerTest {
     @DatabaseSetup("/dataset.xml")
     @DatabaseTearDown("/empty_dataset.xml")
     void updateChapter() throws Exception {
-        this.mockMvc.perform(put("/api/admin/chapters/1?name=testChapterUpdated"))
+        this.mockMvc.perform(put("/api/admin/chapters/1?name=testChapterUpdated")
+                        .header("Authorization", "Bearer " +
+                                jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -53,7 +64,10 @@ public class AdminChapterRestControllerTest {
     @DatabaseSetup("/dataset.xml")
     @DatabaseTearDown("/empty_dataset.xml")
     void deleteChapter() throws Exception {
-        this.mockMvc.perform(delete("/api/admin/chapters/1"))
+        this.mockMvc.perform(delete("/api/admin/chapters/1")
+                        .header("Authorization", "Bearer " +
+                                jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
