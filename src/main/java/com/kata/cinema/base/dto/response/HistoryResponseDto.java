@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryResponseDto {
-    Long id;
+    private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime date;
-    Long movieId;
-    Long personId;
-    String previewUrl;
-    HistoryType type;
+    private LocalDateTime date;
+    private Long movieId;
+    private Long personId;
+    private String previewUrl;
+    private HistoryType type;
 
 }

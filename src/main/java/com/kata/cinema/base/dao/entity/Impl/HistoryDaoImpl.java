@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Repository
 public class HistoryDaoImpl extends AbstractDaoImpl<Long, History> implements HistoryDao {
@@ -15,22 +13,11 @@ public class HistoryDaoImpl extends AbstractDaoImpl<Long, History> implements Hi
     @Override
     @Transactional
     public void deleteHistoryIfPassed30Days() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nowMinus30Days = LocalDateTime.now().minusDays(30);
 
-        List<History> historyList = entityManager.createQuery("" +
-                "select h " +
-                "from History h", History.class).getResultList();
+        entityManager.createQuery("delete from History h where h.date < :date")
+                .setParameter("date", nowMinus30Days)
+                .executeUpdate();
 
-        for (History history : historyList) {
-
-            long days = ChronoUnit.DAYS.between(history.getDate(), now);
-
-            if (days >= 30) {
-                entityManager.createQuery("" +
-                                "delete from History h where h.id =: historyId")
-                        .setParameter("historyId", history.getId())
-                        .executeUpdate();
-            }
-        }
     }
 }
