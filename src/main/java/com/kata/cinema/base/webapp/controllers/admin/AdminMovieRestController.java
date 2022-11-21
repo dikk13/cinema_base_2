@@ -1,13 +1,13 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.kata.cinema.base.dto.request.MovieRequestDto;
+import com.kata.cinema.base.mappers.MovieMapper;
+import com.kata.cinema.base.service.entity.MovieService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -18,6 +18,9 @@ import java.io.FileOutputStream;
 @RequestMapping("/api/admin/movies")
 @RequiredArgsConstructor
 public class AdminMovieRestController {
+
+    private final MovieService movieService;
+    private final MovieMapper movieMapper;
 
     @PostMapping("/{id}/uploadPreview")
     public ResponseEntity<String> upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
@@ -59,6 +62,21 @@ public class AdminMovieRestController {
             return ResponseEntity.ok("Не удалось загрузить файл: файл пустой");
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Void> addNewMovie(@RequestBody MovieRequestDto movieRequestDto) {
+        movieService.create(movieMapper.toMovie(movieRequestDto));
+
+        return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
+        movieService.updateById(id, movieRequestDto);
+        return ResponseEntity.ok(null);
+    }
+
+
 }
 
 
