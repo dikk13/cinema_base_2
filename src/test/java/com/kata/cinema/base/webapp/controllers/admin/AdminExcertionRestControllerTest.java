@@ -1,4 +1,4 @@
-package com.kata.cinema.base.webapp.controllers.unauthorized;
+package com.kata.cinema.base.webapp.controllers.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-class ExcertionRestControllerTest {
+class AdminExcertionRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +41,7 @@ class ExcertionRestControllerTest {
     @DatabaseSetup("/dataset.xml")
     @DatabaseTearDown("/empty_dataset.xml")
     void deleteExcertion() throws Exception {
-        this.mockMvc.perform(delete("/api/excertions/{id}", "100")
+        this.mockMvc.perform(delete("/api/admin/excertions/{id}", "100")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -52,7 +52,7 @@ class ExcertionRestControllerTest {
     @DatabaseTearDown("/empty_dataset.xml")
     void updateExcertion() throws Exception {
         ExcertionRequestDto excertionRequestDto = new ExcertionRequestDto("updated text");
-        this.mockMvc.perform(put("/api/excertions/{id}", "101")
+        this.mockMvc.perform(put("/api/admin/excertions/{id}", "101")
                         .content(objectMapper.writeValueAsString(excertionRequestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
