@@ -1,18 +1,14 @@
 package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 import com.kata.cinema.base.dto.PageDto;
-import com.kata.cinema.base.dto.request.ExcertionRequestDto;
 import com.kata.cinema.base.dto.response.ExcertionResponseDto;
 import com.kata.cinema.base.dto.response.PersonViewResponseDto;
-import com.kata.cinema.base.mappers.ExcertionMapper;
-import com.kata.cinema.base.models.Excertion;
 import com.kata.cinema.base.models.HistoryPerson;
 import com.kata.cinema.base.models.Person;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.models.enums.HistoryType;
 import com.kata.cinema.base.service.dto.ExcertionResponseDtoService;
 import com.kata.cinema.base.service.dto.PersonViewResponseDtoService;
-import com.kata.cinema.base.service.entity.ExcertionService;
 import com.kata.cinema.base.service.entity.HistoryService;
 import com.kata.cinema.base.service.entity.PersonService;
 import lombok.AllArgsConstructor;
@@ -33,20 +29,8 @@ public class PersonRestController {
 
     private final PersonService personService;
     private final HistoryService historyService;
-    private final ExcertionService excertionService;
-    private final ExcertionMapper excertionMapper;
     private final ExcertionResponseDtoService excertionResponseDtoService;
     private final PersonViewResponseDtoService personViewResponseDtoService;
-
-    @PostMapping("/{id}/excertions")
-    public ResponseEntity<HttpStatus> createPersonExcertion(@PathVariable("id") long personId,
-                                                            @RequestBody ExcertionRequestDto excertionRequestDto) {
-        Person person = excertionResponseDtoService.findPersonById(personId);
-        Excertion newExcertion = excertionMapper.toExcertion(excertionRequestDto);
-        newExcertion.setPerson(person);
-        excertionService.create(newExcertion);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
     public ResponseEntity<PageDto<ExcertionResponseDto>> getPersonExcertions(@PathVariable("id") long personId,
