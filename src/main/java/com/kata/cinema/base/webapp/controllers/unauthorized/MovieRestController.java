@@ -32,8 +32,6 @@ public class MovieRestController {
     private final ReviewMovieResponseDtoService reviewMovieResponseDtoService;
     private final MovieViewResponseDtoService movieViewResponseDtoService;
     private final ExcertionResponseDtoService excertionResponseDtoService;
-    private final ExcertionService excertionService;
-    private final ExcertionMapper excertionMapper;
 
     @GetMapping("/{id}/reviews/page/{pageNumber}")
     public PageDto<ReviewMovieResponseDto> getReview(
@@ -53,16 +51,6 @@ public class MovieRestController {
     @GetMapping("/{id}")
     public ResponseEntity<MovieViewResponseDto> getMovie(@PathVariable("id") Long movieId) {
         return new ResponseEntity<>(movieViewResponseDtoService.getMovieViewResponseDtoByMovieId(movieId), HttpStatus.OK);
-    }
-
-    @PostMapping("/{id}/excertions")
-    public ResponseEntity<HttpStatus> createMovieExcertion(@PathVariable("id") Long movieId,
-                                                           @RequestBody ExcertionRequestDto excertionRequestDto) {
-        Movie movie = excertionResponseDtoService.findMovieById(movieId);
-        Excertion newExcertion = excertionMapper.toExcertion(excertionRequestDto);
-        newExcertion.setMovie(movie);
-        excertionService.create(newExcertion);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
