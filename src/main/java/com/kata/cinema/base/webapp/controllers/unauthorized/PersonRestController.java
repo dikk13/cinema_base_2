@@ -24,20 +24,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class PersonRestController {
 
-    private final ExcertionService excertionService;
-    private final ExcertionMapper excertionMapper;
     private final ExcertionResponseDtoService excertionResponseDtoService;
     private final PersonViewResponseDtoService personViewResponseDtoService;
-
-    @PostMapping("/{id}/excertions")
-    public ResponseEntity<HttpStatus> createPersonExcertion(@PathVariable("id") long personId,
-                                                            @RequestBody ExcertionRequestDto excertionRequestDto) {
-        Person person = excertionResponseDtoService.findPersonById(personId);
-        Excertion newExcertion = excertionMapper.toExcertion(excertionRequestDto);
-        newExcertion.setPerson(person);
-        excertionService.create(newExcertion);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
     public ResponseEntity<PageDto<ExcertionResponseDto>> getPersonExcertions(@PathVariable("id") long personId,
