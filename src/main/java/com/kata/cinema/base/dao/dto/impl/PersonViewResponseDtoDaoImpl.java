@@ -31,7 +31,6 @@ public class PersonViewResponseDtoDaoImpl implements PersonViewResponseDtoDao {
                 "person.height," +
                 "person.dateOfBirth," +
                 "person.placeOfBirth," +
-                "person.photoUrl," +
                 "person.firstName," +
                 "person.lastName," +
                 "person.originalFirstName," +

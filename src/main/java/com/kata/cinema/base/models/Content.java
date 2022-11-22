@@ -1,6 +1,6 @@
 package com.kata.cinema.base.models;
 
-import com.kata.cinema.base.models.enums.ContentType;
+import com.kata.cinema.base.models.enums.TypeContent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,18 +26,22 @@ public class Content {
     private Movie movie;
 
     @Column(name = "content_url")
-    private String content_url;
+    private String contentUrl;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private ContentType type;
+    private TypeContent typeContent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Content content = (Content) o;
-        return Objects.equals(id, content.id) && Objects.equals(content_url, content.content_url) && Objects.equals(type, content.type);
+        return Objects.equals(id, content.id) && Objects.equals(contentUrl, content.contentUrl) && Objects.equals(typeContent, content.typeContent);
     }
 
     @Override
@@ -50,8 +54,8 @@ public class Content {
         return "Content{" +
                 "id=" + id +
                 ", movie=" + movie +
-                ", content_url='" + content_url + '\'' +
-                ", type='" + type + '\'' +
+                ", content_url='" + contentUrl + '\'' +
+                ", type='" + typeContent + '\'' +
                 '}';
     }
 }

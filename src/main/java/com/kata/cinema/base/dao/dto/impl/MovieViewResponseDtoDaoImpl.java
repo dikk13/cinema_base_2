@@ -2,7 +2,7 @@ package com.kata.cinema.base.dao.dto.impl;
 
 import com.kata.cinema.base.dao.dto.MovieViewResponseDtoDao;
 import com.kata.cinema.base.dto.response.MovieViewResponseDto;
-import com.kata.cinema.base.models.enums.ContentType;
+import com.kata.cinema.base.models.enums.TypeContent;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -33,11 +33,11 @@ public class MovieViewResponseDtoDaoImpl implements MovieViewResponseDtoDao {
                         "m.rars, " +
                         "m.mpaa, " +
                         "m.description, " +
-                        "c.content_url, " +
+                        "c.contentUrl, " +
                         "avg(s.score), " +
                         "count(s.score)) from Movie m join m.scores s join m.contents c where m.id = :movieId " +
-                        "and c.type = :type group by m.id, c.content_url", MovieViewResponseDto.class)
+                        "and c.typeContent = :type group by m.id, c.contentUrl", MovieViewResponseDto.class)
                 .setParameter("movieId", movieId)
-                .setParameter("type", ContentType.PREVIEW));
+                .setParameter("type", TypeContent.PREVIEW));
     }
 }
