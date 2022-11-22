@@ -437,6 +437,7 @@ public class TestDataInitializer {
             }
             news.setTitle(String.format("Заголовок %s", i));
             news.setHtmlBody(HTML_DESCRIPTION);
+            news.setPreviewUrl(String.format("/upload/news/preview/%s", i));
             newsService.create(news);
         }
     }
