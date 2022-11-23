@@ -4,6 +4,7 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.response.ExcertionResponseDto;
 import com.kata.cinema.base.dto.response.MovieViewResponseDto;
+import com.kata.cinema.base.dto.response.NewsResponseDto;
 import com.kata.cinema.base.dto.response.ReviewMovieResponseDto;
 import com.kata.cinema.base.models.HistoryMovie;
 import com.kata.cinema.base.models.Movie;
@@ -13,6 +14,7 @@ import com.kata.cinema.base.models.enums.ReviewSortType;
 import com.kata.cinema.base.models.enums.TypeReview;
 import com.kata.cinema.base.service.dto.ExcertionResponseDtoService;
 import com.kata.cinema.base.service.dto.MovieViewResponseDtoService;
+import com.kata.cinema.base.service.dto.NewsResponseDtoService;
 import com.kata.cinema.base.service.dto.ReviewMovieResponseDtoService;
 import com.kata.cinema.base.service.entity.HistoryService;
 import com.kata.cinema.base.service.entity.MovieService;
@@ -38,6 +40,7 @@ public class MovieRestController {
     private final ExcertionResponseDtoService excertionResponseDtoService;
     private final MovieService movieService;
     private final HistoryService historyService;
+    private final NewsResponseDtoService newsResponseDtoService;
 
     @GetMapping("/{id}/reviews/page/{pageNumber}")
     public PageDto<ReviewMovieResponseDto> getReview(
@@ -81,4 +84,15 @@ public class MovieRestController {
         parameters.put("movieId", movieId);
         return ResponseEntity.ok(excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
     }
+
+    @GetMapping("/{id}/materials")
+    public PageDto<NewsResponseDto> getNewsMovies(@PathVariable("id") long movieId,
+                                                  @PathVariable("pageNumber") Integer pageNumber,
+                                                  @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("movieId", movieId);
+        PageDto<NewsResponseDto> newsResponseDtoPageDto = new PageDto<>(4L, newsResponseDtoService.getNewsResponseDtoByMovieId(movieId));
+        return newsResponseDtoPageDto;
+    }
+
 }
