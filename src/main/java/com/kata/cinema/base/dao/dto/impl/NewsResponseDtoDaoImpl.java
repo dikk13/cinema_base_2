@@ -21,7 +21,7 @@ public class NewsResponseDtoDaoImpl implements NewsResponseDtoDao {
                 "(" +
                 "n.id, n.rubric, n.date, n.title, n.previewUrl, count (c)" +
                 ") " +
-                "from News n left join Comment c on c.news.id = n.id where (n.rubric = :rubric or :rubric is null ) group by n.id", NewsResponseDto.class)
+                "from News n left join Comment c on c.news.id = n.id where (n.rubric = :rubric or :rubric is null) group by n.id", NewsResponseDto.class)
                 .setParameter("rubric", parameters.get("rubric"))
                 .setFirstResult((currentPage - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage)
@@ -30,7 +30,7 @@ public class NewsResponseDtoDaoImpl implements NewsResponseDtoDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("select count (n) from News n where n.rubric = :rubric", Long.class)
+        return entityManager.createQuery("select count (n) from News n where (n.rubric = :rubric or :rubric is null)", Long.class)
                 .setParameter("rubric", parameters.get("rubric"))
                 .getSingleResult();
     }
