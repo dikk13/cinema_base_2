@@ -26,7 +26,17 @@ public class NewsResponseDtoServiceImpl extends PaginationDtoServiceImpl<NewsRes
 
 
     @Override
-    public List<NewsResponseDto> getNewsResponseDtoByMovieId(Long movieId) {
-        return newsResponseDtoDao.getNewsResponseDtoByMovieId(movieId);
+    public List<NewsResponseDto> getNewsResponseDtoByMovieId(Integer itemsOnPage, Long movieId) {
+        return newsResponseDtoDao.getNewsResponseDtoByMovieId(itemsOnPage, movieId);
+    }
+
+    @Override
+    public PageDto<NewsResponseDto> getNewsMovie(Integer itemsOnPage, Long movieId) {
+        PageDto<NewsResponseDto> pageDto = new PageDto<>();
+        List<NewsResponseDto> newsResponseDtoList = getNewsResponseDtoByMovieId(itemsOnPage, movieId);
+
+        pageDto.setCount(newsResponseDtoDao.getResultTotalNewsMovie(movieId));
+        pageDto.setEntities(newsResponseDtoList);
+        return pageDto;
     }
 }

@@ -36,13 +36,22 @@ public class NewsResponseDtoDaoImpl implements NewsResponseDtoDao {
     }
 
     @Override
-    public List<NewsResponseDto> getNewsResponseDtoByMovieId(Long movieId) {
+    public List<NewsResponseDto> getNewsResponseDtoByMovieId(Integer itemsOnPage, Long movieId) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.response.NewsResponseDto" +
                 "(" +
                 "n.id, n.rubric, n.date, n.title, n.previewUrl, count (c)" +
                 ") " +
-                "from News n left join Comment c on c.news.id = n.id, n.movies m where m.id = :movieId", NewsResponseDto.class)
+                "from News n left join Comment c on c.news.id = n.id join n.movies m where m.id = :movieId group by n.id", NewsResponseDto.class)
                 .setParameter("movieId", movieId)
+                .setMaxResults(itemsOnPage)
                 .getResultList();
+    }
+
+    @Override
+    public Long getResultTotalNewsMovie(Long movieId) {
+        return entityManager.createQuery("select count (n) from News n join n.movies m where m.id = :movieId",
+                Long.class)
+                .setParameter("movieId", movieId)
+                .getSingleResult();
     }
 }

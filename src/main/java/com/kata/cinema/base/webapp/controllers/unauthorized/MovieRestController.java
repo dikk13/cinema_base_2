@@ -87,12 +87,8 @@ public class MovieRestController {
 
     @GetMapping("/{id}/materials")
     public PageDto<NewsResponseDto> getNewsMovies(@PathVariable("id") long movieId,
-                                                  @PathVariable("pageNumber") Integer pageNumber,
-                                                  @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("movieId", movieId);
-        PageDto<NewsResponseDto> newsResponseDtoPageDto = new PageDto<>(4L, newsResponseDtoService.getNewsResponseDtoByMovieId(movieId));
-        return newsResponseDtoPageDto;
+                                                  @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {;
+        return newsResponseDtoService.getNewsMovie(itemsOnPage, movieId);
     }
 
 }
