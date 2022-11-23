@@ -20,7 +20,7 @@ public class MoviePersonResponseDto implements Serializable {
     private Long professionId;
     private Long personId;
     private String fullName; //'Person.firstName Person.lastName'
-    private  String originalFullName; //'Person.originalFirstName Person.originalLastName'
+    private String originalFullName; //'Person.originalFirstName Person.originalLastName'
     private CharacterType type;
     private String nameCharacter; //MoviePerson.nameRole
 }
