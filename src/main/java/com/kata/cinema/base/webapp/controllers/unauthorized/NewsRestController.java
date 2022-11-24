@@ -64,7 +64,7 @@ public class NewsRestController {
     public PageDto<NewsResponseDto> getNews(
             @PathVariable("pageNumber") Integer pageNumber,
             @RequestParam(value = "itemsOnPage", required = false, defaultValue = "10") Integer itemsOnPage,
-            @RequestParam(value = "rubric", required = false) Rubric rubric) {
+            @RequestParam(value = "rubric", required = false, defaultValue = "NEWS") Rubric rubric) {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("rubric", rubric);
