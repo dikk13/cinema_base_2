@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -86,9 +87,9 @@ public class MovieRestController {
     }
 
     @GetMapping("/{id}/materials")
-    public PageDto<NewsResponseDto> getNewsMovies(@PathVariable("id") long movieId,
-                                                  @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {;
-        return newsResponseDtoService.getNewsMovie(itemsOnPage, movieId);
+    public List<NewsResponseDto> getNewsMovies(@PathVariable("id") long movieId,
+                                               @RequestParam(value = "count") Integer count) {;
+        return newsResponseDtoService.getNewsResponseDtoByMovieId(count, movieId);
     }
 
 }
