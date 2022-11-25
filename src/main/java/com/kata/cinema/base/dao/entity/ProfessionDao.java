@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface ProfessionDao extends AbstractDao<Long, Profession>{
     Optional<Profession> getByName(String profession);
+
 }

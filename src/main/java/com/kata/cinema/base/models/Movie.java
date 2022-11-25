@@ -82,9 +82,11 @@ public class Movie {
     @ToString.Exclude
     private List<Genre> genres;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "available_online_movie_id")
-    private AvailableOnlineMovie availableOnlineMovie;
+//    @OneToOne
+//    @JoinTable( name = "available_movie",
+//            joinColumns = @JoinColumn(name = "movie_id",referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "available_online_movie_id", referencedColumnName = "id"))
+//    private AvailableOnlineMovie availableOnlineMovie;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

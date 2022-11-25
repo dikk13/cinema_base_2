@@ -32,13 +32,7 @@ public class AdminStudioPerformanceRestController {
         return ResponseEntity.ok(null);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateStudioPerformance(@RequestParam(name = "name") String studioPerformanceName, @PathVariable("id") long id) {
-        Optional<StudioPerformance> studioPerformanceContainer = studioPerformanceService.getById(id);
-        studioPerformanceContainer.get().setName(studioPerformanceName);
-        studioPerformanceService.update(studioPerformanceContainer.get());
-        return ResponseEntity.ok(null);
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudioPerformanceById(@PathVariable("id") long id) {

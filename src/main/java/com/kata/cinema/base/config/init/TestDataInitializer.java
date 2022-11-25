@@ -64,9 +64,11 @@ public class TestDataInitializer {
     @Autowired
     private AvailableOnlineMovieService availableOnlineMovieService;
     @Autowired
-    PurchasedMovieService purchasedMovieService;
+    private PurchasedMovieService purchasedMovieService;
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private ReactionReviewService reactionReviewService;
 
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
@@ -507,6 +509,17 @@ public class TestDataInitializer {
             }
         }
     }
+    public void reactionReviewInit() {
+        for (int i = 1; i <= 5; i++) {
+            ReactionReview reactionReview = new ReactionReview();
+            reactionReview.setRating(TypeRating.LIKE);
+            reactionReview.setUser(userService.getAll().get(i - 1));
+            reactionReview.setReview(reviewService.getAll().get(0));
+            reactionReviewService.create(reactionReview);
+        }
+    }
+
+
 
     public void scoreInit() {
         for (int k = 1; k <= countMovieList; k++) {
@@ -520,10 +533,10 @@ public class TestDataInitializer {
         }
     }
     public void availableOnlineMovieInit() {
-        int index = random.nextInt(movieService.getAll().size());
+
         for (int count = 1; count <= countMovieList; count++) {
             AvailableOnlineMovie availableOnlineMovie = new AvailableOnlineMovie();
-            availableOnlineMovie.setMovie(movieService.getAll().get(index));
+            availableOnlineMovie.setMovie(movieService.getAll().get(count-1));
             availableOnlineMovie.setRentalPrice(2000);
             availableOnlineMovie.setBuyPrice(3000);
             availableOnlineMovie.setAvailablePlus(true);
@@ -532,15 +545,15 @@ public class TestDataInitializer {
         }
     }
     private void purchasedMovieInit() {
-        int index = random.nextInt(userService.getAll().size());
         for (int count1 = 1; count1 <= countUser; count1++) {
             PurchasedMovie purchasedMovie = new PurchasedMovie();
-            purchasedMovie.setUser(userService.getAll().get(index));
-            for (int i = 1; i == 5; i++) {
-                User user = new User();
-                user.setPurchasedMovie((List<PurchasedMovie>) purchasedMovie);
-                int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
-                purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAvailableMovie().get(index1));
+            purchasedMovie.setUser(userService.getAll().get(count1-1));
+            User user = userService.getAll().get(count1 - 1);
+            for (int p=1; p<=5;p++){
+                user.setPurchasedMovie(purchasedMovieService.getAll());
+            }
+               int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
+                purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAll().get(index1));
                 int year = random.nextInt(2022);
                 int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
                 int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
@@ -549,8 +562,6 @@ public class TestDataInitializer {
                 purchasedMovieService.create(purchasedMovie);
             }
         }
-    }
-
 
             private void init () {
                 roleInit();
@@ -573,5 +584,6 @@ public class TestDataInitializer {
                 scoreInit();
                 availableOnlineMovieInit();
                 purchasedMovieInit();
+                reactionReviewInit();
             }
         }

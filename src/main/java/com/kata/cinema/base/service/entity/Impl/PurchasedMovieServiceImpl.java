@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class PurchasedMovieServiceImpl extends AbstractServiceImpl<Long, PurchasedMovie> implements PurchasedMovieService {
     private final PurchasedMovieDAO purchasedMovieDAO;
 
-    protected PurchasedMovieServiceImpl(AbstractDao<Long, PurchasedMovie> abstractDao, PurchasedMovieDAO purchasedMovieDAO) {
-        super(abstractDao);
+    protected PurchasedMovieServiceImpl(PurchasedMovieDAO purchasedMovieDAO) {
+        super(purchasedMovieDAO);
         this.purchasedMovieDAO = purchasedMovieDAO;
     }
 
