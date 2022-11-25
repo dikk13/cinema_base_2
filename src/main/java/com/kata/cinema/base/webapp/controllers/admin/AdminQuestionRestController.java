@@ -8,6 +8,7 @@ import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.service.entity.NewsService;
 import com.kata.cinema.base.service.entity.QuestionService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +34,12 @@ public class AdminQuestionRestController {
             question.setResults(questionMapper.resultRequestDtoListToResultList(questionRequestDto.getResults()));
             questionService.create(question);
         }
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{newsId}/questions/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("newsId") Long newsId, @PathVariable("id") Long questionId) {
         questionService.deleteQuestionWithAnswersAndResults(newsId, questionId);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

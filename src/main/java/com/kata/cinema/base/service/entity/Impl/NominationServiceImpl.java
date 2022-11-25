@@ -44,8 +44,8 @@ public class NominationServiceImpl extends AbstractServiceImpl<Long, Nomination>
     @Override
     public void deleteById(Long id) {
         List<AwardCeremonyResult> awardCeremonyResult = awardCeremonyResultService.getAll();
-        for (AwardCeremonyResult a: awardCeremonyResult){
-            if (a.getNomination().equals(findNomination(id))){
+        for (AwardCeremonyResult a: awardCeremonyResult) {
+            if (a.getNomination().equals(findNomination(id))) {
                 throw new RuntimeException();
             } else {
                 super.deleteById(id);

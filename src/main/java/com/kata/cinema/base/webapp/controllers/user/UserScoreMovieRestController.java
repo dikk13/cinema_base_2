@@ -11,6 +11,7 @@ import com.kata.cinema.base.service.dto.ScoreMovieResponseDtoService;
 import com.kata.cinema.base.service.entity.ScoreMovieService;
 import com.kata.cinema.base.service.entity.ScoreService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class UserScoreMovieRestController {
         newScore.setScore(score);
         newScore.setMovie(movie);
         scoreService.create(newScore);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/movies/{id}/score")
@@ -52,13 +53,14 @@ public class UserScoreMovieRestController {
         updatedScore.setScore(score);
         updatedScore.setMovie(movie);
         scoreService.update(updatedScore);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/scores/{id}")
     public ResponseEntity<Void> deleteScoreMovie(@PathVariable("id") Long id) {
+        //TODO Добавить проверку на удаление
         scoreService.deleteById(id);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/scores/page/{pageNumber}")

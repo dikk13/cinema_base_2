@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +37,14 @@ public class UserFolderMovieRestController {
     private final FolderMovieService folderMovieService;
 
     @GetMapping("/movies")
-    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id), HttpStatus.OK);
+        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id)
+                .orElseThrow(() -> new NoResultException("No entity found for query")), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/movies/page/{pageNumber}")
@@ -76,6 +78,6 @@ public class UserFolderMovieRestController {
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

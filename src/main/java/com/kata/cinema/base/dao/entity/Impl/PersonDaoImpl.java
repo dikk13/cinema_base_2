@@ -8,16 +8,20 @@ import org.hibernate.query.Query;
 import org.hibernate.transform.ResultTransformer;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PersonDaoImpl extends AbstractDaoImpl<Long, Person> implements PersonDao {
 
-
     public List<SearchPersonDto> namePerson(String firstName) {
         return entityManager.createQuery("select new com.kata.cinema.base.dto.SearchPersonDto(p.id, p.firstName, p.lastName)"
                         + " from Person p WHERE p.firstName LIKE :firstName", SearchPersonDto.class)
-                .setParameter("firstName", firstName + "%").setMaxResults(3).getResultList();
+                .setParameter("firstName", firstName + "%")
+                .setMaxResults(3)
+                .getResultList();
     }
 
     //TODO переписать на трансформер

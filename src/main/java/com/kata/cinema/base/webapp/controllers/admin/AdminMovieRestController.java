@@ -1,6 +1,10 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.kata.cinema.base.dto.request.MovieRequestDto;
+import com.kata.cinema.base.mappers.MovieMapper;
+import com.kata.cinema.base.service.entity.MovieService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
 import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
 import com.kata.cinema.base.models.AvailableOnlineMovie;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -28,8 +33,11 @@ public class AdminMovieRestController {
     private final AvailableOnlineMovieService availableOnlineMovieService;
     private final AvailableOnlineMovieMapper availableOnlineMovieMapper;
 
+    private final MovieService movieService;
+    private final MovieMapper movieMapper;
+
     @PostMapping("/{id}/uploadPreview")
-    public String upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
+    public ResponseEntity<String> upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
 
         String location = "uploads";
         String location2 = "movies";
@@ -60,12 +68,12 @@ public class AdminMovieRestController {
                 stream.write(bytes);
                 stream.close();
 
-                return "Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath();
+                return ResponseEntity.ok("Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath());
             } catch (Exception e) {
-                return "Не удалось загрузить файл: " + e.getMessage();
+                return ResponseEntity.ok("Не удалось загрузить файл: " + e.getMessage());
             }
         } else {
-            return "Не удалось загрузить файл: файл пустой";
+            return ResponseEntity.ok("Не удалось загрузить файл: файл пустой");
         }
     }
 
@@ -93,6 +101,21 @@ public class AdminMovieRestController {
         return ResponseEntity.ok(null);
 
     }
+
+    @PostMapping
+    public ResponseEntity<Void> addNewMovie(@RequestBody MovieRequestDto movieRequestDto) {
+        movieService.create(movieMapper.toMovie(movieRequestDto));
+
+        return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
+        movieService.updateById(id, movieRequestDto);
+        return ResponseEntity.ok(null);
+    }
+
+
 }
 
 

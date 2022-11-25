@@ -6,14 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
+
 @Repository
 public class ProductionStudioDaoImpl extends AbstractDaoImpl<Long, ProductionStudio> implements ProductionStudioDao {
 
     @Override
     public Optional<ProductionStudio> getById(Long id) {
-        return Optional.of(entityManager.createQuery("select ps from ProductionStudio ps " +
+        return jpaResultHelper(entityManager.createQuery("select ps from ProductionStudio ps " +
                         "where ps.id =: id", ProductionStudio.class)
-                .setParameter("id", id)
-                .getSingleResult());
+                .setParameter("id", id));
     }
 }

@@ -25,8 +25,8 @@ public class UserDtoServiceImpl extends AbstractServiceImpl<Long, User> implemen
             return new UserResponseDto(
                     targetUser.getId(),
                     targetUser.getEmail(),
-                    targetUser.getFirst_name(),
-                    targetUser.getLast_name(),
+                    targetUser.getFirstName(),
+                    targetUser.getLastName(),
                     targetUser.getAvatarUrl(),
                     targetUser.getBirthday(),
                     targetUser.getRole().stream().map(r -> new RoleResponseDto(r.getId(), r.getRole())).collect(Collectors.toList()));

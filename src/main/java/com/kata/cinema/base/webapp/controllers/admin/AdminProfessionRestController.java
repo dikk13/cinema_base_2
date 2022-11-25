@@ -21,7 +21,7 @@ public class AdminProfessionRestController {
     private final ProfessionMapper professionMapper;
     private final MoviePersonService moviePersonService;
 
-    @PostMapping("/")
+    @PostMapping
     public void addNewProfession(@RequestParam(name = "string") String string) {
         professionService.create(professionMapper.toProfessionFromString(string));
     }
