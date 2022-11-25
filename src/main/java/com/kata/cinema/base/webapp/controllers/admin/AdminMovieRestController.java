@@ -4,7 +4,6 @@ package com.kata.cinema.base.webapp.controllers.admin;
 import com.kata.cinema.base.dto.request.MovieRequestDto;
 import com.kata.cinema.base.mappers.MovieMapper;
 import com.kata.cinema.base.service.entity.MovieService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
 import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
 import com.kata.cinema.base.models.AvailableOnlineMovie;
@@ -24,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/admin/movies")
