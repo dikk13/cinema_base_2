@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,12 +39,11 @@ public class AvailableOnlineMovie {
     @Column(name = "available_plus")
     private Boolean availablePlus;//имеет доступ
     @Column(name = "enabled",nullable = false, columnDefinition = "boolean default true")
-    private boolean enabled = Boolean.TRUE;
+    private boolean enabled=Boolean.TRUE;
 
 
-    @OneToOne(cascade = CascadeType.MERGE,mappedBy = "availableOnlineMovie")
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    @ToString.Exclude
     private Movie movie;
 
     @OneToMany(cascade = CascadeType.MERGE,mappedBy = "availableOnlineMovie")
@@ -60,6 +60,10 @@ public class AvailableOnlineMovie {
         if (o == null || getClass() != o.getClass()) return false;
         AvailableOnlineMovie that = (AvailableOnlineMovie) o;
         return isEnabled() == that.isEnabled() && Objects.equals(getId(), that.getId()) && Objects.equals(getRentalPrice(), that.getRentalPrice()) && Objects.equals(getBuyPrice(), that.getBuyPrice()) && Objects.equals(getAvailablePlus(), that.getAvailablePlus()) && Objects.equals(getMovie(), that.getMovie()) && Objects.equals(getPurchasedMovie(), that.getPurchasedMovie());
+    }
+
+    public AvailableOnlineMovie(boolean enabled) {
+        this.enabled = enabled;
     }
 }
 
