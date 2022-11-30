@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
+import com.kata.cinema.base.models.AvailableOnlineMovie;
 import com.kata.cinema.base.dto.request.MovieRequestDto;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.RARS;
@@ -20,6 +22,8 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -36,16 +40,52 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
+
 public class AdminMovieRestControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Autowired
     private JwtUtil jwtUtil;
+    @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
+    void availableOnlineMovieRequestDto() throws Exception {
+        AvailableOnlineMovieRequestDto availableOnlineMovieRequestDto = new AvailableOnlineMovieRequestDto(200, 300, true);
+        this.mockMvc.perform(post("/api/admin/movies/100/online")
+                        .content(objectMapper.writeValueAsString(availableOnlineMovieRequestDto))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());}
+    @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
+    void deactivate () throws Exception {
+        AvailableOnlineMovie availableOnlineMovie=new AvailableOnlineMovie(false);
 
+        this.mockMvc.perform(patch("/api/admin/movies/101/online/deactivate")
+                        .content(objectMapper.writeValueAsString(availableOnlineMovie))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
+    void activate () throws Exception {
+        AvailableOnlineMovie availableOnlineMovie=new AvailableOnlineMovie(Boolean.TRUE);
+        this.mockMvc.perform(patch("/api/admin/movies/100/online/activate")
+                        .content(objectMapper.writeValueAsString(availableOnlineMovie))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
     @Test
     @DatabaseSetup("/dataset_for_question_contr.xml")
     @DatabaseTearDown(value = "/empty_dataset.xml")
@@ -63,9 +103,9 @@ public class AdminMovieRestControllerTest {
                 ids
         );
         this.mockMvc.perform(post("/api/admin/movies")
-                .content(objectMapper.writeValueAsString(requestDto))
-                .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(requestDto))
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

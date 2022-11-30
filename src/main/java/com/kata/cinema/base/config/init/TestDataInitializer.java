@@ -63,12 +63,14 @@ public class TestDataInitializer {
 
     @Autowired
     private ReviewService reviewService;
-
     @Autowired
-    private ReactionReviewService reactionReviewService;
-
+    private AvailableOnlineMovieService availableOnlineMovieService;
+    @Autowired
+    private PurchasedMovieService purchasedMovieService;
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private ReactionReviewService reactionReviewService;
 
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
@@ -504,7 +506,6 @@ public class TestDataInitializer {
             }
         }
     }
-
     public void reactionReviewInit() {
         for (int i = 1; i <= 5; i++) {
             ReactionReview reactionReview = new ReactionReview();
@@ -514,6 +515,8 @@ public class TestDataInitializer {
             reactionReviewService.create(reactionReview);
         }
     }
+
+
 
     public void scoreInit() {
         for (int k = 1; k <= countMovieList; k++) {
@@ -526,26 +529,58 @@ public class TestDataInitializer {
             }
         }
     }
+    public void availableOnlineMovieInit() {
 
-    private void init() {
-        roleInit();
-        genreInit();
-        movieInit();
-        collectionInit();
-        userInit();
-        folderMovieInit();
-        studioProductionInit();
-        productionStudioInit();
-        productionStudioMovieInit();
-        personInit();
-        professionInit();
-        moviePersonInit();
-        newsInit();
-        questionInit();
-        answerInit();
-        resultInit();
-        reviewInit();
-        reactionReviewInit();
-        scoreInit();
+        for (int count = 1; count <= countMovieList; count++) {
+            AvailableOnlineMovie availableOnlineMovie = new AvailableOnlineMovie();
+            availableOnlineMovie.setMovie(movieService.getAll().get(count-1));
+            availableOnlineMovie.setRentalPrice(2000);
+            availableOnlineMovie.setBuyPrice(3000);
+            availableOnlineMovie.setAvailablePlus(true);
+            availableOnlineMovie.setEnabled(true);
+            availableOnlineMovieService.create(availableOnlineMovie);
+        }
     }
-}
+    private void purchasedMovieInit() {
+        for (int count1 = 1; count1 <= countUser; count1++) {
+            PurchasedMovie purchasedMovie = new PurchasedMovie();
+            purchasedMovie.setUser(userService.getAll().get(count1-1));
+            User user = userService.getAll().get(count1 - 1);
+            for (int p=1; p<=5;p++){
+                user.setPurchasedMovie(purchasedMovieService.getAll());
+            }
+               int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
+                purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAll().get(index1));
+                int year = random.nextInt(2022);
+                int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+                int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+                purchasedMovie.setEndDate(LocalDate.of(year, month, day));
+                purchasedMovie.setPurchase(PurchaseType.values()[random.nextInt(PurchaseType.values().length)]);
+                purchasedMovieService.create(purchasedMovie);
+            }
+        }
+
+            private void init () {
+                roleInit();
+                genreInit();
+                movieInit();
+                collectionInit();
+                userInit();
+                folderMovieInit();
+                studioProductionInit();
+                productionStudioInit();
+                productionStudioMovieInit();
+                personInit();
+                professionInit();
+                moviePersonInit();
+                newsInit();
+                questionInit();
+                answerInit();
+                resultInit();
+                reviewInit();
+                scoreInit();
+                availableOnlineMovieInit();
+                purchasedMovieInit();
+                reactionReviewInit();
+            }
+        }

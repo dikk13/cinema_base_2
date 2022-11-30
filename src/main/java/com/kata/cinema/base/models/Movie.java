@@ -25,53 +25,40 @@ public class Movie {
     @SequenceGenerator(name = "seq_movie_id", sequenceName = "SEQ_MOVIE_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
-
     @Column(name = "name")
     private String name;
 
     @Column(name = "countries")
     private String countries;
-
     @Column(name = "date_release")
     private LocalDate dateRelease;
-
     @Column(name = "rars")
     @Enumerated(EnumType.STRING)
     private RARS rars;
-
     @Column(name = "mpaa")
     @Enumerated(EnumType.STRING)
     private MPAA mpaa;
-
     @Column(name = "time")
     private int time;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private MovieType type;
-
     @Column(name = "original_name")
     private String originalName;
-
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Content> contents;
-
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<MoviePerson> moviePerson;
-
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<AwardCeremonyResult> awardCeremonyResults;
-
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Score> scores;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "news_movie",
@@ -79,7 +66,6 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "news_id"))
     @ToString.Exclude
     private List<News> news;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "collection_movie",

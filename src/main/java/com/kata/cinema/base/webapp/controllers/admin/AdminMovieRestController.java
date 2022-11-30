@@ -4,9 +4,19 @@ package com.kata.cinema.base.webapp.controllers.admin;
 import com.kata.cinema.base.dto.request.MovieRequestDto;
 import com.kata.cinema.base.mappers.MovieMapper;
 import com.kata.cinema.base.service.entity.MovieService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
+import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
+import com.kata.cinema.base.models.AvailableOnlineMovie;
+import com.kata.cinema.base.service.entity.AvailableOnlineMovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,10 +24,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+
 @RestController
 @RequestMapping("/api/admin/movies")
 @RequiredArgsConstructor
 public class AdminMovieRestController {
+    private final AvailableOnlineMovieService availableOnlineMovieService;
+    private final AvailableOnlineMovieMapper availableOnlineMovieMapper;
 
     private final MovieService movieService;
     private final MovieMapper movieMapper;
@@ -61,6 +74,31 @@ public class AdminMovieRestController {
         } else {
             return ResponseEntity.ok("Не удалось загрузить файл: файл пустой");
         }
+    }
+
+    @PostMapping("/{id}/online")
+    public void availableOnlineMovieRequestDto(@PathVariable("id") Long movieId,
+                                               @RequestBody AvailableOnlineMovieRequestDto
+                                                       availableOnlineMovieRequestDto) {
+                availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+            availableOnlineMovieService.create(availableOnlineMovieMapper.toAvailableOnlineMovie(availableOnlineMovieRequestDto));
+    }
+
+    @PatchMapping("/{id}/online/deactivate")
+    public ResponseEntity<Void> deactivate(@PathVariable("id") Long movieId, @RequestBody AvailableOnlineMovie availableOnlineMovie) {
+        availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+        availableOnlineMovie.setEnabled(false);
+        availableOnlineMovieService.update(availableOnlineMovie);
+        return ResponseEntity.ok(null);
+    }
+
+    @PatchMapping("/{id}/online/activate")
+    public ResponseEntity<Void> activate(@PathVariable("id") Long movieId, @RequestBody AvailableOnlineMovie availableOnlineMovie) {
+        availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+        availableOnlineMovie.setEnabled(true);
+        availableOnlineMovieService.update(availableOnlineMovie);
+        return ResponseEntity.ok(null);
+
     }
 
     @PostMapping

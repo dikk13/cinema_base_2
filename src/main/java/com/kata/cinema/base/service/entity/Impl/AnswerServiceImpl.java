@@ -17,6 +17,6 @@ public class AnswerServiceImpl extends AbstractServiceImpl<Long, Answer> impleme
 
     public AnswerServiceImpl(AbstractDao<Long, Answer> abstractDao, AnswerDao answerDao) {
         super(abstractDao);
-         this.answerDao = answerDao;
+        this.answerDao = answerDao;
     }
 }
