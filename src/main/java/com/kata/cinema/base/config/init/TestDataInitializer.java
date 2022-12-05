@@ -63,14 +63,18 @@ public class TestDataInitializer {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private ReactionReviewService reactionReviewService;
     @Autowired
     private AvailableOnlineMovieService availableOnlineMovieService;
     @Autowired
     private PurchasedMovieService purchasedMovieService;
     @Autowired
     private ScoreService scoreService;
+
     @Autowired
-    private ReactionReviewService reactionReviewService;
+    private CommentsService commentsService;
 
     private final CollectionService collectionService;
     private final PasswordEncoder encoder;
@@ -90,6 +94,8 @@ public class TestDataInitializer {
     private static final int ONE_DAY = 1;
     private static final String DESCRIPTION = "описание описание описание описание описание описание описание описание описание описание описание описание";
     private static final String HTML_DESCRIPTION = "html страница html страница html страница html страница html страница html страница";
+
+    private static final int countReview = 500;
 
     private static final Random random = new Random();
 
@@ -127,6 +133,7 @@ public class TestDataInitializer {
             movie.setRars(RARS.values()[random.nextInt(RARS.values().length)]);
             movie.setGenres(genreListMovie);
             movie.setName(String.format("Фильм%s", i));
+            movie.setOriginalName(String.format("Оригинальное название%s", i));
             movie.setDescription(DESCRIPTION);
 
             movieService.create(movie);
@@ -231,14 +238,13 @@ public class TestDataInitializer {
     public void folderMovieInit() {
 
         List<Movie> allMovies = movieService.getAll();
-        List<User> allUsers = userService.getAll();
-        for (User user : allUsers) {
-            for (int category = 0; category < Category.values().length - 1; category++) {
+        for (int userN=1; userN<=countUser; userN++) {
+            for (int category = 0; category < Category.values().length-1; category++) {
                 FolderMovie folderMovie = new FolderMovie();
                 folderMovie.setCategory(Category.values()[category]);
                 folderMovie.setName(Category.values()[category].name());
                 folderMovie.setPrivacy(Privacy.PUBLIC);
-                folderMovie.setUser(user);
+                folderMovie.setUser(userService.getAll().get(userN-1));
                 folderMovie.setDescription(DESCRIPTION);
                 List<Movie> movies = new ArrayList<>();
                 int moviesCount = random.nextInt(20) + 5;
@@ -292,17 +298,19 @@ public class TestDataInitializer {
     }
 
     public void productionStudioMovieInit() {
-        int index = random.nextInt(movieService.getAll().size());
-        for (int i = 0; i < 3; i++) {
-            ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
-            productionStudioMovie.setMovie(movieService.getAll().get(index));
-            int index2 = random.nextInt(productionStudioService.getAll().size());
-            if (productionStudioMovie.getStudio() == null) {
-                productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
-            } else if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
-                productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+        for (int j = 1; j <= countMovieList / 2; j++) {
+            int index = random.nextInt(movieService.getAll().size());
+            for (int i = 0; i < 3; i++) {
+                ProductionStudioMovie productionStudioMovie = new ProductionStudioMovie();
+                productionStudioMovie.setMovie(movieService.getAll().get(index));
+                int index2 = random.nextInt(productionStudioService.getAll().size());
+                if (productionStudioMovie.getStudio() == null) {
+                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+                } else if (!productionStudioMovie.getStudio().equals(productionStudioService.getAll().get(index2))) {
+                    productionStudioMovie.setStudio(productionStudioService.getAll().get(index2));
+                }
+                productionMovieStudioService.create(productionStudioMovie);
             }
-            productionMovieStudioService.create(productionStudioMovie);
         }
 
 
@@ -426,6 +434,7 @@ public class TestDataInitializer {
     public void newsInit() {
 
         for (int i = 1; i <= countNews; i++) {
+            User user=userService.getByRole("PUBLICIST");
             News news = new News();
             LocalDateTime end = LocalDateTime.now();
             long days = ChronoUnit.DAYS.between(LocalDateTime.now().minusWeeks(1), end);
@@ -440,10 +449,10 @@ public class TestDataInitializer {
             news.setTitle(String.format("Заголовок %s", i));
             news.setHtmlBody(HTML_DESCRIPTION);
             news.setPreviewUrl(String.format("/upload/news/preview/%s", i));
-            newsService.create(news);
+            news.setUser(user);
+                newsService.create(news);
+            }
         }
-    }
-
     public void questionInit() {
         List<News> listNews = newsService.getAll().stream()
                 .filter(i -> i.getRubric().equals(Rubric.valueOf("TESTS"))).toList();
@@ -506,17 +515,18 @@ public class TestDataInitializer {
             }
         }
     }
+
     public void reactionReviewInit() {
-        for (int i = 1; i <= 5; i++) {
-            ReactionReview reactionReview = new ReactionReview();
-            reactionReview.setRating(TypeRating.LIKE);
-            reactionReview.setUser(userService.getAll().get(i - 1));
-            reactionReview.setReview(reviewService.getAll().get(0));
-            reactionReviewService.create(reactionReview);
+        for (int j = 1; j <= (countReview/2); j++) {
+            for (int i = 1; i <= 5; i++) {
+                ReactionReview reactionReview = new ReactionReview();
+                reactionReview.setRating(TypeRating.LIKE);
+                reactionReview.setUser(userService.getAll().get(i-1));
+                reactionReview.setReview(reviewService.getAll().get(j));
+                reactionReviewService.create(reactionReview);
+            }
         }
     }
-
-
 
     public void scoreInit() {
         for (int k = 1; k <= countMovieList; k++) {
@@ -525,15 +535,21 @@ public class TestDataInitializer {
                 score.setScore(random.nextInt(1, 11));
                 score.setUser(userService.getAll().get(i - 1));
                 score.setMovie(movieService.getAll().get(k - 1));
+                int minDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
+                int maxDay = (int) LocalDate.of(2022, 1, 11).toEpochDay();
+                long randomDay = minDay + random.nextInt(maxDay - minDay);
+                LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+                score.setDate(randomDate);
                 scoreService.create(score);
             }
         }
     }
+
     public void availableOnlineMovieInit() {
 
         for (int count = 1; count <= countMovieList; count++) {
             AvailableOnlineMovie availableOnlineMovie = new AvailableOnlineMovie();
-            availableOnlineMovie.setMovie(movieService.getAll().get(count-1));
+            availableOnlineMovie.setMovie(movieService.getAll().get(count - 1));
             availableOnlineMovie.setRentalPrice(2000);
             availableOnlineMovie.setBuyPrice(3000);
             availableOnlineMovie.setAvailablePlus(true);
@@ -541,46 +557,47 @@ public class TestDataInitializer {
             availableOnlineMovieService.create(availableOnlineMovie);
         }
     }
+
     private void purchasedMovieInit() {
         for (int count1 = 1; count1 <= countUser; count1++) {
             PurchasedMovie purchasedMovie = new PurchasedMovie();
-            purchasedMovie.setUser(userService.getAll().get(count1-1));
+            purchasedMovie.setUser(userService.getAll().get(count1 - 1));
             User user = userService.getAll().get(count1 - 1);
-            for (int p=1; p<=5;p++){
+            for (int p = 1; p <= 5; p++) {
                 user.setPurchasedMovie(purchasedMovieService.getAll());
             }
-               int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
-                purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAll().get(index1));
-                int year = random.nextInt(2022);
-                int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
-                int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
-                purchasedMovie.setEndDate(LocalDate.of(year, month, day));
-                purchasedMovie.setPurchase(PurchaseType.values()[random.nextInt(PurchaseType.values().length)]);
-                purchasedMovieService.create(purchasedMovie);
-            }
+            int index1 = random.nextInt(availableOnlineMovieService.getAll().size());
+            purchasedMovie.setAvailableOnlineMovie(availableOnlineMovieService.getAll().get(index1));
+            int year = random.nextInt(2022);
+            int month = random.nextInt(ELEVEN_MONTHS) + ONE_MONTH;
+            int day = random.nextInt(TWENTY_SEVEN_DAYS) + ONE_DAY;
+            purchasedMovie.setEndDate(LocalDate.of(year, month, day));
+            purchasedMovie.setPurchase(PurchaseType.values()[random.nextInt(PurchaseType.values().length)]);
+            purchasedMovieService.create(purchasedMovie);
         }
+    }
 
-            private void init () {
-                roleInit();
-                genreInit();
-                movieInit();
-                collectionInit();
-                userInit();
-                folderMovieInit();
-                studioProductionInit();
-                productionStudioInit();
-                productionStudioMovieInit();
-                personInit();
-                professionInit();
-                moviePersonInit();
-                newsInit();
-                questionInit();
-                answerInit();
-                resultInit();
-                reviewInit();
-                scoreInit();
-                availableOnlineMovieInit();
-                purchasedMovieInit();
-                reactionReviewInit();
-            }
-        }
+    private void init() {
+        roleInit();
+        genreInit();
+        movieInit();
+        collectionInit();
+        userInit();
+        folderMovieInit();
+        studioProductionInit();
+        productionStudioInit();
+        productionStudioMovieInit();
+        personInit();
+        professionInit();
+        moviePersonInit();
+        newsInit();
+        questionInit();
+        answerInit();
+        resultInit();
+        reviewInit();
+        reactionReviewInit();
+        scoreInit();
+        availableOnlineMovieInit();
+        purchasedMovieInit();
+    }
+}

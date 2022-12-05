@@ -65,4 +65,5 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, User> implements 
         targetUser.setBirthday(userRequestDto.getBirthday());
         userDao.update(targetUser);
     }
+    public User getByRole (String roleUser){return userDao.getByRole(roleUser);}
 }

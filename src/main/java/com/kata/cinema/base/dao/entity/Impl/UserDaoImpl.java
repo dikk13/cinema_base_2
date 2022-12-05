@@ -20,4 +20,13 @@ public class UserDaoImpl extends AbstractDaoImpl<Long, User> implements UserDao 
             throw new UsernameNotFoundException("There is no such email");
         }
     }
+
+   public User getByRole (String roleUser){
+
+           return entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.role r WHERE r.role=:roleUser",User.class)
+                   .setParameter("roleUser",roleUser)
+                   .getSingleResult();
+
+    }
 }
+
