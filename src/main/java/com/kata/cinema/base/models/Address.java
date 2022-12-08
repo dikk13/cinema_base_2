@@ -8,16 +8,16 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_address")
+@Table(name = "address")
 @Setter
 @Getter
 @NoArgsConstructor
-public class UserAddress {
+public class Address {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_address_id")
-    @SequenceGenerator(name = "seq_user_address_id", sequenceName = "SEQ_USER_ADDRESS_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_address_id")
+    @SequenceGenerator(name = "seq_address_id", sequenceName = "SEQ_ADDRESS_ID", allocationSize = 1)
     private Long id;
 
     @Column(name = "street")
@@ -39,7 +39,7 @@ public class UserAddress {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserAddress that = (UserAddress) o;
+        Address that = (Address) o;
         return Objects.equals(id, that.id) && Objects.equals(street, that.street) &&
                 Objects.equals(city, that.city) && Objects.equals(user, that.user);
     }
