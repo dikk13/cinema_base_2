@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import java.util.HashSet;
 @ToString
 @Table(name = "folders_persons")
 @NoArgsConstructor
+@AllArgsConstructor
 public class FolderPerson {
     @Id
     @Column(name = "id")
@@ -87,5 +89,13 @@ public class FolderPerson {
         FolderPerson that = (FolderPerson) o;
         return Objects.equals(id, that.id) && favourites == that.favourites && Objects.equals(privacy, that.privacy) &&
                 Objects.equals(name, that.name) && Objects.equals(description, that.description);
+    }
+
+    public FolderPerson(Long id, Boolean favourites, String privacy, String name, String description) {
+        this.id = id;
+        this.favourites = favourites;
+        this.privacy = privacy;
+        this.name = name;
+        this.description = description;
     }
 }

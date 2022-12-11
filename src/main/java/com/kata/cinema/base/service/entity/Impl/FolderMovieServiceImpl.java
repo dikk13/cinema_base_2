@@ -3,6 +3,7 @@ package com.kata.cinema.base.service.entity.Impl;
 import com.kata.cinema.base.dao.entity.AbstractDao;
 import com.kata.cinema.base.dao.entity.FolderMovieDao;
 import com.kata.cinema.base.models.FolderMovie;
+import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.FolderMovieService;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,5 @@ public class FolderMovieServiceImpl extends AbstractServiceImpl<Long, FolderMovi
     public Optional<FolderMovie> getFolderMovieById(Long folderMovieId) {
         return folderMovieDao.getFolderMovieById(folderMovieId);
     }
+
 }

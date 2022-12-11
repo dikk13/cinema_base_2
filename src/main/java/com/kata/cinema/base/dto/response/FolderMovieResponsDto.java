@@ -17,4 +17,7 @@ public class FolderMovieResponsDto implements Serializable {
     private Privacy privacy;
     private String name;
     private String description;
-}
+
+
+    }
+

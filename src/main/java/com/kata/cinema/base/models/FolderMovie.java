@@ -3,6 +3,7 @@ package com.kata.cinema.base.models;
 
 import com.kata.cinema.base.models.enums.Category;
 import com.kata.cinema.base.models.enums.Privacy;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "folders_movies")
 @NoArgsConstructor
+@AllArgsConstructor
 public class FolderMovie {
 
     @Id
@@ -75,6 +77,14 @@ public class FolderMovie {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public FolderMovie(Long id, Category category, Privacy privacy, String name, String description) {
+        this.id = id;
+        this.category = category;
+        this.privacy = privacy;
+        this.name = name;
+        this.description = description;
     }
 }
 
