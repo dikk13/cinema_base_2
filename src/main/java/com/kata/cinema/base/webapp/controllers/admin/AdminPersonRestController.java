@@ -1,6 +1,7 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 import com.kata.cinema.base.dto.request.PersonRequestDto;
+import com.kata.cinema.base.exception.PersonIdNotFoundException;
 import com.kata.cinema.base.exception.PersonIsPresentException;
 import com.kata.cinema.base.mappers.PersonMapper;
 import com.kata.cinema.base.service.entity.PersonService;
@@ -34,7 +35,11 @@ public class AdminPersonRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable("id") Long id) {
-        personService.deleteById(id);
+        if (personService.getById(id).isPresent()) {
+            personService.deleteById(id);
+        } else {
+            throw new PersonIdNotFoundException("Персоны с таким ID не существует");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
