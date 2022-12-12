@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface MoviePersonService extends AbstractService<Long, MoviePerson> {
     boolean isProfessionIsBeingUsed(Profession profession);
 
-    Optional<MoviePerson> getMoviePersonByMovieIdPersonIdProfessionId(Long movieId, Long personId, Long professionId);}
+    Optional<MoviePerson> getMoviePersonByMovieIdPersonIdProfessionId(Long movieId, Long personId, Long professionId);
+
+    void updateById(Long id, MoviePerson moviePerson);
+}

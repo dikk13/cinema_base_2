@@ -31,4 +31,17 @@ public class MoviePersonServiceImpl extends AbstractServiceImpl<Long, MoviePerso
     public Optional<MoviePerson> getMoviePersonByMovieIdPersonIdProfessionId(Long movieId, Long personId, Long professionId) {
         return moviePersonDao.getMoviePersonByMovieIdPersonIdProfessionId(movieId, personId, professionId);
     }
+
+    @Transactional
+    @Override
+    public void updateById(Long id, MoviePerson moviePerson) {
+        if (this.getById(id).isPresent()) {
+            moviePerson.setId(id);
+            moviePerson.setMovie(this.getById(id).get().getMovie());
+            moviePerson.setPerson(this.getById(id).get().getPerson());
+            moviePerson.setProfession(this.getById(id).get().getProfession());
+            moviePerson.setType(this.getById(id).get().getType());
+            moviePerson.setNameRole(this.getById(id).get().getNameRole());
+        }
+    }
 }
