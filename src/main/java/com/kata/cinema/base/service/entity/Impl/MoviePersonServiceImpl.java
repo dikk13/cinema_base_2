@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class MoviePersonServiceImpl extends AbstractServiceImpl<Long, MoviePerson> implements MoviePersonService {
@@ -23,5 +25,10 @@ public class MoviePersonServiceImpl extends AbstractServiceImpl<Long, MoviePerso
 
     public boolean isProfessionIsBeingUsed(Profession profession) {
         return moviePersonDao.isProfessionIsBeingUsed(profession);
+    }
+
+    @Override
+    public Optional<MoviePerson> getMoviePersonByMovieIdPersonIdProfessionId(Long movieId, Long personId, Long professionId) {
+        return moviePersonDao.getMoviePersonByMovieIdPersonIdProfessionId(movieId, personId, professionId);
     }
 }
