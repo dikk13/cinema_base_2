@@ -75,24 +75,23 @@ public class UserFolderMovieRestController {
 
     @PostMapping("/movies")
     public ResponseEntity<Void> createNewFolderByMovie(
-            @RequestBody FolderRequestDto folderRequestDto){
+            @RequestBody FolderRequestDto folderRequestDto) {
         FolderMovie folderMovie = folderRequestDtoMapper.toFolderMovie(folderRequestDto);
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}/movies")
     public ResponseEntity<Void> deleteFolderMovieById(@PathVariable Long id) {
         Optional<FolderMovie> folderMovieToDelete = folderMovieService.getById(id);
-        if (folderMovieToDelete.isPresent()) {
-        FolderMovie folderMovie=folderMovieToDelete.get();
-            if (folderMovie.getCategory().equals(Category.CUSTOM)) {
-                folderMovieService.deleteById(id);
-                return ResponseEntity.ok(null);
+        if (folderMovieToDelete.isEmpty()) {
+            throw new RuntimeException("Неверно передан id, пользователя с таким id нету ");
         }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        FolderMovie folderMovie = folderMovieToDelete.get();
+        folderMovie.getCategory().equals(Category.CUSTOM);
+        folderMovieService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-

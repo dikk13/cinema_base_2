@@ -4,13 +4,14 @@ import com.kata.cinema.base.dao.entity.FolderMovieDao;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.models.enums.Category;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
 import static com.kata.cinema.base.dao.util.JpaResultHelper.jpaResultHelper;
 
 @Repository
-public class FolderMovieDaoImpl extends AbstractDaoImpl <Long, FolderMovie> implements FolderMovieDao {
+public class FolderMovieDaoImpl extends AbstractDaoImpl<Long, FolderMovie> implements FolderMovieDao {
 
 
     @Override
@@ -26,4 +27,4 @@ public class FolderMovieDaoImpl extends AbstractDaoImpl <Long, FolderMovie> impl
                 .setParameter("id", folderMovieId));
     }
 
-   }
+}

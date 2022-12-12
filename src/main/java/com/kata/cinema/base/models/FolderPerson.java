@@ -50,22 +50,22 @@ public class FolderPerson {
 
     @ToString.Exclude
     @ManyToMany
-    @JoinTable (
+    @JoinTable(
             name = "folder_persons_to_person",
             joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Set <Person> folderPersonsSet = new java.util.LinkedHashSet<>();
+    private Set<Person> folderPersonsSet = new java.util.LinkedHashSet<>();
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    public void addPersonToFolder (Person person) {
+    public void addPersonToFolder(Person person) {
         folderPersonsSet.add(person);
     }
 
-    public void removePersonFromFolder (Person person) {
+    public void removePersonFromFolder(Person person) {
         folderPersonsSet.remove(person);
     }
 

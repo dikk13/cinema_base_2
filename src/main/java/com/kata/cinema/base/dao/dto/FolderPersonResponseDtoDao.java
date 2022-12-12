@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FolderPersonResponseDtoDao {
 
-    List<FolderPersonResponseDto> getFolderPersonResponseDtoList (Long id);
+    List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id);
 }

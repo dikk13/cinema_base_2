@@ -9,7 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FolderPersonService extends AbstractService<Long, FolderPerson> {
-    public List<FolderPerson> getFolderPersonById (Long folderPersonId);
-
-
+    public List<FolderPerson> getFolderPersonById(Long folderPersonId);
 }

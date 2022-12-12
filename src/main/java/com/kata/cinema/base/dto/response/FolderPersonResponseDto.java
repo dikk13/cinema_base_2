@@ -16,11 +16,11 @@ import java.io.Serializable;
 @ToString
 public class FolderPersonResponseDto implements Serializable {
     private Long id;
-   private String name;
-   private String description;
+    private String name;
+    private String description;
     private Boolean favourites;
     private Privacy privacy;
-   private Long countPerson;
+    private Long countPerson;
 
 
 }

@@ -16,24 +16,16 @@ public class FolderPersonResponseDtoServiceImpl implements FolderPersonResponseD
 
     private final FolderPersonService folderPersonService;
     private final FolderPersonResponseDtoMapper folderPersonResponseDtoMapper;
-    private final FolderPersonResponseDtoDao folderPersonResponseDtoDao;
 
-    public FolderPersonResponseDtoServiceImpl(FolderPersonService folderPersonService, FolderPersonResponseDtoMapper folderPersonResponseDtoMapper, FolderPersonResponseDtoDao folderPersonResponseDtoDao) {
+    public FolderPersonResponseDtoServiceImpl(FolderPersonService folderPersonService, FolderPersonResponseDtoMapper folderPersonResponseDtoMapper) {
         this.folderPersonService = folderPersonService;
         this.folderPersonResponseDtoMapper = folderPersonResponseDtoMapper;
-        this.folderPersonResponseDtoDao = folderPersonResponseDtoDao;
+
     }
 
     @Override
-    public   List<FolderPersonResponseDto> getFolderPersonResponseDtoList (Long id) {
+    public List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id) {
         List<FolderPerson> folderPersonList = folderPersonService.getFolderPersonById(id);
         return folderPersonResponseDtoMapper.toDTOList(folderPersonList);
     }
-
-
-
-
-//    public Optional<FolderMovieResponsDto> getFolderMovieResponsDtoById(Long folderMovieId) {
-//        return folderMovieResponsDtoDao.getFolderMovieResponsDtoById(folderMovieId);
-
- }
+}

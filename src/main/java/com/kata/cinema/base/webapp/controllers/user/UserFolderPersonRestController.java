@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/user/folders")
 @AllArgsConstructor
@@ -32,14 +33,14 @@ public class UserFolderPersonRestController {
     @DeleteMapping("/{id}/persons")
     public ResponseEntity<Void> deleteFolderPersonsById(@PathVariable Long id) {
         Optional<FolderPerson> folderPersonToDelete = folderPersonService.getById(id);
-        if (folderPersonToDelete.isPresent()) {
-            FolderPerson folderPerson = folderPersonToDelete.get();
-            if (folderPerson.getFavourites().equals(false)) {
-                folderPersonService.deleteById(id);
-                return ResponseEntity.ok(null);
-            }
+        if (folderPersonToDelete.isEmpty()) {
+            throw new RuntimeException("Неверно передан id, пользователя с таким id нету ");
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        FolderPerson folderPerson = folderPersonToDelete.get();
+        folderPerson.getFavourites().equals(false);
+        folderPersonService.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/persons")
@@ -49,12 +50,12 @@ public class UserFolderPersonRestController {
 
     @PostMapping("/persons")
     public ResponseEntity<Void> addFolderPerson(@RequestBody FolderRequestDto folderRequestDto) {
-       FolderPerson folderPerson = folderRequestDtoMapper.toFolderPerson(folderRequestDto);
+        FolderPerson folderPerson = folderRequestDtoMapper.toFolderPerson(folderRequestDto);
         folderPerson.setFavourites(Boolean.FALSE);
         folderPerson.setPrivacy("PUBLIC");
         folderPersonService.create(folderPerson);
 
-       return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

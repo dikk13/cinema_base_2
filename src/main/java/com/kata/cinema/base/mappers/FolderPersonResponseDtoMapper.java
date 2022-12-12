@@ -9,13 +9,14 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Mapper (componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface FolderPersonResponseDtoMapper {
 
 
-   @Mapping(source = "user.id", target = "countPerson")
+    @Mapping(source = "user.id", target = "countPerson")
+    FolderPersonResponseDto toDTO(FolderPerson folderPerson);
 
-   FolderPersonResponseDto toDTO (FolderPerson folderPerson);
-    List<FolderPersonResponseDto> toDTOList (List<FolderPerson>  folderPerson);
-    FolderPerson toFolderPerson (FolderPersonResponseDto folderPersonRequestDto);
+    List<FolderPersonResponseDto> toDTOList(List<FolderPerson> folderPerson);
+
+    FolderPerson toFolderPerson(FolderPersonResponseDto folderPersonRequestDto);
 }

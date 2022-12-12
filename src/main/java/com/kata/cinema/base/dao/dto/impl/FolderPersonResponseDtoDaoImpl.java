@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+
 @Repository
 public class FolderPersonResponseDtoDaoImpl implements FolderPersonResponseDtoDao {
     @PersistenceContext
@@ -14,12 +15,17 @@ public class FolderPersonResponseDtoDaoImpl implements FolderPersonResponseDtoDa
 
     @Override
     public List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id) {
-        //return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.FolderPersonResponseDto (f.privacy,f.description,f.name,f.favourites, select count (m) from FolderPerson fm join fm.folderPersonsSet m where m.id= : ) from FolderPerson f where f.name=:name",
-        // FolderPersonResponseDto.class)
-
-        return entityManager.createQuery(new StringBuilder().append("SELECT new com.kata.cinema.base.dto.response.FolderPersonResponseDto(").append("f.id,").append("f.name,").append("f.description,").append("f.favourites,").append("f.privacy,").append("count (m.id) from FolderPerson fm join fm.folderPersonsSet m where m.id = : id)").toString(), FolderPersonResponseDto.class)
+        return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.FolderPersonResponseDto" +
+                                "(fm.privacy," +
+                                "fm.favourites," +
+                                "fm.description," +
+                                "fm.name," +
+                                "fm.id," +
+                                "fm.name," +
+                                "count (m) from FolderPerson fm join Person m where m.id=:id",
+                        FolderPersonResponseDto.class)
                 .setParameter("id", id)
                 .getResultList();
-    }
 
+    }
 }
