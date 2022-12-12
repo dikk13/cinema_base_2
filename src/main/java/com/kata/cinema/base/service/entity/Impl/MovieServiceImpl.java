@@ -47,4 +47,13 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
         }
     }
 
+    @Override
+    public Movie getMovieById(Long movieId) {
+        Optional<Movie> movie = movieDao.getById(movieId);
+        if (movie.isPresent()) {
+            return movie.get();
+        } else {
+            throw new NullPointerException("Фильм не найден");
+        }
+    }
 }
