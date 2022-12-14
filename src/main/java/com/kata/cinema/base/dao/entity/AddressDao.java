@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface AddressDao extends AbstractDao<Long, Address>{
 
-    Optional<Address> getAddressByUserId(Long userId);
+
 }

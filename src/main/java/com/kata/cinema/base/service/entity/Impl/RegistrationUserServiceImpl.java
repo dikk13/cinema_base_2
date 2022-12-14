@@ -11,12 +11,10 @@ import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.RegistrationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,13 +23,14 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
 
     private final UserDao userDao;
     private final RoleDao roleDao;
-    private BCryptPasswordEncoder cryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao) {
+    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
         super(userDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
         folderPerson.setName("Избранные");
         folderPerson.setFavourites(true);
         folderPerson.setUser(user);
-        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(userRoles);
         userDao.create(user);
     }

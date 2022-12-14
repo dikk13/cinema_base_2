@@ -26,13 +26,9 @@ public class Address {
     @Column(name = "city")
     private String city;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, street, city, user);
+        return Objects.hash(id, street, city);
     }
 
     @Override
@@ -41,7 +37,7 @@ public class Address {
         if (o == null || getClass() != o.getClass()) return false;
         Address that = (Address) o;
         return Objects.equals(id, that.id) && Objects.equals(street, that.street) &&
-                Objects.equals(city, that.city) && Objects.equals(user, that.user);
+                Objects.equals(city, that.city);
     }
 
     @Override

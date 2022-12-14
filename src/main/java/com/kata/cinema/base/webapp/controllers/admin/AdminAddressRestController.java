@@ -25,13 +25,13 @@ public class AdminAddressRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddressById(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteAddressById(@PathVariable("id") Long id) {
         addressService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Long id, @RequestBody AddressRequestDto addressRequestDto) {
+    public ResponseEntity<AddressResponseDto> updateAddress(@PathVariable("id") Long id,@RequestBody AddressRequestDto addressRequestDto) {
         addressService.updateById(id, addressRequestDto);
         return ResponseEntity.ok(null);
     }

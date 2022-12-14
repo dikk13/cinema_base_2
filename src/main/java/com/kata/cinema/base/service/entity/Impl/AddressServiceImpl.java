@@ -2,6 +2,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.AddressDao;
 import com.kata.cinema.base.dto.request.AddressRequestDto;
+import com.kata.cinema.base.exception.AddressIdNotFoundException;
 import com.kata.cinema.base.mappers.AddressMapper;
 import com.kata.cinema.base.models.Address;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
@@ -26,17 +27,15 @@ public class AddressServiceImpl extends AbstractServiceImpl<Long, Address> imple
     }
 
     @Override
-    public Optional<Address> getAddressByUserId(Long userId) {
-        return addressDao.getAddressByUserId(userId);
-    }
-
-    @Override
     @Transactional
     public void updateById(Long id, AddressRequestDto addressRequestDto) {
-        Optional<Address> optionalAddress = getById(id);
-        if (optionalAddress.isPresent()) {
-            Address addressToUpdate = addressMapper.toAddress(addressRequestDto);
-            addressDao.update(addressToUpdate);
+        Optional<Address> addressContainer= getById(id);
+        if (addressContainer.isPresent()) {
+            addressContainer.get().setStreet(addressMapper.toAddress(addressRequestDto).getStreet());
+            addressContainer.get().setCity(addressMapper.toAddress(addressRequestDto).getCity());
+            addressDao.update(addressContainer.get());
+        } else {
+            throw new AddressIdNotFoundException("Address with this ID: " + id + " ,don't found ") {};
         }
     }
 }
