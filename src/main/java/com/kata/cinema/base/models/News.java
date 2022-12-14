@@ -6,19 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +28,7 @@ public class News {
     private Long id;
 
     @Column(name = "rubric")
+    @Enumerated(EnumType.STRING)
     private Rubric rubric;
 
     @Column(name = "date")
@@ -46,12 +37,20 @@ public class News {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "preview_url")
+    private String previewUrl;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "html_body")
     private String htmlBody;
 
+    @OneToMany(mappedBy = "news")
+    private List<Question> questions;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = true, updatable = false)
     protected User user;
 
     @ToString.Exclude
@@ -68,7 +67,7 @@ public class News {
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
         return Objects.equals(id, news.id) && Objects.equals(date, news.date) && Objects.equals(title, news.title) &&
-                Objects.equals(htmlBody, news.htmlBody);
+                Objects.equals(htmlBody, news.htmlBody) && Objects.equals(previewUrl, news.previewUrl);
     }
 
     @Override

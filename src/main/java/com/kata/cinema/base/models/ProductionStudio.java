@@ -29,6 +29,10 @@ public class ProductionStudio {
     @Column
     private LocalDate dateFoundation;
 
+    @ManyToOne
+    @JoinColumn(name = "studioPerformance_id")
+    private StudioPerformance performance;
+
     @Override
     public int hashCode() {
         return getClass().hashCode();

@@ -22,9 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Transactional
-@DatabaseSetup("/dataset.xml")
-@DatabaseTearDown("/empty_dataset.xml")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
@@ -36,6 +33,8 @@ class ProductionStudioRestControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @DatabaseSetup("/dataset.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
     void getStudioMovie() throws Exception {
         this.mockMvc.perform(get("/api/movies/100/studios")).andDo(print()).andExpect(status().isOk())
                 .andDo(print())

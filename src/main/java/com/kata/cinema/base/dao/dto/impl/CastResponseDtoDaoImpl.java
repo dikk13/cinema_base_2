@@ -20,7 +20,7 @@ public class CastResponseDtoDaoImpl implements CastResponseDtoDao {
     public List<CastResponseDto> getCastResponseDtoListByMovieId(Long id) {
         return entityManager.createQuery("" +
                         "select distinct new com.kata.cinema.base.dto.response.CastResponseDto(m.id, p.id, p.name) " +
-                        "from Movie m join m.moviePerson mp join mp.profession p where m.id =: id")
+                        "from Movie m join m.moviePerson mp join mp.profession p where m.id =: id", CastResponseDto.class)
                 .setParameter("id", id)
                 .getResultList();
     }

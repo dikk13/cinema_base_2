@@ -7,8 +7,8 @@ import com.kata.cinema.base.exception.GenreIdNotFoundException;
 import com.kata.cinema.base.models.Genre;
 import com.kata.cinema.base.dto.response.GenreResponseDto;
 import com.kata.cinema.base.service.entity.GenreService;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,31 +17,25 @@ import java.util.Optional;
 
 
 @RestController
+@RequestMapping("/api/admin/genres")
+@AllArgsConstructor
 public class AdminGenreRestController {
     private final GenreService genreService;
     private final GenreMapper genreMapper;
 
-
-    @Autowired
-    public AdminGenreRestController(GenreService genreService, GenreMapper genreMapper) {
-        this.genreService = genreService;
-        this.genreMapper = genreMapper;
-    }
-
-
-    @GetMapping("/api/admin/genres")
+    @GetMapping
     public ResponseEntity<List<GenreResponseDto>> getAllGenre() {
         return ResponseEntity.ok(genreMapper.toDTOList(genreService.getAll()));
     }
 
-    @DeleteMapping("/api/admin/genres/{id}")
-    public void deleteGenreById(@PathVariable("id") long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGenreById(@PathVariable("id") long id) {
         genreService.deleteById(id);
-
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/api/admin/genres/{id}")
-    public void updateGenre(@RequestParam (name = "name") String genreName, @PathVariable("id") long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateGenre(@RequestParam (name = "name") String genreName, @PathVariable("id") long id) {
         Optional<Genre> genreContainer= genreService.getById(id);
         if (genreContainer.isPresent()) {
             genreContainer.get().setName(genreName);
@@ -50,11 +44,12 @@ public class AdminGenreRestController {
         else {
             throw new GenreIdNotFoundException("Genre with this ID: " + id + " ,don't found ") {};
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/api/admin/genres")
-    public void addNewGenre(@RequestBody GenreResponseDto genreDto) {
+    @PostMapping
+    public ResponseEntity<Void> addNewGenre(@RequestBody GenreResponseDto genreDto) {
         genreService.create(genreMapper.toGenre(genreDto));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

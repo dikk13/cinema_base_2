@@ -29,10 +29,10 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
     @Column(name = "password")
     private String password;
@@ -46,41 +46,15 @@ public class User implements UserDetails {
     @Column(name = "enabled", nullable = false, columnDefinition = "boolean default true")
     private boolean enabled = Boolean.TRUE;
 
+    //TODO заменить на Lazy, проверить тесты
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> role;
+    private Set<Role> role;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) &&
-                Objects.equals(first_name, user.first_name) && Objects.equals(last_name, user.last_name) &&
-                Objects.equals(password, user.password) && Objects.equals(birthday, user.birthday) &&
-                Objects.equals(avatarUrl, user.avatarUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", password='" + password + '\'' +
-                ", birthday=" + birthday +
-                ", userAvatars=" + avatarUrl +
-                '}';
-    }
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy = "user")
+    private List<PurchasedMovie> purchasedMovie;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

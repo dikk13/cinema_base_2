@@ -1,9 +1,9 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
+import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.response.FolderResponseDto;
 import com.kata.cinema.base.dto.response.MovieResponseDto;
-import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.mappers.FolderMovieResponsDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.models.User;
@@ -12,20 +12,23 @@ import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.models.enums.ShowType;
 import com.kata.cinema.base.models.enums.SortMovieFolderType;
 import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
-import com.kata.cinema.base.service.entity.FolderMovieService;
 import com.kata.cinema.base.service.dto.MovieResponseDtoService;
+import com.kata.cinema.base.service.entity.FolderMovieService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user/folders")
+@AllArgsConstructor
 public class UserFolderMovieRestController {
 
     private final FolderMovieResponsDtoService folderMovieResponsDtoService;
@@ -33,21 +36,15 @@ public class UserFolderMovieRestController {
     private final FolderMovieResponsDtoMapper folderMovieResponsDtoMapper;
     private final FolderMovieService folderMovieService;
 
-    public UserFolderMovieRestController(FolderMovieResponsDtoService folderMovieResponsDtoService, MovieResponseDtoService movieResponseDtoService, FolderMovieResponsDtoMapper folderMovieResponsDtoMapper, FolderMovieService folderMovieService) {
-        this.folderMovieResponsDtoService = folderMovieResponsDtoService;
-        this.movieResponseDtoService = movieResponseDtoService;
-        this.folderMovieResponsDtoMapper = folderMovieResponsDtoMapper;
-        this.folderMovieService = folderMovieService;
-    }
-
     @GetMapping("/movies")
-    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponsDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+    public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
         return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoListByUserId(userId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/movies")
     public ResponseEntity<FolderMovieResponsDto> getFolderMovieResponsDtoById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id), HttpStatus.OK);
+        return new ResponseEntity<>(folderMovieResponsDtoService.getFolderMovieResponsDtoById(id)
+                .orElseThrow(() -> new NoResultException("No entity found for query")), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/movies/page/{pageNumber}")
@@ -73,13 +70,14 @@ public class UserFolderMovieRestController {
     }
 
     @PostMapping("/movies")
-    public void createNewFolderByMovie(@RequestBody FolderMovieResponsDto folder,
-             @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
+    public ResponseEntity<Void> createNewFolderByMovie(
+            @RequestBody FolderMovieResponsDto folder,
+            @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
         FolderMovie folderMovie = folderMovieResponsDtoMapper.toFolder(folder);
         folderMovie.setName(name);
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
-
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

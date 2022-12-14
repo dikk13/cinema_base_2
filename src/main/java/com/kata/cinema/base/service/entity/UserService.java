@@ -11,4 +11,6 @@ public interface UserService extends AbstractService<Long, User>  {
     void changePassword(PasswordChangeRequestDto passwordChangeRequestDto, User targetUser);
     void disableUser(User targetUser);
     void changeUserDetails (UserRequestDto userRequestDto, User targetUser);
+    User getByRole (String roleUser);
+
 }

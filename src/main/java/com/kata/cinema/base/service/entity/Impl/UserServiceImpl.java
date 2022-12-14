@@ -38,18 +38,13 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, User> implements 
     @Transactional
     @Override
     public void changePassword(PasswordChangeRequestDto passwordChangeRequestDto, User targetUser) {
-        if (cryptor.getCryptor().matches(passwordChangeRequestDto.getOldPassword(), targetUser.getPassword())) {
-            targetUser.setPassword(cryptor.getCryptor().encode(passwordChangeRequestDto.getNewPassword()));
-            passwordChangeRequestDto.setOldPassword("");
-            passwordChangeRequestDto.setNewPassword("");
-            try {
-                userDao.update(targetUser);
-            } catch (Exception e) {
-                throw new UpdateEntityException("При попытке обновления объекта в БД произошла ошибка");
-            }
-        } else {
+        if (!cryptor.getCryptor().matches(passwordChangeRequestDto.getOldPassword(), targetUser.getPassword())) {
             throw new PasswordUncoincidenceException("Предыдущие пароли не совпадают");
         }
+        targetUser.setPassword(cryptor.getCryptor().encode(passwordChangeRequestDto.getNewPassword()));
+        passwordChangeRequestDto.setOldPassword("");
+        passwordChangeRequestDto.setNewPassword("");
+        userDao.update(targetUser);
     }
 
     @Transactional
@@ -57,29 +52,18 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, User> implements 
     public void disableUser(User targetUser) {
         if (targetUser != null) {
             targetUser.setEnabled(Boolean.FALSE);
-            try {
-                userDao.update(targetUser);
-            }
-            catch (Exception e) {
-                throw new UpdateEntityException("При попытке обновления объекта в БД произошла ошибка");
-            }
+            userDao.update(targetUser);
         }
     }
 
     @Transactional
     @Override
     public void changeUserDetails(UserRequestDto userRequestDto, User targetUser) {
-        if (targetUser != null && userRequestDto != null) {
-            targetUser.setEmail(userRequestDto.getEmail());
-            targetUser.setFirst_name(userRequestDto.getFirstName());
-            targetUser.setLast_name(userRequestDto.getLastName());
-            targetUser.setBirthday(userRequestDto.getBirthday());
-            try {
-                userDao.update(targetUser);
-            }
-            catch (Exception e) {
-                throw new UpdateEntityException("При попытке обновления объекта в БД произошла ошибка");
-            }
-        }
+        targetUser.setEmail(userRequestDto.getEmail());
+        targetUser.setFirstName(userRequestDto.getFirstName());
+        targetUser.setLastName(userRequestDto.getLastName());
+        targetUser.setBirthday(userRequestDto.getBirthday());
+        userDao.update(targetUser);
     }
+    public User getByRole (String roleUser){return userDao.getByRole(roleUser);}
 }

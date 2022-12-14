@@ -1,25 +1,42 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
 
+import com.kata.cinema.base.dto.request.MovieRequestDto;
+import com.kata.cinema.base.mappers.MovieMapper;
+import com.kata.cinema.base.service.entity.MovieService;
+import com.kata.cinema.base.dto.request.AvailableOnlineMovieRequestDto;
+import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
+import com.kata.cinema.base.models.AvailableOnlineMovie;
+import com.kata.cinema.base.service.entity.AvailableOnlineMovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+
 @RestController
-@RequestMapping("/api/admin/movie")
+@RequestMapping("/api/admin/movies")
 @RequiredArgsConstructor
 public class AdminMovieRestController {
+    private final AvailableOnlineMovieService availableOnlineMovieService;
+    private final AvailableOnlineMovieMapper availableOnlineMovieMapper;
+
+    private final MovieService movieService;
+    private final MovieMapper movieMapper;
 
     @PostMapping("/{id}/uploadPreview")
-    public String upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
+    public ResponseEntity<String> upload(@PathVariable(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) {
 
         String location = "uploads";
         String location2 = "movies";
@@ -50,14 +67,54 @@ public class AdminMovieRestController {
                 stream.write(bytes);
                 stream.close();
 
-                return "Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath();
+                return ResponseEntity.ok("Файл " + fileNew.getName() + " успешно загружен в " + fileNew.getPath());
             } catch (Exception e) {
-                return "Не удалось загрузить файл: " + e.getMessage();
+                return ResponseEntity.ok("Не удалось загрузить файл: " + e.getMessage());
             }
         } else {
-            return "Не удалось загрузить файл: файл пустой";
+            return ResponseEntity.ok("Не удалось загрузить файл: файл пустой");
         }
     }
+
+    @PostMapping("/{id}/online")
+    public void availableOnlineMovieRequestDto(@PathVariable("id") Long movieId,
+                                               @RequestBody AvailableOnlineMovieRequestDto
+                                                       availableOnlineMovieRequestDto) {
+                availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+            availableOnlineMovieService.create(availableOnlineMovieMapper.toAvailableOnlineMovie(availableOnlineMovieRequestDto));
+    }
+
+    @PatchMapping("/{id}/online/deactivate")
+    public ResponseEntity<Void> deactivate(@PathVariable("id") Long movieId, @RequestBody AvailableOnlineMovie availableOnlineMovie) {
+        availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+        availableOnlineMovie.setEnabled(false);
+        availableOnlineMovieService.update(availableOnlineMovie);
+        return ResponseEntity.ok(null);
+    }
+
+    @PatchMapping("/{id}/online/activate")
+    public ResponseEntity<Void> activate(@PathVariable("id") Long movieId, @RequestBody AvailableOnlineMovie availableOnlineMovie) {
+        availableOnlineMovieService.getAvailableOnlineMovieById(movieId);
+        availableOnlineMovie.setEnabled(true);
+        availableOnlineMovieService.update(availableOnlineMovie);
+        return ResponseEntity.ok(null);
+
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> addNewMovie(@RequestBody MovieRequestDto movieRequestDto) {
+        movieService.create(movieMapper.toMovie(movieRequestDto));
+
+        return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
+        movieService.updateById(id, movieRequestDto);
+        return ResponseEntity.ok(null);
+    }
+
+
 }
 
 

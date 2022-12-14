@@ -1,12 +1,15 @@
 package com.kata.cinema.base.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.kata.cinema.base.security.jwt.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -16,10 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public AuthTokenFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
@@ -27,39 +31,33 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+        try {
+            String jwt = parseToken(request);
 
-        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
-            String jwt = authHeader.substring(7);
-
-            if (jwt.isBlank()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "Invalid JWT Token in Bearer Header");
-            } else {
-                try {
-                    String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userDetails,
-                                    userDetails.getPassword(),
-                                    userDetails.getAuthorities());
-
-                    if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
-                    }
-                } catch (JWTVerificationException exc) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                            "Invalid JWT Token");
-                }
+            if (jwt != null && jwtUtil.validateToken(jwt)) {
+                String email = jwtUtil.getUsername(jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
+        } catch (Exception e) {
+            log.error("Cannot set user authentication: ", e.getMessage());
         }
-
         filterChain.doFilter(request, response);
+    }
+
+    public String parseToken(HttpServletRequest httpServletRequest) {
+        String headerAuth = httpServletRequest.getHeader("Authorization");
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+            return headerAuth.substring(7);
+        }
+        log.warn("Authorization header is null");
+        return null;
     }
 }

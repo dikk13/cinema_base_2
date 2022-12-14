@@ -12,7 +12,7 @@ import java.util.*;
 public class MovieResponseDtoDaoImpl implements MovieResponseDtoDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<MovieResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
