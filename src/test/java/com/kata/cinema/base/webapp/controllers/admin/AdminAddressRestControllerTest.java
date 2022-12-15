@@ -46,6 +46,17 @@ public class AdminAddressRestControllerTest extends IntegrationTestBase {
     @Test
     @DatabaseSetup("/dataset_for_question_contr.xml")
     @DatabaseTearDown("/empty_dataset.xml")
+    void getAllAddress() throws Exception{
+        this.mockMvc.perform(get("/api/admin/address")
+                        .header("Authorization", "Bearer " + jwtUtil.generateToken("email24@mail.com"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print()).
+                andExpect(status().isOk());
+    }
+
+    @Test
+    @DatabaseSetup("/dataset_for_question_contr.xml")
+    @DatabaseTearDown("/empty_dataset.xml")
     void addNewAddress() throws Exception{
         AddressRequestDto addressRequestDto = new AddressRequestDto(
                 "street",
