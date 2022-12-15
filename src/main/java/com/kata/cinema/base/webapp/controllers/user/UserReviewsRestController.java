@@ -6,7 +6,7 @@ import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.models.enums.TypeRating;
 import com.kata.cinema.base.service.entity.ReactionReviewService;
 import com.kata.cinema.base.service.entity.ReviewService;
-import com.kata.cinema.base.service.entity.UserService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +34,9 @@ public class UserReviewsRestController {
                                             @AuthenticationPrincipal User currentUser) {
 
         //TODO доставать ревью по id
-        Review review = reviewService.getAll().get((int)(reviewId - 1));
+
+        Review review= reviewService.getReviewById(reviewId);
+
         Optional<ReactionReview> reactionReview = reactionReviewService.getReactionReviewByUserIdAndReviewId(currentUser.getId(), reviewId);
 
         if (reactionReview.isEmpty()) {
