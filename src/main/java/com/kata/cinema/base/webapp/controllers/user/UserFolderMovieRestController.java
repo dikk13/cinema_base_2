@@ -92,6 +92,12 @@ public class UserFolderMovieRestController {
         FolderMovie folderMovie = folderMovieToDelete.get();
         folderMovie.getCategory().equals(Category.CUSTOM);
         folderMovieService.deleteById(id);
+
+        if (folderMovie.getCategory() != Category.CUSTOM) {
+            throw new RuntimeException("Категория неверна ");
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }

@@ -40,6 +40,10 @@ public class UserFolderPersonRestController {
         folderPerson.getFavourites().equals(false);
         folderPersonService.deleteById(id);
 
+        if (folderPerson.getFavourites() != false) {
+            throw new RuntimeException("Ошибка!");
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
