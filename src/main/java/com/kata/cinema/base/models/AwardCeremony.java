@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Table(name = "award_ceremony")
@@ -31,7 +32,7 @@ public class AwardCeremony {
     private Long id;
 
     @Column(unique = true)
-    private String dateEvent;
+    private LocalDate dateEvent;
 
     @Column
     private String placeEvent;

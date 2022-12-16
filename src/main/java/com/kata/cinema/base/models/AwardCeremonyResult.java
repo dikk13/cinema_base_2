@@ -1,6 +1,7 @@
 package com.kata.cinema.base.models;
 
 
+import com.kata.cinema.base.models.enums.NominationStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,9 +49,9 @@ public class AwardCeremonyResult {
     private Nomination nomination;
 
     @Column
-    private String nominationStatus;
+    private NominationStatus nominationStatus;
 
-    public AwardCeremonyResult(Long id, String nominationStatus) {
+    public AwardCeremonyResult(Long id, NominationStatus nominationStatus) {
         this.id = id;
         this.nominationStatus = nominationStatus;
     }
