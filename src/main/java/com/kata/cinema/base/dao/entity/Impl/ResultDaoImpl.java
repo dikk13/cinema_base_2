@@ -1,7 +1,7 @@
 package com.kata.cinema.base.dao.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.ResultDao;
-import com.kata.cinema.base.models.QuestionAnswer;
+import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
 import com.kata.cinema.base.models.Result;
 import org.springframework.stereotype.Repository;
 
@@ -11,21 +11,18 @@ import java.util.List;
 public class ResultDaoImpl extends AbstractDaoImpl<Long, Result> implements ResultDao {
 
     @Override
-    public Result getResultByQuestionAnswerList(List<QuestionAnswer> fromDTO) {
+    public Result getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
         Result result = new Result();
         int actualCountRightAnswer = 0;
         int countRightAnswerByDto = 0;
-        for (QuestionAnswer questionAnswer : fromDTO) {
+        for (QuestionAnswerRequestDto requestDto : questionAnswerRequestDtoList) {
             actualCountRightAnswer += entityManager.createQuery(
-                            "SELECT COUNT(a) FROM Answer a WHERE a.isRight =:isRight " +
-                                    "AND a.question.id =:id", Integer.class)
+                            "select count(a) from Answer a where a.isRight =:isRight " +
+                                    "and a.question.id =:id", Integer.class)
                     .setParameter("isRight", true)
-                    .setParameter("id", questionAnswer.getQuestion().getId())
+                    .setParameter("id", requestDto.getQuestionId())
                     .getSingleResult();
-//            countRightAnswerByDto += questionAnswer.getAnswerId()
-//                    .stream()
-//                    .mapToInt(Long::intValue)
-//                    .sum();
+            countRightAnswerByDto += requestDto.getAnswerId().size();
         }
         result.setCountRightAnswer(actualCountRightAnswer);
         if (actualCountRightAnswer == countRightAnswerByDto) {

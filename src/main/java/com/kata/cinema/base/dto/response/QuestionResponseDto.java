@@ -2,17 +2,12 @@ package com.kata.cinema.base.dto.response;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 public class QuestionResponseDto {
 
-    Long id;
-    Integer position;
-    String question;
+    private final Long id;
+    private final Integer position;
+    private final String question;
 
 }
 

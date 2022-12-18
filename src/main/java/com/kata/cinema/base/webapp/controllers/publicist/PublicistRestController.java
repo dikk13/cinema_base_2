@@ -2,7 +2,6 @@ package com.kata.cinema.base.webapp.controllers.publicist;
 
 import com.kata.cinema.base.dto.request.QuestionRequestDto;
 import com.kata.cinema.base.mappers.QuestionMapper;
-import com.kata.cinema.base.models.News;
 import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.service.entity.NewsService;
 import com.kata.cinema.base.service.entity.QuestionService;
@@ -23,10 +22,10 @@ public class PublicistRestController {
     @PutMapping("/news/{newsId}/questions/{questionId}")
     public ResponseEntity<Void> putQuestions(QuestionRequestDto questions,
                                              @PathVariable("newsId") Long newsId,
-                                             @PathVariable("questionId") String questionId) {
-        News news = newsService.getNewsById(newsId);
+                                             @PathVariable("questionId") Long questionId) {
         Question question = questionMapper.toQuestion(questions);
-        question.setNews(news);
+        question.setId(questionId);
+        question.setNews(newsService.getNewsById(newsId));
         question.setAnswers(questionMapper.answerRequestDtoListToAnswerList(questions.getAnswers()));
         question.setResults(questionMapper.resultRequestDtoListToResultList(questions.getResults()));
         questionService.create(question);

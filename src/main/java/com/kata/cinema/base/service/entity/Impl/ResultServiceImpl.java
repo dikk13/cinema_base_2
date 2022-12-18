@@ -2,7 +2,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.AbstractDao;
 import com.kata.cinema.base.dao.entity.ResultDao;
-import com.kata.cinema.base.models.QuestionAnswer;
+import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
 import com.kata.cinema.base.models.Result;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.ResultService;
@@ -23,8 +23,8 @@ public class ResultServiceImpl extends AbstractServiceImpl<Long, Result> impleme
     }
 
     @Override
-    public Result getResultByQuestionAnswerList(List<QuestionAnswer> fromDTO) {
-        return resultDao.getResultByQuestionAnswerList(fromDTO);
+    public Result getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
+        return resultDao.getResultByQuestionAnswerList(questionAnswerRequestDtoList);
     }
 
 }

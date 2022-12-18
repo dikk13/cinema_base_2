@@ -2,16 +2,11 @@ package com.kata.cinema.base.dto.response;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 public class ResultResponseDto {
 
-    private Integer countRightAnswer;
-    private String result;
+    private final Integer countRightAnswer;
+    private final String result;
 
 }
 

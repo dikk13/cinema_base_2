@@ -4,17 +4,12 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 public class QuestionAnswerRequestDto {
 
-    private Long questionId;
+    private final Long questionId;
 
-    private List<Long> answerId; // правильный ответ может быть один или несколько
+    private final List<Long> answerId; // правильный ответ может быть один или несколько
 
 }
 

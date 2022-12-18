@@ -5,7 +5,6 @@ import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
 import com.kata.cinema.base.dto.response.*;
 import com.kata.cinema.base.mappers.CommentsMapper;
-import com.kata.cinema.base.mappers.QuestionAnswerMapper;
 import com.kata.cinema.base.mappers.QuestionMapper;
 import com.kata.cinema.base.mappers.ResultMapper;
 import com.kata.cinema.base.models.enums.Rubric;
@@ -37,14 +36,12 @@ public class NewsRestController {
     private final QuestionMapper questionMapper;
     private final ResultMapper resultMapper;
     private final ResultService resultService;
-    private final QuestionAnswerMapper questionAnswerMapper;
 
     public NewsRestController(CommentsService commentsService, CommentsMapper commentsMapper,
                               NewsBodyResponseDtoService newsBodyResponseDtoService,
                               CommentNewsResponseDtoService commentNewsResponseDtoService,
                               NewsResponseDtoService newsResponseDtoService, QuestionService questionService,
-                              QuestionMapper questionMapper, ResultMapper resultMapper,
-                              ResultService resultService, QuestionAnswerMapper questionAnswerMapper) {
+                              QuestionMapper questionMapper, ResultMapper resultMapper, ResultService resultService) {
         this.commentsService = commentsService;
         this.commentsMapper = commentsMapper;
         this.newsBodyResponseDtoService = newsBodyResponseDtoService;
@@ -54,7 +51,6 @@ public class NewsRestController {
         this.questionMapper = questionMapper;
         this.resultMapper = resultMapper;
         this.resultService = resultService;
-        this.questionAnswerMapper = questionAnswerMapper;
     }
 
     @GetMapping("/{id}/comments")
@@ -95,8 +91,7 @@ public class NewsRestController {
     public ResponseEntity<ResultResponseDto> getResultByRightAnswers(
             List<QuestionAnswerRequestDto> questionAnswerRequestDtos) {
         return new ResponseEntity<>(resultMapper.toDTO(
-                resultService.getResultByQuestionAnswerList(questionAnswerMapper.fromDTO(
-                        questionAnswerRequestDtos))), HttpStatus.FOUND);
+                resultService.getResultByQuestionAnswerList(questionAnswerRequestDtos)), HttpStatus.FOUND);
     }
 
 }
