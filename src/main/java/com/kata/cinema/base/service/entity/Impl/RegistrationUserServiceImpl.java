@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.persistence.PersistenceContext;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,6 +24,7 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
 
     private final UserDao userDao;
     private final RoleDao roleDao;
+    @PersistenceContext
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired

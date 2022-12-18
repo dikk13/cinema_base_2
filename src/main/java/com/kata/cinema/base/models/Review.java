@@ -1,10 +1,7 @@
 package com.kata.cinema.base.models;
 
 import com.kata.cinema.base.models.enums.TypeReview;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
@@ -24,6 +22,9 @@ public class Review {
     @SequenceGenerator(name = "seq_review_id", sequenceName = "SEQ_REVIEW_ID", allocationSize = 1)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "is_moderate")
+    private Boolean isModerate = false;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -42,10 +43,12 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "movies_id")
+    @ToString.Include
     private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "users_id")
+    @ToString.Include
     private User user;
 
     @Override
@@ -61,16 +64,4 @@ public class Review {
         return getClass().hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", typeReview=" + typeReview +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", date=" + date +
-                ", movie=" + movie +
-                ", user=" + user +
-                '}';
-    }
 }

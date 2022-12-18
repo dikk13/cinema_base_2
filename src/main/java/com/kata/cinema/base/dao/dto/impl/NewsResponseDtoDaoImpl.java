@@ -2,6 +2,7 @@ package com.kata.cinema.base.dao.dto.impl;
 
 import com.kata.cinema.base.dao.dto.NewsResponseDtoDao;
 import com.kata.cinema.base.dto.response.NewsResponseDto;
+import com.kata.cinema.base.models.enums.RedactorStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,20 @@ public class NewsResponseDtoDaoImpl implements NewsResponseDtoDao {
                 "from News n left join Comment c on c.news.id = n.id join n.movies m where m.id = :movieId group by n.id", NewsResponseDto.class)
                 .setParameter("movieId", movieId)
                 .setMaxResults(count)
+                .getResultList();
+    }
+
+    @Override
+    public List<NewsResponseDto> getAllUnmoderatedNewsList() {
+        return entityManager.createQuery("select new com.kata.cinema.base.dto.response.NewsResponseDto" +
+                        "(" +
+                        "n.id, n.rubric, n.date, n.title, n.previewUrl, count (c)" +
+                        ") " +
+                        "from News n inner join Comment c on c.news.id = n.id left join RedactorComment rc " +
+                        "on (rc.news.id = n.id and rc.status = :status) where n.isModerate = :isModerate " +
+                        "group by n.id order by n.date", NewsResponseDto.class)
+                .setParameter("isModerate", false)
+                .setParameter("status", RedactorStatus.ACTIVE)
                 .getResultList();
     }
 
