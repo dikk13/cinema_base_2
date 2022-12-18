@@ -488,7 +488,7 @@ public class TestDataInitializer {
         for (Question question : listQuestion) {
             for (int i = 1; i <= countResult; i++) {
                 Result result = new Result();
-                result.setCountRightAnswer(i);
+                result.setCountRightAnswer(i); // почему? в таблице ответов всегда 1 правильный, 3 неправильных
                 result.setResult(String.format("Результат %s", i));
                 result.setQuestion(question);
                 resultService.create(result);

@@ -2,11 +2,14 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.AbstractDao;
 import com.kata.cinema.base.dao.entity.ResultDao;
+import com.kata.cinema.base.models.QuestionAnswer;
 import com.kata.cinema.base.models.Result;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.ResultService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 @Service
@@ -18,4 +21,10 @@ public class ResultServiceImpl extends AbstractServiceImpl<Long, Result> impleme
         super(abstractDao);
         this.resultDao = resultDao;
     }
+
+    @Override
+    public Result getResultByQuestionAnswerList(List<QuestionAnswer> fromDTO) {
+        return resultDao.getResultByQuestionAnswerList(fromDTO);
+    }
+
 }
