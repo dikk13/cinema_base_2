@@ -20,9 +20,9 @@ public class ResultDaoImpl extends AbstractDaoImpl<Long, Result> implements Resu
                             "select count(a) from Answer a where a.isRight =:isRight " +
                                     "and a.question.id =:id", Integer.class)
                     .setParameter("isRight", true)
-                    .setParameter("id", requestDto.getQuestionId())
+                    .setParameter("id", requestDto.questionId())
                     .getSingleResult();
-            countRightAnswerByDto += requestDto.getAnswerId().size();
+            countRightAnswerByDto += requestDto.answerId().size();
         }
         result.setCountRightAnswer(actualCountRightAnswer);
         if (actualCountRightAnswer == countRightAnswerByDto) {
