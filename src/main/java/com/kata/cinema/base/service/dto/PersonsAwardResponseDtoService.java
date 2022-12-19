@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface PersonsAwardResponseDtoService {
 
-    List<AwardResponseDto> getPersonsAwards();
+    List<AwardResponseDto> getPersonsAwards(Long id);
 
 }

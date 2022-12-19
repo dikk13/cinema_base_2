@@ -17,8 +17,8 @@ public class PersonsAwardResponseDtoServiceImpl implements PersonsAwardResponseD
     }
 
     @Override
-    public List<AwardResponseDto> getPersonsAwards() {
-        return personsAwardResponseDtoDao.getPersonsAwards();
+    public List<AwardResponseDto> getPersonsAwards(Long id) {
+        return personsAwardResponseDtoDao.getPersonsAwards(id);
     }
 
 }

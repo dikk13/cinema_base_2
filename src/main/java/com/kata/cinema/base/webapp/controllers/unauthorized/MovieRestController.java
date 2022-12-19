@@ -87,9 +87,9 @@ public class MovieRestController {
         return newsResponseDtoService.getNewsResponseDtoByMovieId(count, movieId);
     }
 
-    @GetMapping("/awards")
-    public List<AwardResponseDto> getMoviesAwards() {
-        return moviesAwardResponseDtoService.getMoviesAwards();
+    @GetMapping("/{id}/awards")
+    public List<AwardResponseDto> getMoviesAwards(@PathVariable Long id) {
+        return moviesAwardResponseDtoService.getMoviesAwards(id);
     }
 
 }

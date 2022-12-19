@@ -68,9 +68,9 @@ public class PersonRestController {
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
-    @GetMapping("/awards")
-    public List<AwardResponseDto> getPersonsAwards() {
-        return personsAwardResponseDtoService.getPersonsAwards();
+    @GetMapping("/{id}/awards")
+    public List<AwardResponseDto> getPersonsAwards(@PathVariable Long id) {
+        return personsAwardResponseDtoService.getPersonsAwards(id);
     }
 
 }

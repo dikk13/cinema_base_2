@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MoviesAwardResponseDtoDao {
 
-    List<AwardResponseDto> getMoviesAwards();
+    List<AwardResponseDto> getMoviesAwards(Long id);
 
 }
