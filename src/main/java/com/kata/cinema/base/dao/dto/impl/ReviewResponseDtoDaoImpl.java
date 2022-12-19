@@ -61,7 +61,6 @@ public class ReviewResponseDtoDaoImpl implements ReviewResponseDtoDao {
                 .setParameter("like", TypeRating.LIKE)
                 .setParameter("dislike", TypeRating.DISLIKE)
                 .getResultList();
-        // Почему не возникает ClassCastException? запрос возвращает int или bigint
-        // добавление cast(select ...) as long ломает select - становится зеленым('select' unexpected)
     }
+
 }
