@@ -5,30 +5,30 @@ import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
 import com.kata.cinema.base.models.Result;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class ResultDaoImpl extends AbstractDaoImpl<Long, Result> implements ResultDao {
 
     @Override
-    public Result getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
-        Result result = new Result();
-        int actualCountRightAnswer = 0;
-        int countRightAnswerByDto = 0;
-        for (QuestionAnswerRequestDto requestDto : questionAnswerRequestDtoList) {
-            actualCountRightAnswer += entityManager.createQuery(
-                            "select count(a) from Answer a where a.isRight =:isRight " +
-                                    "and a.question.id =:id", Integer.class)
-                    .setParameter("isRight", true)
-                    .setParameter("id", requestDto.questionId())
-                    .getSingleResult();
-            countRightAnswerByDto += requestDto.answerId().size();
-        }
-        result.setCountRightAnswer(actualCountRightAnswer);
-        if (actualCountRightAnswer == countRightAnswerByDto) {
-            result.setResult("Количество правильных ответов совпадает");
-        } else {
-            result.setResult("Количество правильных ответов не совпадает");
+    public List<Result> getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
+        List<Result> result = new ArrayList<>();
+        for (var dto : questionAnswerRequestDtoList) {
+            Integer rightAnswers = null; // считаем правильные ответы на вопрос
+            for (var answerId : dto.answerId()) {
+                rightAnswers += entityManager.createQuery("select count(a) " +
+                                "from Answer a where a.id = :id and a.isRight =:isRight", Integer.class)
+                        .setParameter("isRight", true)
+                        .setParameter("id", answerId)
+                        .getSingleResult();
+            }
+            result.add(entityManager.createQuery(
+                            "select r from Result r where r.question.id =:id " +
+                                    "and r.countRightAnswer = :countRightAnswer", Result.class)
+                    .setParameter("countRightAnswer", rightAnswers)
+                    .setParameter("id", dto.questionId())
+                    .getSingleResult());
         }
         return result;
     }

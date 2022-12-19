@@ -88,9 +88,9 @@ public class NewsRestController {
     }
 
     @PostMapping("/{id}/questions/tests")
-    public ResponseEntity<ResultResponseDto> getResultByRightAnswers(
+    public ResponseEntity<List<ResultResponseDto>> getResultByRightAnswers(
             List<QuestionAnswerRequestDto> questionAnswerRequestDtos) {
-        return new ResponseEntity<>(resultMapper.toDTO(
+        return new ResponseEntity<>(resultMapper.toDtosList(
                 resultService.getResultByQuestionAnswerList(questionAnswerRequestDtos)), HttpStatus.FOUND);
     }
 

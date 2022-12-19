@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ResultDao extends AbstractDao<Long, Result>{
 
-    Result getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList);
+    List<Result> getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList);
 
 }

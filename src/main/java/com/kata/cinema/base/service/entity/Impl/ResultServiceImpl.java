@@ -23,7 +23,7 @@ public class ResultServiceImpl extends AbstractServiceImpl<Long, Result> impleme
     }
 
     @Override
-    public Result getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
+    public List<Result> getResultByQuestionAnswerList(List<QuestionAnswerRequestDto> questionAnswerRequestDtoList) {
         return resultDao.getResultByQuestionAnswerList(questionAnswerRequestDtoList);
     }
 
