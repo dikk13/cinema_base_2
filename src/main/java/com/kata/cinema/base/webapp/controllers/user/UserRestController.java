@@ -27,7 +27,7 @@ public class UserRestController {
 
     @GetMapping("/profile")
     public ResponseEntity<UserResponseDto> getUserProfileInfo(@AuthenticationPrincipal User currentUser) {
-        //TODO переписать метод, доставать id текущего пользователя из контеста, а дто из бд по id
+
         Optional<User> targetUser = userService.getById(currentUser.getId());
         if (targetUser.isEmpty()) {
             throw new RuntimeException("Неверно передан id, пользователя с таким ");
