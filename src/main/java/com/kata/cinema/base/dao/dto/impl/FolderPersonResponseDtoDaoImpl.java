@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class FolderPersonResponseDtoDaoImpl implements FolderPersonResponseDtoDao {
     @PersistenceContext
-    EntityManager entityManager;
+   private EntityManager entityManager;
 
     @Override
     public List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id) {

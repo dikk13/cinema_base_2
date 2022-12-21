@@ -18,8 +18,8 @@ public class FolderMovieServiceImpl extends AbstractServiceImpl<Long, FolderMovi
 
     private final FolderMovieDao folderMovieDao;
 
-    protected FolderMovieServiceImpl(AbstractDao<Long, FolderMovie> abstractDao, FolderMovieDao folderMovieDao) {
-        super(abstractDao);
+    protected FolderMovieServiceImpl(FolderMovieDao folderMovieDao) {
+        super(folderMovieDao);
         this.folderMovieDao = folderMovieDao;
     }
 

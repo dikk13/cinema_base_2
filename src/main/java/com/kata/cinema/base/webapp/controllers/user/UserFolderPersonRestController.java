@@ -2,9 +2,11 @@ package com.kata.cinema.base.webapp.controllers.user;
 
 import com.kata.cinema.base.dto.request.FolderRequestDto;
 import com.kata.cinema.base.dto.response.FolderPersonResponseDto;
+import com.kata.cinema.base.exception.FolderPersonIdNotFoundException;
 import com.kata.cinema.base.mappers.FolderPersonResponseDtoMapper;
 import com.kata.cinema.base.mappers.FolderRequestDtoMapper;
 import com.kata.cinema.base.models.FolderPerson;
+import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.dto.FolderPersonResponseDtoService;
 import com.kata.cinema.base.service.entity.FolderPersonService;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,14 +30,14 @@ import java.util.Optional;
 public class UserFolderPersonRestController {
     private final FolderPersonService folderPersonService;
     private final FolderRequestDtoMapper folderRequestDtoMapper;
-    private final FolderPersonResponseDtoMapper folderPersonResponseDtoMapper;
+    private final FolderPersonResponseDtoService folderPersonResponseDtoService;
 
 
     @DeleteMapping("/{id}/persons")
     public ResponseEntity<Void> deleteFolderPersonsById(@PathVariable Long id) {
         Optional<FolderPerson> folderPersonToDelete = folderPersonService.getById(id);
         if (folderPersonToDelete.isEmpty()) {
-            throw new RuntimeException("Неверно передан id, пользователя с таким id нету ");
+            throw new FolderPersonIdNotFoundException("Неверно передан id, пользователя с таким id нету ");
         }
         FolderPerson folderPerson = folderPersonToDelete.get();
         folderPerson.getFavourites().equals(false);
@@ -48,8 +51,8 @@ public class UserFolderPersonRestController {
     }
 
     @GetMapping("/persons")
-    public ResponseEntity<List<FolderPersonResponseDto>> getFolderPersonResponseDtoList() {
-        return ResponseEntity.ok(folderPersonResponseDtoMapper.toDTOList(folderPersonService.getAll()));
+    public ResponseEntity<List<FolderPersonResponseDto>> getFolderPersonResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
+        return new ResponseEntity<>(folderPersonResponseDtoService.getFolderPersonResponseDtoList(userId), HttpStatus.OK);
     }
 
     @PostMapping("/persons")

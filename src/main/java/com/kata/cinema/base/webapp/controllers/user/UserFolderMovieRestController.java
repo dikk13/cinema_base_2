@@ -5,6 +5,8 @@ import com.kata.cinema.base.dto.request.FolderRequestDto;
 import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.response.FolderResponseDto;
 import com.kata.cinema.base.dto.response.MovieResponseDto;
+import com.kata.cinema.base.exception.CategoryNotFoundException;
+import com.kata.cinema.base.exception.FolderMovieIdNotFoundException;
 import com.kata.cinema.base.mappers.FolderRequestDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.models.User;
@@ -87,14 +89,14 @@ public class UserFolderMovieRestController {
     public ResponseEntity<Void> deleteFolderMovieById(@PathVariable Long id) {
         Optional<FolderMovie> folderMovieToDelete = folderMovieService.getById(id);
         if (folderMovieToDelete.isEmpty()) {
-            throw new RuntimeException("Неверно передан id, пользователя с таким id нету ");
+            throw new FolderMovieIdNotFoundException("Неверно передан id, пользователя с таким id нету ");
         }
         FolderMovie folderMovie = folderMovieToDelete.get();
         folderMovie.getCategory().equals(Category.CUSTOM);
         folderMovieService.deleteById(id);
 
         if (folderMovie.getCategory() != Category.CUSTOM) {
-            throw new RuntimeException("Категория неверна ");
+            throw new CategoryNotFoundException("Категория неверна ");
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
