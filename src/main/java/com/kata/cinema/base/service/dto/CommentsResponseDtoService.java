@@ -1,4 +1,4 @@
-package com.kata.cinema.base.service.dto.impl;
+package com.kata.cinema.base.service.dto;
 
 import com.kata.cinema.base.dto.response.CommentsResponseDto;
 import com.kata.cinema.base.dto.response.ReviewResponseDto;

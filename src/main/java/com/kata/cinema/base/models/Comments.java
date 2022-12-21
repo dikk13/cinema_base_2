@@ -23,6 +23,9 @@ public class Comments {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "isModerate")
+    Boolean isModerate = false;
+
     @Column(name = "date")
     private LocalDateTime date;
 
