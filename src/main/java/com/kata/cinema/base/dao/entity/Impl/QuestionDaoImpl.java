@@ -13,4 +13,5 @@ public class QuestionDaoImpl extends AbstractDaoImpl<Long, Question> implements 
                 .setParameter("id", questionId)
                 .executeUpdate();
     }
+
 }
