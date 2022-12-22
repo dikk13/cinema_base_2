@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface ReviewService extends AbstractService<Long, Review> {
 
-    Review getReviewByNewsId(Long newsId);
-
     void changeModerateFlag(Long id, RedactorComment redactorComment);
 
 

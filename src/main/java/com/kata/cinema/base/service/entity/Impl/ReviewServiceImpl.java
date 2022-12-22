@@ -7,9 +7,6 @@ import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.ReviewService;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
-
 import java.util.Optional;
 
 import static com.kata.cinema.base.models.enums.RedactorStatus.RESOLVED;
