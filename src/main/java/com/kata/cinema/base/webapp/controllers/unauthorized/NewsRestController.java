@@ -56,8 +56,8 @@ public class NewsRestController {
     }
 
     @GetMapping("/{id}/comments/body")
-    public List<CommentNewsResponseDto> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
-        return commentNewsResponseDtoService.getCommentNewsResponseDtoListByNewsId(id);
+    public ResponseEntity<List<CommentNewsResponseDto>> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
+        return ResponseEntity.ok(commentNewsResponseDtoService.getCommentNewsResponseDtoListByNewsId(id));
     }
 
     @GetMapping("/page/{pageNumber}")
