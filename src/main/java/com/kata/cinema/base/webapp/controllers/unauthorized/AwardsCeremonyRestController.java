@@ -22,9 +22,7 @@ public class AwardsCeremonyRestController {
 
     PaginationDtoService<AwardsCeremonyResultResponseDto> paginationDtoService;
 
-    @GetMapping("/ceremonies/result?(optional=false)awardId={awardId}&" +
-            "(optional=false)dateEvent={dateEvent}&" +
-            "(optional=false)nominationStatus={nominationStatus}")
+    @GetMapping("/ceremonies/result")
     public PageDto<AwardsCeremonyResultResponseDto> getAwardsCeremonyResult(
             @RequestParam("awardId") Long awardId, @RequestParam("dateEvent") LocalDate dateEvent,
             @RequestParam("nominationStatus") NominationStatus nominationStatus) {
