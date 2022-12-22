@@ -15,7 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql({"/PersonRestController/data.sql"})
+@Sql(value = "/PersonRestController/data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = "/PersonRestController/clear.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class GetPersonsAwardsTest {
 
     @Autowired

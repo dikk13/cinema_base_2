@@ -30,4 +30,9 @@ public class NewsResponseDtoServiceImpl extends PaginationDtoServiceImpl<NewsRes
         return newsResponseDtoDao.getNewsResponseDtoByMovieId(itemsOnPage, movieId);
     }
 
+    @Override
+    public List<NewsResponseDto> getAllUnmoderatedNewsList() {
+        return newsResponseDtoDao.getAllUnmoderatedNewsList();
+    }
+
 }
