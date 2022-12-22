@@ -6,12 +6,15 @@ import com.kata.cinema.base.exception.FolderPersonIdNotFoundException;
 import com.kata.cinema.base.mappers.FolderPersonResponseDtoMapper;
 import com.kata.cinema.base.mappers.FolderRequestDtoMapper;
 import com.kata.cinema.base.models.FolderPerson;
+import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.dto.FolderPersonResponseDtoService;
 import com.kata.cinema.base.service.entity.FolderPersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,8 +54,9 @@ public class UserFolderPersonRestController {
     }
 
     @GetMapping("/persons")
-    public ResponseEntity<List<FolderPersonResponseDto>> getFolderPersonResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
-        return new ResponseEntity<>(folderPersonResponseDtoService.getFolderPersonResponseDtoList(userId), HttpStatus.OK);
+    public ResponseEntity<List<FolderPersonResponseDto>> getFolderPersonResponseDtoListByUserId(@AuthenticationPrincipal User user) {
+        User userActive = (User) ((Authentication) user).getPrincipal();
+        return new ResponseEntity<>(folderPersonResponseDtoService.getFolderPersonResponseDtoList(userActive.getId()), HttpStatus.OK);
     }
 
     @PostMapping("/persons")
