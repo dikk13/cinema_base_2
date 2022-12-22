@@ -39,26 +39,6 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
         Optional<Role> roleUser = roleDao.getByName("USER");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(roleUser.orElse(null));
-        //TODO вынести в приватный метод
-
-//        for(Category category: Category.values()) {
-//            if (!category.equals(Category.CUSTOM)) {
-//                FolderMovie folderMovie = new FolderMovie();
-//                folderMovie.setCategory(category);
-//                folderMovie.setPrivacy(Privacy.PUBLIC);
-//                folderMovie.setName(category.name());
-//                folderMovie.setUser(user);
-//            }
-//        }
-//        FolderPerson folderPerson = new FolderPerson();
-//        folderPerson.setName("Избранные");
-//        folderPerson.setFavourites(true);
-//        folderPerson.setUser(user);
-//        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
-//        user.setRole(userRoles);
-//        userDao.create(user);
-
-
     }
 
     private void creatFolderMovieAndFolderPerson(User user) {
