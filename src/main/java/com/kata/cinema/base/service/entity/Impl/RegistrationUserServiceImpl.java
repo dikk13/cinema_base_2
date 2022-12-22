@@ -1,5 +1,6 @@
 package com.kata.cinema.base.service.entity.Impl;
 
+import com.kata.cinema.base.config.Cryptor;
 import com.kata.cinema.base.dao.entity.RoleDao;
 import com.kata.cinema.base.dao.entity.UserDao;
 import com.kata.cinema.base.models.FolderMovie;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -24,14 +24,14 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
 
     private final UserDao userDao;
     private final RoleDao roleDao;
-    @PersistenceContext
-    private BCryptPasswordEncoder cryptPasswordEncoder;
+    private final BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired
-    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao) {
+    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao, Cryptor cryptor) {
         super(userDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.cryptPasswordEncoder = cryptor.getCryptor();
     }
 
     @Override
