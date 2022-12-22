@@ -6,10 +6,11 @@ import com.kata.cinema.base.service.dto.ReviewResponseDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ReviewResponseDtoServiceImpl extends PaginationDtoServiceImpl<ReviewResponseDto> implements ReviewResponseDtoService {
-
 
     private final ReviewResponseDtoDao responseDtoDao;
 
@@ -19,4 +20,8 @@ public class ReviewResponseDtoServiceImpl extends PaginationDtoServiceImpl<Revie
         this.responseDtoDao = responseDtoDao;
     }
 
+    @Override
+    public List<ReviewResponseDto> getAllUnmoderatedReviewsList() {
+        return responseDtoDao.getAllUnmoderatedReviewsList();
+    }
 }

@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface NewsResponseDtoDao extends PaginationDtoDao<NewsResponseDto> {
     List<NewsResponseDto> getNewsResponseDtoByMovieId(Integer count, Long movieId);
+
+    List<NewsResponseDto> getAllUnmoderatedNewsList();
+
 }
