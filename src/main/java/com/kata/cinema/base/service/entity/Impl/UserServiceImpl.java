@@ -6,7 +6,6 @@ import com.kata.cinema.base.dao.entity.UserDao;
 import com.kata.cinema.base.dto.request.PasswordChangeRequestDto;
 import com.kata.cinema.base.dto.request.UserRequestDto;
 import com.kata.cinema.base.exception.PasswordUncoincidenceException;
-import com.kata.cinema.base.exception.UpdateEntityException;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.UserService;

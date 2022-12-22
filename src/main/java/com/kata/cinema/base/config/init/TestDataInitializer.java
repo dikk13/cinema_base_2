@@ -81,7 +81,7 @@ public class TestDataInitializer {
     private static final int countMovieList = 100;
     private static final int countCollection = 20;
 
-    private static final int countUser = 25;
+    private static final int countUser = 26;
     private static final int countGenre = 10;
     private static final int countProductionStudio = 20;
     private static final int countNews = 25;
@@ -181,24 +181,32 @@ public class TestDataInitializer {
         Role rolePublicist = new Role();
         rolePublicist.setRole("PUBLICIST");
         roleService.create(rolePublicist);
+
+        Role roleRedactor = new Role();
+        roleRedactor.setRole("REDACTOR");
+        roleService.create(roleRedactor);
     }
 
     public void userInit() {
 
         final int ONE_BEFORE_LAST_USER_IN_BASE = 24;
         final int LAST_USER_IN_BASE = 25;
+        final int ONE_AFTER_LAST_USER_IN_BASE = 26;
         final int START_YEAR = 1970;
         final int LAST_YEAR = 2010;
 
         final Role ROLE_USER;
         final Role ROLE_ADMIN;
         final Role ROLE_PUBLICIST;
+        final Role ROLE_REDACTOR;
         final Optional<Role> roleUserOptional = roleService.getByName("USER");
         final Optional<Role> roleAdminOptional = roleService.getByName("ADMIN");
         final Optional<Role> rolePublicistOptional = roleService.getByName("PUBLICIST");
+        final Optional<Role> roleRedactorOptional = roleService.getByName("REDACTOR");
         ROLE_USER = roleUserOptional.orElseGet(Role::new);
         ROLE_ADMIN = roleAdminOptional.orElseGet(Role::new);
         ROLE_PUBLICIST = rolePublicistOptional.orElseGet(Role::new);
+        ROLE_REDACTOR = roleRedactorOptional.orElseGet(Role::new);
 
         Set<Role> roles = new HashSet<>();
         roles.add(ROLE_USER);
@@ -223,6 +231,11 @@ public class TestDataInitializer {
                 lastUserRoles.add(ROLE_USER);
                 lastUserRoles.add(ROLE_PUBLICIST);
                 user.setRole(lastUserRoles);
+            } else if (userNumber == ONE_AFTER_LAST_USER_IN_BASE) {
+                Set<Role> newUserRoles = new HashSet<>();
+                newUserRoles.add(ROLE_USER);
+                newUserRoles.add(ROLE_REDACTOR);
+                user.setRole(newUserRoles);
             } else {
                 user.setRole(roles);
             }
