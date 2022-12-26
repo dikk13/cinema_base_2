@@ -24,8 +24,9 @@ public class AwardsCeremonyResultResponseDtoDaoImpl implements AwardsCeremonyRes
                                 "concat(a.person.originalFirstName, ' ', a.person.originalLastName), a.movie.id, " +
                                 "a.movie.name, a.movie.originalName, a.nomination, a.ceremony.dateEvent, " +
                                 "a.ceremony.id, a.nomination.name, a.nominationStatus) from AwardCeremonyResult a" +
-                                " where a.ceremony.awards.id = :awardId and a.ceremony.dateEvent = :dateEvent" +
-                                " and a.nominationStatus = :nominationStatus"
+                                " where (:awardId is null or a.ceremony.awards.id = :awardId) and" +
+                                " (:dateEvent is null or a.ceremony.dateEvent = :dateEvent) and" +
+                                " (:nominationStatus is null or a.nominationStatus = :nominationStatus)"
                         , AwardsCeremonyResultResponseDto.class)
                 .setParameter("awardId", parameters.get("awardId"))
                 .setParameter("dateEvent", parameters.get("dateEvent"))
@@ -37,10 +38,10 @@ public class AwardsCeremonyResultResponseDtoDaoImpl implements AwardsCeremonyRes
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return jpaResultHelper(entityManager.createQuery("select count (a) " +
-                "from AwardCeremonyResult a where a.ceremony.awards.id = :awardId and" +
-                " a.ceremony.dateEvent = :dateEvent and a.nominationStatus = :nominationStatus"
-                , Long.class)
+        return jpaResultHelper(entityManager.createQuery("select count (a) from AwardCeremonyResult a where" +
+                        " (:awardId is null or a.ceremony.awards.id = :awardId) and" +
+                        " (:dateEvent is null or a.ceremony.dateEvent = :dateEvent) and" +
+                        " (:nominationStatus is null or a.nominationStatus = :nominationStatus)", Long.class)
                 .setParameter("awardId", parameters.get("awardId"))
                 .setParameter("dateEvent", parameters.get("dateEvent"))
                 .setParameter("nominationStatus", parameters.get("nominationStatus")))
