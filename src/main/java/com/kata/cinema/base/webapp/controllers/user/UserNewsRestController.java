@@ -25,7 +25,7 @@ public class UserNewsRestController {
     private final UserService userService;
 
     @PostMapping("/{id}/comments")
-    ResponseEntity<Void> addComments(@PathVariable("id") long newsId,
+    public ResponseEntity<Void> addComments(@PathVariable("id") long newsId,
                                      @AuthenticationPrincipal User principal,
                                      @RequestBody CommentsRequestDto commentsRequestDto) {
         Comment comment = commentsMapper.toComments(commentsRequestDto);

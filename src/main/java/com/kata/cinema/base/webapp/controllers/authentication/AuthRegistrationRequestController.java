@@ -14,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +34,11 @@ public class AuthRegistrationRequestController {
     private final UserValidator userValidator;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     @PostMapping("/registration")
-    public ResponseEntity<UserRegistrationRequestDto> registrationForm(@RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
-        User user = userMapper.toUser(requestDto);
+    public ResponseEntity<UserRegistrationRequestDto> registrationForm(
+            @RequestBody UserRegistrationRequestDto requestDto, BindingResult result ) {
+      User user = userMapper.toUser(requestDto);
       userValidator.validate(user, result);
       try {
           if (!result.hasErrors()) {
@@ -47,7 +50,7 @@ public class AuthRegistrationRequestController {
       return ResponseEntity.ok(requestDto);
     }
 
-
+    @Transactional
     @PostMapping("/token")
     public ResponseEntity<Map<String, Object>> authLogin(@RequestBody AuthRequestDto authRequestDto) {
       UsernamePasswordAuthenticationToken authenticationToken =

@@ -13,13 +13,13 @@ import static com.kata.cinema.base.models.enums.RedactorStatus.RESOLVED;
 
 @Service
 public class ReviewServiceImpl extends AbstractServiceImpl<Long, Review> implements ReviewService {
-
     private final ReviewDao reviewDao;
 
     protected ReviewServiceImpl(ReviewDao reviewDao) {
         super(reviewDao);
         this.reviewDao = reviewDao;
     }
+
 
     @Override
     public Review getReviewById(Long reviewId) {
