@@ -27,6 +27,9 @@ public class News {
     @SequenceGenerator(name = "seq_news_id", sequenceName = "SEQ_NEWS_ID", allocationSize = 1)
     private Long id;
 
+    @Column(name = "is_moderate")
+    private Boolean isModerate = false;
+
     @Column(name = "rubric")
     @Enumerated(EnumType.STRING)
     private Rubric rubric;

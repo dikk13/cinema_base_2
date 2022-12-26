@@ -2,8 +2,8 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.StudioPerformanceDao;
 import com.kata.cinema.base.models.StudioPerformance;
-import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
+import com.kata.cinema.base.service.entity.StudioPerformanceService;
 import org.springframework.stereotype.Service;
 
 @Service

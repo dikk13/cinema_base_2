@@ -28,7 +28,6 @@ import java.util.HashSet;
 @ToString
 @Table(name = "folders_persons")
 @NoArgsConstructor
-@AllArgsConstructor
 public class FolderPerson {
     @Id
     @Column(name = "id")
@@ -49,33 +48,14 @@ public class FolderPerson {
     protected String description;
 
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(
-            name = "folder_persons_to_person",
-            joinColumns = @JoinColumn(name = "folder_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Set<Person> folderPersonsSet = new java.util.LinkedHashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
-
-    public void addPersonToFolder(Person person) {
-        folderPersonsSet.add(person);
-    }
-
-    public void removePersonFromFolder(Person person) {
-        folderPersonsSet.remove(person);
-    }
-
-    public Set<Person> getFolderPersonsSet() {
-        return folderPersonsSet;
-    }
-
-    public void setFolderPersonsSet(Set<Person> folderPersonsSet) {
-        this.folderPersonsSet = folderPersonsSet;
-    }
 
     @Override
     public int hashCode() {
@@ -89,13 +69,5 @@ public class FolderPerson {
         FolderPerson that = (FolderPerson) o;
         return Objects.equals(id, that.id) && favourites == that.favourites && Objects.equals(privacy, that.privacy) &&
                 Objects.equals(name, that.name) && Objects.equals(description, that.description);
-    }
-
-    public FolderPerson(Long id, Boolean favourites, String privacy, String name, String description) {
-        this.id = id;
-        this.favourites = favourites;
-        this.privacy = privacy;
-        this.name = name;
-        this.description = description;
     }
 }
