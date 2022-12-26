@@ -9,7 +9,9 @@ import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -25,13 +27,11 @@ public class UserRestController {
 
     @GetMapping("/profile")
     public ResponseEntity<UserResponseDto> getUserProfileInfo(@AuthenticationPrincipal User currentUser) {
-        //TODO переписать метод, доставать id текущего пользователя из контеста, а дто из бд по id
 
         Optional<User> targetUser = userService.getById(currentUser.getId());
         if (targetUser.isEmpty()) {
             throw new RuntimeException("Неверно передан id, пользователя с таким ");
         }
-
         return ResponseEntity.ok(targetUser.map(userDtoService::getUserResponseDto).orElse(null));
     }
 

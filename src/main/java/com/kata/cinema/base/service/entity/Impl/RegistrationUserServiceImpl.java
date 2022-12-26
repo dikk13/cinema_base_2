@@ -1,6 +1,5 @@
 package com.kata.cinema.base.service.entity.Impl;
 
-import com.kata.cinema.base.config.Cryptor;
 import com.kata.cinema.base.dao.entity.RoleDao;
 import com.kata.cinema.base.dao.entity.UserDao;
 import com.kata.cinema.base.models.FolderMovie;
@@ -12,7 +11,7 @@ import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.RegistrationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -24,14 +23,14 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
 
     private final UserDao userDao;
     private final RoleDao roleDao;
-    private final BCryptPasswordEncoder cryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao, Cryptor cryptor) {
+    protected RegistrationUserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
         super(userDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
-        this.cryptPasswordEncoder = cryptor.getCryptor();
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -39,8 +38,11 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
         Optional<Role> roleUser = roleDao.getByName("USER");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(roleUser.orElse(null));
-        //TODO вынести в приватный метод
-        for(Category category: Category.values()) {
+    }
+
+    private void creatFolderMovieAndFolderPerson(User user) {
+        Set<Role> userRoles = new HashSet<>();
+        for (Category category : Category.values()) {
             if (!category.equals(Category.CUSTOM)) {
                 FolderMovie folderMovie = new FolderMovie();
                 folderMovie.setCategory(category);
@@ -53,7 +55,7 @@ public class RegistrationUserServiceImpl extends AbstractServiceImpl<Long, User>
         folderPerson.setName("Избранные");
         folderPerson.setFavourites(true);
         folderPerson.setUser(user);
-        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(userRoles);
         userDao.create(user);
     }
