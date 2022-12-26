@@ -39,17 +39,17 @@ public class PublicistQuestionPoolRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping("/news/{id}/questions")
-//    public ResponseEntity<Void> addNewQuestion(@PathVariable("id") Long newsId,
-//                                               @RequestBody QuestionRequestDto questionRequestDto,
-//                                               @RequestParam("questions") String question){
-//        Question newQuestion = questionMapper.toQuestion(questionRequestDto);
-//        News news = questionNewsResponseDtoService.findNews(newsId);
-//        newQuestion.setQuestion(question);
-//        newQuestion.setNews(news);
-//        questionService.create(newQuestion);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping("/news/{id}/questions")
+    public ResponseEntity<Void> addNewQuestion(@PathVariable("id") Long newsId,
+                                               @RequestBody QuestionRequestDto questionRequestDto,
+                                               @RequestParam("questions") String question){
+        Question newQuestion = questionMapper.toQuestion(questionRequestDto);
+        News news = questionNewsResponseDtoService.findNews(newsId);
+        newQuestion.setQuestion(question);
+        newQuestion.setNews(news);
+        questionService.create(newQuestion);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 //
 //    @GetMapping("/questions/page/{pageNumber}")
 //    public ResponseEntity<PageDto<QuestionResponseDto>> getQuestionPage(@PathVariable("pageNumber") Integer pageNumber,
