@@ -12,6 +12,10 @@ public class MoviesAwardResponseDtoServiceImpl implements MoviesAwardResponseDto
 
     MoviesAwardResponseDtoDao moviesAwardResponseDtoDao;
 
+    public MoviesAwardResponseDtoServiceImpl(MoviesAwardResponseDtoDao moviesAwardResponseDtoDao) {
+        this.moviesAwardResponseDtoDao = moviesAwardResponseDtoDao;
+    }
+
     @Override
     public List<AwardResponseDto> getMoviesAwards(Long id) {
         return moviesAwardResponseDtoDao.getMoviesAwards(id);
