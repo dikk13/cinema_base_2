@@ -26,7 +26,7 @@ public class Result {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")
-    private Question question ;
+    private Question question;
 
     @Override
     public boolean equals(Object o) {

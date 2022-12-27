@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,4 +31,10 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Long, Question> imp
             throw new NullPointerException();
         }
     }
+
+    @Override
+    public List<Question> getAllQuestionsByNewsId(Long id) {
+        return questionDao.getAllQuestionsByNewsId(id);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.kata.cinema.base.mappers;
 import com.kata.cinema.base.dto.request.AnswerRequestDto;
 import com.kata.cinema.base.dto.request.QuestionRequestDto;
 import com.kata.cinema.base.dto.request.ResultRequestDto;
+import com.kata.cinema.base.dto.response.QuestionResponseDto;
 import com.kata.cinema.base.models.Answer;
 import com.kata.cinema.base.models.Question;
 import com.kata.cinema.base.models.Result;
@@ -28,4 +29,7 @@ public interface QuestionMapper {
     Result resultRequestDtoToResult(ResultRequestDto resultRequestDto);
 
     List<Result> resultRequestDtoListToResultList(List<ResultRequestDto> list);
+
+    List<QuestionResponseDto> toDTOList(List<Question> questions);
+
 }

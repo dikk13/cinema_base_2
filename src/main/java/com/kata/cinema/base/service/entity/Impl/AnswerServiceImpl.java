@@ -2,6 +2,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.AbstractDao;
 import com.kata.cinema.base.dao.entity.AnswerDao;
+import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
 import com.kata.cinema.base.models.Answer;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.AnswerService;
@@ -19,4 +20,10 @@ public class AnswerServiceImpl extends AbstractServiceImpl<Long, Answer> impleme
         super(abstractDao);
         this.answerDao = answerDao;
     }
+
+    @Override
+    public Integer countRightAnswersByQuestionAnswerRequestDto(QuestionAnswerRequestDto requestDto) {
+        return answerDao.countRightAnswersByQuestionAnswerRequestDto(requestDto);
+    }
+
 }
