@@ -17,11 +17,8 @@ public class QuestionResponseDtoDaoImpl implements QuestionResponseDtoDao {
 
     @Override
     public List<QuestionResponseDto> getItemsDto(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
-        return entityManager.createQuery("select new com.kata.cinema.base.dto.response.QuestionResponseDto"+
-                        "(q.id, q.position, q.question)" +
-                        "from Question q where q.news.id = :newsId"
-                        , QuestionResponseDto.class)
-                .setParameter("newsId", parameters.get("newsId"))
+        return entityManager.createQuery("select new com.kata.cinema.base.dto.response.QuestionResponseDto" +
+                        "(q.id, q.position, q.question)" + "from Question q", QuestionResponseDto.class)
                 .setFirstResult((currentPage - 1) * itemsOnPage)
                 .setMaxResults(itemsOnPage)
                 .getResultList();
@@ -29,18 +26,6 @@ public class QuestionResponseDtoDaoImpl implements QuestionResponseDtoDao {
 
     @Override
     public Long getResultTotal(Map<String, Object> parameters) {
-        return entityManager.createQuery("select count (q) from Question q where q.news.id =: newsId", Long.class)
-                .setParameter("newsId", parameters.get("newsId")).getSingleResult();
-    }
-
-    @Override
-    public List<QuestionResponseDto> getQuestionResponseDtoByNewsId(Integer count, Long newsId) {
-        return entityManager.createQuery("select new com.kata.cinema.base.dto.response.QuestionResponseDto"+
-                                "(q.id, q.position, q.question)" +
-                                "from Question q where q.news.id = :newsId"
-                        , QuestionResponseDto.class)
-                .setParameter("newsId", newsId)
-                .setMaxResults(count)
-                .getResultList();
+        return entityManager.createQuery("select count (q) from Question q", Long.class).getSingleResult();
     }
 }
