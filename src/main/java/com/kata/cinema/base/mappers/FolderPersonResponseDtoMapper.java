@@ -12,8 +12,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FolderPersonResponseDtoMapper {
 
-
-    @Mapping(source = "user.id", target = "countPerson")
     FolderPersonResponseDto toDTO(FolderPerson folderPerson);
 
     List<FolderPersonResponseDto> toDTOList(List<FolderPerson> folderPerson);

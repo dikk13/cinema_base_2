@@ -1,5 +1,6 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.models.enums.Privacy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Objects;
-import java.util.Set;
-import java.util.HashSet;
 
 @Entity
 @Getter
@@ -28,6 +25,7 @@ import java.util.HashSet;
 @ToString
 @Table(name = "folders_persons")
 @NoArgsConstructor
+@AllArgsConstructor
 public class FolderPerson {
     @Id
     @Column(name = "id")
@@ -36,16 +34,16 @@ public class FolderPerson {
     private Long id;
 
     @Column(name = "favourites", nullable = false)
-    protected Boolean favourites;
+    private  Boolean favourites;
 
     @Column(name = "privacy", nullable = false, length = 7)
-    protected String privacy;
+    private  Privacy privacy;
 
     @Column(name = "name", nullable = false, length = 30)
-    protected String name;
+    private String name;
 
     @Column(name = "description", nullable = true, length = 100)
-    protected String description;
+    private String description;
 
     @ToString.Exclude
     @ManyToOne

@@ -7,6 +7,7 @@ import com.kata.cinema.base.mappers.FolderPersonResponseDtoMapper;
 import com.kata.cinema.base.mappers.FolderRequestDtoMapper;
 import com.kata.cinema.base.models.FolderPerson;
 import com.kata.cinema.base.models.User;
+import com.kata.cinema.base.models.enums.Privacy;
 import com.kata.cinema.base.service.dto.FolderMovieResponsDtoService;
 import com.kata.cinema.base.service.dto.FolderPersonResponseDtoService;
 import com.kata.cinema.base.service.entity.FolderPersonService;
@@ -63,7 +64,7 @@ public class UserFolderPersonRestController {
     public ResponseEntity<Void> addFolderPerson(@RequestBody FolderRequestDto folderRequestDto) {
         FolderPerson folderPerson = folderRequestDtoMapper.toFolderPerson(folderRequestDto);
         folderPerson.setFavourites(Boolean.FALSE);
-        folderPerson.setPrivacy("PUBLIC");
+        folderPerson.setPrivacy(Privacy.PUBLIC);
         folderPersonService.create(folderPerson);
 
         return new ResponseEntity<>(HttpStatus.OK);

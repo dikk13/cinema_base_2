@@ -11,21 +11,23 @@ import java.util.List;
 @Repository
 public class FolderPersonResponseDtoDaoImpl implements FolderPersonResponseDtoDao {
     @PersistenceContext
-   private EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
-    public List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id) {
+    public List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long userId) {
         return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.FolderPersonResponseDto" +
-                                "(fm.privacy," +
-                                "fm.favourites," +
-                                "fm.description," +
-                                "fm.name," +
-                                "fm.id," +
-                                "fm.name," +
-                                "count (m) from FolderPerson fm join Person m where m.id=:id",
+                                "(f.id," +
+                                "f.name," +
+                                "f.description," +
+                                "f.favourites," +
+                                "f.privacy," +
+                                "count (p)) " +
+                                "FROM FolderPerson f join Person p ON p.id=f.person.id " +
+                                "join User u ON u.id=f.user.id WHERE f.user.id=:userId",
                         FolderPersonResponseDto.class)
-                .setParameter("id", id)
+                .setParameter("userId", userId)
                 .getResultList();
 
     }
 }
+

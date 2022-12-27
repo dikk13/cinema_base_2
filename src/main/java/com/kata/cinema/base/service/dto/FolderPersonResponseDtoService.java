@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface FolderPersonResponseDtoService {
 
-    List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long id);
+    List<FolderPersonResponseDto> getFolderPersonResponseDtoList(Long userId);
 
 }

@@ -24,9 +24,16 @@ public class FolderMovieResponsDtoDaoImpl implements FolderMovieResponsDtoDao {
     }
     @Override
     public List<FolderResponseDto> getFolderByUser(Long userId) {
-        return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.FolderResponseDto(f.id,f.name,f.category,(select count (m) from FolderMovie fm join fm.movies m where f.user.id = : userId)) from FolderMovie f  where f.user.id = : userId", FolderResponseDto.class)
+        return entityManager.createQuery("SELECT new com.kata.cinema.base.dto.response.FolderResponseDto" +
+                        "(f.id," +
+                        "f.name," +
+                        "f.category," +
+                        "(select count (m) from FolderMovie fm join fm.movies m where f.user.id = : userId)) " +
+                        "from FolderMovie f  where f.user.id = : userId",
+                        FolderResponseDto.class)
                 .setParameter("userId", userId)
                 .getResultList();
     }
 
 }
+
