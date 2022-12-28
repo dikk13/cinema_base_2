@@ -36,12 +36,13 @@ public class MoviePersonServiceImpl extends AbstractServiceImpl<Long, MoviePerso
     @Override
     public void updateById(Long id, MoviePerson moviePerson) {
         if (this.getById(id).isPresent()) {
+            MoviePerson oldMoviePerson1 = this.getById(id).get();
             moviePerson.setId(id);
-            moviePerson.setMovie(this.getById(id).get().getMovie());
-            moviePerson.setPerson(this.getById(id).get().getPerson());
-            moviePerson.setProfession(this.getById(id).get().getProfession());
-            moviePerson.setType(this.getById(id).get().getType());
-            moviePerson.setNameRole(this.getById(id).get().getNameRole());
+            moviePerson.setMovie(oldMoviePerson1.getMovie());
+            moviePerson.setPerson(oldMoviePerson1.getPerson());
+            moviePerson.setProfession(oldMoviePerson1.getProfession());
+            moviePerson.setType(oldMoviePerson1.getType());
+            moviePerson.setNameRole(oldMoviePerson1.getNameRole());
         }
     }
 }
