@@ -60,7 +60,7 @@
             original_first_name="OName"
             original_last_name="OLast"
             place_of_birth="Earth"
-            photo_url="/url_photo_person100"
+
     />
     <persons
             id="101"
@@ -71,7 +71,7 @@
             original_first_name="OName2"
             original_last_name="OLast2"
             place_of_birth="Earth"
-            photo_url="/url_photo_person102"
+
     />
     <persons
             id="102"
@@ -82,7 +82,7 @@
             original_first_name="OName3"
             original_last_name="OLast3"
             place_of_birth="Earth"
-            photo_url="/url_photo_person103"
+
     />
     <professions
             id="100"
@@ -234,4 +234,21 @@
         id="1"
         name="testChapter1"
     />
+    <folders_movies
+            id="100"
+            category="3"
+            privacy="1"
+            name="folder"
+            description="aaa"
+    />
+    <folders_persons
+            id="100"
+            favourites="false"
+            privacy="PUBLIC"
+            name="name"
+            description="fpdescription"
+
+    />
+
+
 </dataset>

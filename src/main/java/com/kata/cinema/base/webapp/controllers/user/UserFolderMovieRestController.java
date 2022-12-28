@@ -1,10 +1,13 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
 import com.kata.cinema.base.dto.PageDto;
+import com.kata.cinema.base.dto.request.FolderRequestDto;
 import com.kata.cinema.base.dto.response.FolderMovieResponsDto;
 import com.kata.cinema.base.dto.response.FolderResponseDto;
 import com.kata.cinema.base.dto.response.MovieResponseDto;
-import com.kata.cinema.base.mappers.FolderMovieResponsDtoMapper;
+import com.kata.cinema.base.exception.CategoryNotFoundException;
+import com.kata.cinema.base.exception.FolderMovieIdNotFoundException;
+import com.kata.cinema.base.mappers.FolderRequestDtoMapper;
 import com.kata.cinema.base.models.FolderMovie;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.models.enums.Category;
@@ -25,6 +28,7 @@ import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user/folders")
@@ -33,8 +37,10 @@ public class UserFolderMovieRestController {
 
     private final FolderMovieResponsDtoService folderMovieResponsDtoService;
     private final MovieResponseDtoService movieResponseDtoService;
-    private final FolderMovieResponsDtoMapper folderMovieResponsDtoMapper;
+
     private final FolderMovieService folderMovieService;
+    private final FolderRequestDtoMapper folderRequestDtoMapper;
+
 
     @GetMapping("/movies")
     public ResponseEntity<List<FolderMovieResponsDto>> getFolderMovieResponseDtoListByUserId(@RequestParam(value = "userId") Long userId) {
@@ -71,13 +77,29 @@ public class UserFolderMovieRestController {
 
     @PostMapping("/movies")
     public ResponseEntity<Void> createNewFolderByMovie(
-            @RequestBody FolderMovieResponsDto folder,
-            @RequestParam(value = "name", required = false, defaultValue = "Новая папка") String name) {
-        FolderMovie folderMovie = folderMovieResponsDtoMapper.toFolder(folder);
-        folderMovie.setName(name);
+            @RequestBody FolderRequestDto folderRequestDto) {
+        FolderMovie folderMovie = folderRequestDtoMapper.toFolderMovie(folderRequestDto);
         folderMovie.setCategory(Category.valueOf("CUSTOM"));
         folderMovie.setPrivacy(Privacy.valueOf("PUBLIC"));
         folderMovieService.create(folderMovie);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}/movies")
+    public ResponseEntity<Void> deleteFolderMovieById(@PathVariable Long id) {
+        Optional<FolderMovie> folderMovieToDelete = folderMovieService.getById(id);
+        if (folderMovieToDelete.isEmpty()) {
+            throw new FolderMovieIdNotFoundException("Неверно передан id, пользователя с таким id нету ");
+        }
+        FolderMovie folderMovie = folderMovieToDelete.get();
+        folderMovie.getCategory().equals(Category.CUSTOM);
+        folderMovieService.deleteById(id);
+
+        if (folderMovie.getCategory() != Category.CUSTOM) {
+            throw new CategoryNotFoundException("Категория неверна ");
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }
