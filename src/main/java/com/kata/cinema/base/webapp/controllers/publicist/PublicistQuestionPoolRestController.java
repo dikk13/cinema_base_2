@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,11 +36,9 @@ public class PublicistQuestionPoolRestController {
 
     @PostMapping("/news/{id}/questions")
     public ResponseEntity<Void> addNewQuestion(@PathVariable("id") Long newsId,
-                                               @RequestBody QuestionRequestDto questionRequestDto,
-                                               @RequestParam("questions") String question){
+                                               @RequestBody QuestionRequestDto questionRequestDto){
         Question newQuestion = questionMapper.toQuestion(questionRequestDto);
         News news = questionResponseDtoService.findNews(newsId);
-        newQuestion.setQuestion(question);
         newQuestion.setNews(news);
         questionService.create(newQuestion);
         return new ResponseEntity<>(HttpStatus.OK);
