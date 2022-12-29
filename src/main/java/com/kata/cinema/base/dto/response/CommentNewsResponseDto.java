@@ -30,19 +30,18 @@ public class CommentNewsResponseDto implements Serializable {
     private Integer level;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yy")
     private LocalDate date;
-    private TypeRating rating;
+    private Integer rating;
 
     private UserCommentDto user;
 
     public CommentNewsResponseDto(Long id, String message,
                                   Long parentId, int level,
-                                  LocalDateTime date, TypeRating rating, User user) {
+                                  LocalDateTime date, User user) {
         this.id = id;
         this.message = message;
         this.parentId = parentId;
         this.level = level;
         this.date = date.toLocalDate();
-        this.rating = rating;
         this.user = new UserCommentDto(
                 user.getId(), user.getEmail(), user.getAvatarUrl()
         );

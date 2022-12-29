@@ -3,8 +3,13 @@ package com.kata.cinema.base.webapp.controllers.user;
 import com.kata.cinema.base.dto.request.PasswordChangeRequestDto;
 import com.kata.cinema.base.dto.request.UserRequestDto;
 import com.kata.cinema.base.dto.response.UserResponseDto;
+import com.kata.cinema.base.exception.CommentNotFoundException;
+import com.kata.cinema.base.models.RatingComment;
 import com.kata.cinema.base.models.User;
+import com.kata.cinema.base.models.enums.TypeRating;
 import com.kata.cinema.base.service.dto.UserDtoService;
+import com.kata.cinema.base.service.entity.CommentsService;
+import com.kata.cinema.base.service.entity.RatingCommentService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +28,8 @@ public class UserRestController {
 
     private final UserDtoService userDtoService;
     private final UserService userService;
+    private final RatingCommentService ratingCommentService;
+    private final CommentsService commentsService;
 
 
     @GetMapping("/profile")
@@ -53,6 +60,17 @@ public class UserRestController {
     @DeleteMapping("/profile")
     public ResponseEntity<Void> disableUser(@AuthenticationPrincipal User currentUser) {
         userService.disableUser(currentUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/comment/{id}")
+    public ResponseEntity<Void> rateComment(
+            @PathVariable("id") Long commentId, @RequestParam(name = "rating") TypeRating rating,
+            @AuthenticationPrincipal User currentUser) {
+        if (commentsService.getById(commentId).isEmpty()) {
+            throw new CommentNotFoundException("Comment with id not found");
+        }
+        ratingCommentService.rateComment(currentUser.getId(), commentId, rating);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
