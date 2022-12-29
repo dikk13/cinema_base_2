@@ -102,4 +102,33 @@ public class UserFolderMovieRestController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @PatchMapping("/{id}/movies")
+    public ResponseEntity<Void> updateFolderMoviePrivacy(
+            @RequestParam(name = "privacy") String privacy, @PathVariable("id") Long id) {
+        Optional<FolderMovie> folderMovieToUpdatePrivacy = folderMovieService.getById(id);
+        if (folderMovieToUpdatePrivacy.isEmpty()) {
+            throw new FolderMovieIdNotFoundException("FolderMovie with id is not found");
+        }
+        FolderMovie folderMovie = folderMovieToUpdatePrivacy.get();
+        folderMovie.setPrivacy(Privacy.valueOf(privacy));
+        folderMovieService.update(folderMovie);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PutMapping("/{id}/movies")
+    public ResponseEntity<Void> updateFolderMovieNameDescription(
+            @PathVariable("id") Long id, @RequestBody FolderRequestDto folderRequestDto) {
+        Optional<FolderMovie> folderMovieToUpdate = folderMovieService.getById(id);
+        if (folderMovieToUpdate.isEmpty()) {
+            throw new FolderMovieIdNotFoundException("FolderMovie with id is not found");
+        }
+        FolderMovie folderMovie = folderMovieToUpdate.get();
+        folderMovie.setName(folderRequestDto.getName());
+        folderMovie.setDescription(folderRequestDto.getDescription());
+        folderMovieService.update(folderMovie);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

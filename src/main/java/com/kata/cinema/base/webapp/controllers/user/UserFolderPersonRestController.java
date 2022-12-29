@@ -16,14 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +60,33 @@ public class UserFolderPersonRestController {
         folderPerson.setPrivacy(Privacy.PUBLIC);
         folderPersonService.create(folderPerson);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/persons")
+    public ResponseEntity<Void> updateFolderPersonPrivacy(
+            @RequestParam(name = "privacy") String privacy, @PathVariable("id") Long id) {
+        Optional<FolderPerson> folderPersonToUpdatePrivacy = folderPersonService.getById(id);
+        if (folderPersonToUpdatePrivacy.isEmpty()) {
+            throw new FolderPersonIdNotFoundException("FolderPerson with id is not found");
+        }
+        FolderPerson folderPerson = folderPersonToUpdatePrivacy.get();
+        folderPerson.setPrivacy(Privacy.valueOf(privacy));
+        folderPersonService.update(folderPerson);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/persons")
+    public ResponseEntity<Void> updateFolderPersonNameDescription(
+            @PathVariable("id") Long id, @RequestBody FolderRequestDto folderRequestDto) {
+            Optional<FolderPerson> folderPersonToUpdate = folderPersonService.getById(id);
+        if (folderPersonToUpdate.isEmpty()) {
+            throw new FolderPersonIdNotFoundException("FolderPerson with id is not found");
+        }
+        FolderPerson folderPerson = folderPersonToUpdate.get();
+        folderPerson.setName(folderRequestDto.getName());
+        folderPerson.setDescription(folderRequestDto.getDescription());
+        folderPersonService.update(folderPerson);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
