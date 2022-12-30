@@ -1,7 +1,10 @@
 package com.kata.cinema.base.mappers;
 
+import com.kata.cinema.base.dto.request.CastRequestDto;
 import com.kata.cinema.base.dto.response.MoviePersonResponseDto;
 import com.kata.cinema.base.models.MoviePerson;
+import com.kata.cinema.base.models.Person;
+import com.kata.cinema.base.models.Profession;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +31,18 @@ public interface MoviePersonMapper {
             moviePersonResponseDtoList.add(moviePersonToMoviePersonResponseDto(mp));
         }
         return moviePersonResponseDtoList;
+    }
+
+    default MoviePerson toMoviePerson(CastRequestDto castRequestDto) {
+        MoviePerson moviePerson = new MoviePerson();
+        Profession profession = new Profession();
+        Person person = new Person();
+        profession.setId(castRequestDto.getProfessionId());
+        moviePerson.setProfession(profession);
+        person.setId(castRequestDto.getPersonId());
+        moviePerson.setPerson(person);
+        moviePerson.setType(castRequestDto.getType());
+        moviePerson.setNameRole(castRequestDto.getNameCharacter());
+        return moviePerson;
     }
 }

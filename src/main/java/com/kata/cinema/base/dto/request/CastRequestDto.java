@@ -1,18 +1,18 @@
 package com.kata.cinema.base.dto.request;
 
+import com.kata.cinema.base.models.enums.CharacterType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-public class FolderRequestDto {
-    private String name;
-    private String description;
-
+public class CastRequestDto {
+    private Long professionId;
+    private CharacterType type;
+    private String nameCharacter;
+    private Long personId;
 }

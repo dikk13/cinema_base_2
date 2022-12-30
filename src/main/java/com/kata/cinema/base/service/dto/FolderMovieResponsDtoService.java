@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FolderMovieResponsDtoService {
-   List<FolderMovieResponsDto> getFolderMovieResponsDtoListByUserId (Long userId);
-   Optional<FolderMovieResponsDto> getFolderMovieResponsDtoById (Long folderMovieId);
-   List<FolderResponseDto> getFolderByUser(Long userId);
+    List<FolderMovieResponsDto> getFolderMovieResponsDtoListByUserId(Long userId);
+
+    Optional<FolderMovieResponsDto> getFolderMovieResponsDtoById(Long folderMovieId);
+
+    List<FolderResponseDto> getFolderByUser(Long userId);
 }
