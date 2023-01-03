@@ -22,7 +22,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 @Service
-public class MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoService {
+public class  MovieViewResponseDtoServiceImpl implements MovieViewResponseDtoService {
 
     private final GenreService genreService;
     private final UserService userService;

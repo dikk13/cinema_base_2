@@ -1,21 +1,18 @@
 package com.kata.cinema.base.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table(name = "Comment")
+@Table(name = "Comments")
 @Entity
 @Setter
 @ToString
 @Getter
 @NoArgsConstructor
-public class Comment {
+public class Comments {
 
     @Id
     @Column(name = "id")
@@ -23,8 +20,11 @@ public class Comment {
     @SequenceGenerator(name = "seq_comments_id", sequenceName = "SEQ_COMMENTS_ID", allocationSize = 1)
     private Long id;
 
-    @Column(name = "message")
-    private String message;
+    @Column(name = "text")
+    private String text;
+
+    @Column(name = "isModerate")
+    Boolean isModerate = false;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -39,12 +39,6 @@ public class Comment {
     @JoinColumn(name = "news_id", nullable = false, updatable = false)
     private News news;
 
-    @Column(name = "parent_id")
-    private Long parentId;
-
-    @Column(name = "level")
-    private Integer level;
-
     @Override
     public int hashCode() {
         return getClass().hashCode();
@@ -54,7 +48,7 @@ public class Comment {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Comment comment = (Comment) obj;
-        return Objects.equals(id, comment.id) && Objects.equals(message, comment.message) && Objects.equals(date, comment.date);
+        Comments comments = (Comments) obj;
+        return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
     }
 }
