@@ -28,13 +28,13 @@ public class Movie {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "countries")
-    private String countries;
     @Column(name = "date_release")
     private LocalDate dateRelease;
+
     @Column(name = "rars")
     @Enumerated(EnumType.STRING)
     private RARS rars;
+
     @Column(name = "mpaa")
     @Enumerated(EnumType.STRING)
     private MPAA mpaa;
@@ -42,23 +42,36 @@ public class Movie {
     private int time;
     @Column(name = "description")
     private String description;
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private MovieType type;
     @Column(name = "original_name")
     private String originalName;
+
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Content> contents;
+
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<MoviePerson> moviePerson;
+
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<AwardCeremonyResult> awardCeremonyResults;
+
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Score> scores;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "country",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id"))
+    private List <Country> country;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "news_movie",
@@ -66,6 +79,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "news_id"))
     @ToString.Exclude
     private List<News> news;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "collection_movie",
@@ -73,7 +87,6 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "collection_id"))
     @ToString.Exclude
     private List<Collection> collections;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "movie_genre",
@@ -88,7 +101,7 @@ public class Movie {
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
         return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) &&
-                Objects.equals(countries, movie.countries) && Objects.equals(dateRelease, movie.dateRelease) &&
+                Objects.equals(country, movie.country) && Objects.equals(dateRelease, movie.dateRelease) &&
                 Objects.equals(time, movie.time) && Objects.equals(description, movie.description) &&
                 Objects.equals(originalName, movie.originalName);
     }
@@ -97,5 +110,4 @@ public class Movie {
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }
