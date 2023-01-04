@@ -11,10 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionAnswerResponseDto {
-    Long id;
-    Integer position;
-    String question;
-    List<AnswerResponseDto> answers;
+    private Long id;
+    private Integer position;
+    private String question;
+    private List<AnswerResponseDto> answers;
 
     public QuestionAnswerResponseDto(Long id, Integer position, String question) {
         this.id = id;

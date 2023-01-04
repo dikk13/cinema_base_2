@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerResponseDto {
-    Long id;
-    String answer;
+    private Long id;
+    private String answer;
 }

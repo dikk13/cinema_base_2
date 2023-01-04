@@ -45,11 +45,7 @@ public class QuestionAnswerResponseDtoDaoImpl implements QuestionAnswerResponseD
 
     @Override
     public Boolean isRightAnswer(Long questionId, Long answerId) {
-        Boolean isRight = (Boolean) entityManager.createQuery("select a.isRight from Answer a where a.id = :id")
+        return (Boolean) entityManager.createQuery("select a.isRight from Answer a where a.id = :id")
                 .setParameter("id", answerId).getSingleResult();
-
-        Question question = (Question) entityManager.createQuery("select a.question from Answer a where a.id = :id")
-                .setParameter("id", answerId).getSingleResult();
-        return isRight && (question.getId().longValue() == questionId.longValue());
     }
 }
