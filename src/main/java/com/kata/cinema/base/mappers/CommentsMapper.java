@@ -2,6 +2,7 @@ package com.kata.cinema.base.mappers;
 
 import com.kata.cinema.base.dto.request.CommentsRequestDto;
 import com.kata.cinema.base.dto.response.CommentsResponseDto;
+
 import com.kata.cinema.base.models.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -23,5 +24,9 @@ public interface CommentsMapper {
     @Mapping(source = "message", target = "message")
     @Mapping(source = "date", target = "date")
     Comment toComments(CommentsRequestDto commentsRequestDto);
+
+    @Mapping(source = "message", target = "message")
+    @Mapping(source = "date", target = "date")
+    Comment toCommentsResp(CommentsResponseDto commentsResponseDto);
 
 }

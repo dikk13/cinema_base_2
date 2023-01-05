@@ -1,15 +1,12 @@
 package com.kata.cinema.base.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table(name = "Comment")
+@Table(name = "Comments")
 @Entity
 @Setter
 @ToString
@@ -25,6 +22,9 @@ public class Comment {
 
     @Column(name = "message")
     private String message;
+
+    @Column(name = "isModerate")
+    Boolean isModerate = false;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -45,6 +45,7 @@ public class Comment {
     @Column(name = "level")
     private Integer level;
 
+
     @Override
     public int hashCode() {
         return getClass().hashCode();
@@ -54,7 +55,7 @@ public class Comment {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Comment comment = (Comment) obj;
-        return Objects.equals(id, comment.id) && Objects.equals(message, comment.message) && Objects.equals(date, comment.date);
+        Comment comments = (Comment) obj;
+        return Objects.equals(id, comments.id) && Objects.equals(message, comments.message) && Objects.equals(date, comments.date);
     }
 }

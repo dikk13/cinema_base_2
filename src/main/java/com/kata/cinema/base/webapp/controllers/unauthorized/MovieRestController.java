@@ -36,6 +36,7 @@ public class MovieRestController {
     private final MovieService movieService;
     private final HistoryService historyService;
     private final NewsResponseDtoService newsResponseDtoService;
+
     private final MoviesAwardResponseDtoService moviesAwardResponseDtoService;
 
     @GetMapping("/{id}/reviews/page/{pageNumber}")
@@ -74,8 +75,8 @@ public class MovieRestController {
 
     @GetMapping("/{id}/excertions/page/{pageNumber}")
     public ResponseEntity<PageDto<ExcertionResponseDto>> getMovieExcertion(@PathVariable("id") long movieId,
-                                                           @PathVariable("pageNumber") Integer pageNumber,
-                                                           @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
+                                                                           @PathVariable("pageNumber") Integer pageNumber,
+                                                                           @RequestParam(value = "itemsOnPage", required = true, defaultValue = "10") Integer itemsOnPage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("movieId", movieId);
         return ResponseEntity.ok(excertionResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters));
@@ -91,5 +92,4 @@ public class MovieRestController {
     public List<AwardResponseDto> getMoviesAwards(@PathVariable Long id) {
         return moviesAwardResponseDtoService.getMoviesAwards(id);
     }
-
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface CommentsService extends AbstractService<Long, Comment> {
 
     List<Comment> getAllCommentsByNewsId(long id);
+
+    List<Comment> getAllCommentsNoModerate(long pageId);
 }
