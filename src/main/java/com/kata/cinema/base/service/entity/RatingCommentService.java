@@ -4,6 +4,6 @@ import com.kata.cinema.base.models.RatingComment;
 import com.kata.cinema.base.models.enums.TypeRating;
 
 public interface RatingCommentService extends AbstractService<Long, RatingComment> {
-    void rateComment(Long userId, Long commentId, TypeRating rating);
+    void createOrUpdateRatingComment(Long userId, Long commentId, TypeRating rating);
 
 }

@@ -28,13 +28,13 @@ public class RatingCommentServiceImpl extends AbstractServiceImpl<Long, RatingCo
     }
 
     @Override
-    public void rateComment(Long userId, Long commentId, TypeRating rating) {
+    public void createOrUpdateRatingComment(Long userId, Long commentId, TypeRating rating) {
         Optional<RatingComment> ratingCommentOptional = ratingCommentDao.getByUserIdCommentId(userId, commentId);
         if (ratingCommentOptional.isEmpty()) {
             RatingComment ratingComment = new RatingComment();
             ratingComment.setRating(rating);
             ratingComment.setUser(userService.getById(userId).get());
-            ratingComment.setComment(commentsService.getById(commentId).get());
+            ratingComment.setComments(commentsService.getById(commentId).get());
             ratingCommentDao.create(ratingComment);
         } else {
             RatingComment ratingComment = ratingCommentOptional.get();

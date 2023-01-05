@@ -31,12 +31,12 @@ public class CommentNewsResponseDto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yy")
     private LocalDate date;
     private Integer rating;
-
     private UserCommentDto user;
+
 
     public CommentNewsResponseDto(Long id, String message,
                                   Long parentId, int level,
-                                  LocalDateTime date, User user) {
+                                  LocalDateTime date, User user, Integer rating) {
         this.id = id;
         this.message = message;
         this.parentId = parentId;
