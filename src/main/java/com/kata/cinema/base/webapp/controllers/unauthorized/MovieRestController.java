@@ -92,6 +92,4 @@ public class MovieRestController {
     public List<AwardResponseDto> getMoviesAwards(@PathVariable Long id) {
         return moviesAwardResponseDtoService.getMoviesAwards(id);
     }
-
-
 }

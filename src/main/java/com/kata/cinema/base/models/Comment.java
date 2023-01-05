@@ -56,6 +56,6 @@ public class Comment {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Comment comments = (Comment) obj;
-        return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
+        return Objects.equals(id, comments.id) && Objects.equals(message, comments.message) && Objects.equals(date, comments.date);
     }
 }
