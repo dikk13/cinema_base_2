@@ -27,7 +27,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comment> impl
 
     @Override
     @Transactional
-    public void create(Comment comment) {
-        commentsDao.create(comment);
+    public void create(Comment comments) {
+        commentsDao.create(comments);
     }
 }

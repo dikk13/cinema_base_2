@@ -3,12 +3,13 @@ package com.kata.cinema.base.webapp.controllers.user;
 import com.kata.cinema.base.dto.request.CommentsRequestDto;
 import com.kata.cinema.base.exception.CommentNotFoundException;
 import com.kata.cinema.base.mappers.CommentsMapper;
-import com.kata.cinema.base.models.Comment;
+
 import com.kata.cinema.base.models.News;
 import com.kata.cinema.base.models.User;
 import com.kata.cinema.base.service.entity.CommentsService;
 import com.kata.cinema.base.service.entity.UserService;
 import lombok.AllArgsConstructor;
+import org.mapstruct.ap.shaded.freemarker.core.Comment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
