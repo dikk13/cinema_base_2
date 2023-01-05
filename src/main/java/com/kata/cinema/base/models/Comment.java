@@ -20,8 +20,8 @@ public class Comment {
     @SequenceGenerator(name = "seq_comments_id", sequenceName = "SEQ_COMMENTS_ID", allocationSize = 1)
     private Long id;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "message")
+    private String message;
 
     @Column(name = "isModerate")
     Boolean isModerate = false;
