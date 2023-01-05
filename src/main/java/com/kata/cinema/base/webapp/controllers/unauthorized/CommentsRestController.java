@@ -3,7 +3,7 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 import com.kata.cinema.base.dto.PageDto;
 import com.kata.cinema.base.dto.response.CommentsResponseDto;
 import com.kata.cinema.base.mappers.CommentsMapper;
-import com.kata.cinema.base.models.Comments;
+import com.kata.cinema.base.models.Comment;
 import com.kata.cinema.base.service.dto.CommentsResponseDtoService;
 import com.kata.cinema.base.service.entity.CommentsService;
 import org.springframework.http.HttpStatus;
@@ -52,7 +52,7 @@ public class CommentsRestController {
     @PatchMapping("/comments/{id}/moderator")
     public ResponseEntity<Void> updateIsModerate(@RequestBody CommentsResponseDto commentsResponseDto) {
 
-        Comments commentUpdate = commentsMapper.toCommentsResp(commentsResponseDto);
+        Comment commentUpdate = commentsMapper.toCommentsResp(commentsResponseDto);
         commentUpdate.setIsModerate(true);
         commentsService.update(commentUpdate);
         return new ResponseEntity<>(HttpStatus.OK);

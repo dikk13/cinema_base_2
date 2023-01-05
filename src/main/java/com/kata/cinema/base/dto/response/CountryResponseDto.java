@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class CountryResponseDto implements Serializable {
-    Long id;
-    String name;
+   private Long id;
+   private String name;
 
 }

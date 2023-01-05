@@ -12,7 +12,7 @@ import java.util.Objects;
 @ToString
 @Getter
 @NoArgsConstructor
-public class Comments {
+public class Comment {
 
     @Id
     @Column(name = "id")
@@ -39,6 +39,13 @@ public class Comments {
     @JoinColumn(name = "news_id", nullable = false, updatable = false)
     private News news;
 
+    @Column(name = "parent_id")
+    private Long parentId;
+
+    @Column(name = "level")
+    private Integer level;
+
+
     @Override
     public int hashCode() {
         return getClass().hashCode();
@@ -48,7 +55,7 @@ public class Comments {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Comments comments = (Comments) obj;
+        Comment comments = (Comment) obj;
         return Objects.equals(id, comments.id) && Objects.equals(text, comments.text) && Objects.equals(date, comments.date);
     }
 }

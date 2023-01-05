@@ -64,13 +64,12 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Score> scores;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "country",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "country_id"))
-    private List <Country> country;
+    private Set<Country> country;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

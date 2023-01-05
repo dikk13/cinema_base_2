@@ -1,10 +1,11 @@
 package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.AbstractDao;
-import com.kata.cinema.base.models.Comments;
+import com.kata.cinema.base.dao.entity.CountryDao;
 import com.kata.cinema.base.models.Country;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.CountryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,14 +15,17 @@ import java.util.List;
 @Transactional
 public class CountryServiceImpl extends AbstractServiceImpl<Long, Country> implements CountryService {
 
+    private final CountryDao countryDao;
 
-    protected CountryServiceImpl(AbstractDao<Long, Country> abstractDao) {
+    @Autowired
+    protected CountryServiceImpl(AbstractDao<Long, Country> abstractDao, CountryDao countryDao) {
         super(abstractDao);
+        this.countryDao = countryDao;
     }
 
     @Override
-    public List<Comments> getAllCountriesById(long id) {
-        return null;
+    public List<Country> getAllCountriesById(long id) {
+        return countryDao.getAllCountriesById(id);
     }
 
 }
