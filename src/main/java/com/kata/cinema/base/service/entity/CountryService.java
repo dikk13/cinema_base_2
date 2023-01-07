@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface CountryService extends AbstractService<Long, Country> {
 
-    List<Country> getAllCountriesById(long id);
 }

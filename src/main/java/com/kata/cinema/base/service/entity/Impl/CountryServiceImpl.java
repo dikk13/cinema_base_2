@@ -18,15 +18,11 @@ public class CountryServiceImpl extends AbstractServiceImpl<Long, Country> imple
     private final CountryDao countryDao;
 
     @Autowired
-    protected CountryServiceImpl(AbstractDao<Long, Country> abstractDao, CountryDao countryDao) {
-        super(abstractDao);
+    protected CountryServiceImpl(CountryDao countryDao) {
+        super(countryDao);
         this.countryDao = countryDao;
     }
 
-    @Override
-    public List<Country> getAllCountriesById(long id) {
-        return countryDao.getAllCountriesById(id);
-    }
 
 }
 
