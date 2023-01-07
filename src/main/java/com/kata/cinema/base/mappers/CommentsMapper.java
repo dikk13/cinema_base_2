@@ -16,7 +16,7 @@ public interface CommentsMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "message", target = "message")
-    @Mapping(source = "date", target = "dateTime")
+    @Mapping(source = "date", target = "date")
     CommentsResponseDto toDTO(Comment comment);
 
     List<CommentsResponseDto> toDTOList(List<Comment> comments);
