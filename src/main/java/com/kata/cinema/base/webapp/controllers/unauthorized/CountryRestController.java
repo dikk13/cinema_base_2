@@ -34,9 +34,4 @@ public class CountryRestController {
         countryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    @GetMapping("/api/countries/{id}")
-//    public ResponseEntity<CountryResponseDto> getСountry(@PathVariable("id") Long countryId) {
-//        return new ResponseEntity<>(countryResponseDtoService.getCountryResponseDtoByMovieId(countryId), HttpStatus.OK);
-//    }
 }
