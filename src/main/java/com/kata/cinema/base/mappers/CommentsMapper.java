@@ -23,6 +23,8 @@ public interface CommentsMapper {
 
     @Mapping(source = "message", target = "message")
     @Mapping(source = "date", target = "date")
+    @Mapping(source = "parentId", target = "parentId")
+    @Mapping(source = "level", target = "level")
     Comment toComments(CommentsRequestDto commentsRequestDto);
 
     @Mapping(source = "message", target = "message")

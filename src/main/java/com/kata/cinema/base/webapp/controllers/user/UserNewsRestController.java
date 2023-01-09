@@ -1,6 +1,7 @@
 package com.kata.cinema.base.webapp.controllers.user;
 
 import com.kata.cinema.base.dto.request.CommentsRequestDto;
+import com.kata.cinema.base.exception.CommentNotFoundException;
 import com.kata.cinema.base.mappers.CommentsMapper;
 
 import com.kata.cinema.base.models.Comment;
@@ -43,4 +44,37 @@ public class UserNewsRestController {
         commentsService.create(comment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("id") Long commentId,
+                                                  @AuthenticationPrincipal User currentUser) {
+       Optional<Comment> commentOptional = commentsService.getById(commentId);
+       if (commentOptional.isEmpty()) throw new CommentNotFoundException("Comment with id is not found");
+       Comment comment = commentOptional.get();
+       if (comment.getUser().getId().longValue() != currentUser.getId().longValue()) {
+           throw new RuntimeException("Allowed to delete users own comments only");
+       }
+       commentsService.delete(comment);
+       return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PutMapping("/comments/{id}")
+    public ResponseEntity<Void> updateComment(@PathVariable("id") Long commentId,
+                                              @RequestBody CommentsRequestDto commentsRequestDto,
+                                              @AuthenticationPrincipal User currentUser) {
+        Optional<Comment> commentOptional = commentsService.getById(commentId);
+        if (commentOptional.isEmpty()) throw new CommentNotFoundException("Comment with id is not found");
+        Comment commentToUpdate = commentOptional.get();
+        if (commentToUpdate.getUser().getId().longValue() != currentUser.getId().longValue()) {
+            throw new RuntimeException("Allowed to update users own comments only");
+        }
+        Comment commentFromDto = commentsMapper.toComments(commentsRequestDto);
+        commentToUpdate.setMessage(commentFromDto.getMessage());
+        commentToUpdate.setDate(commentFromDto.getDate());
+        commentToUpdate.setLevel(commentFromDto.getLevel());
+        commentToUpdate.setParentId(commentFromDto.getParentId());
+        commentsService.update(commentToUpdate);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
