@@ -29,11 +29,13 @@ public class AddressServiceImpl extends AbstractServiceImpl<Long, Address> imple
     @Override
     @Transactional
     public void updateById(Long id, AddressRequestDto addressRequestDto) {
-        Optional<Address> addressContainer= getById(id);
+        Optional<Address> addressContainer = getById(id);
         if (addressContainer.isPresent()) {
-            addressContainer.get().setStreet(addressMapper.toAddress(addressRequestDto).getStreet());
-            addressContainer.get().setCity(addressMapper.toAddress(addressRequestDto).getCity());
-            addressDao.update(addressContainer.get());
+            Address newAddress = addressMapper.toAddress(addressRequestDto);
+            Address address = addressContainer.get();
+            address.setStreet(newAddress.getStreet());
+            address.setCity(newAddress.getCity());
+            addressDao.update(address);
         } else {
             throw new AddressIdNotFoundException("Address with this ID: " + id + " ,don't found ") {};
         }

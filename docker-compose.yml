@@ -6,7 +6,7 @@ services:
     container_name: 'cinema_base'
     ports: ['8080:8080']
     environment:
-      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres'
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-app:5432/postgres_app_db'
       - 'SPRING_DATASOURCE_USERNAME=postgres'
       - 'SPRING_DATASOURCE_PASSWORD=axweil'
   db:
@@ -14,6 +14,14 @@ services:
     image: 'postgres:14'
     ports: ['5432:5432']
     environment:
-      - 'POSTGRES_DB=localhost:8080/postgres'
+      - 'POSTGRES_DB=postgres_app_db'
       - 'POSTGRES_USER=postgres'
       - 'POSTGRES_PASSWORD=axweil'
+  db-test:
+    container_name: "postgres-test"
+    image: 'postgres:14'
+    ports: [ '5433:5433' ]
+    environment:
+      - 'POSTGRES_DB=postgres_test_db'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=root'

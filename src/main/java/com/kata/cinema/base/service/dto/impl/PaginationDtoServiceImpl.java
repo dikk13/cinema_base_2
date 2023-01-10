@@ -26,4 +26,5 @@ public abstract class PaginationDtoServiceImpl<T> implements PaginationDtoServic
     public PageDto<T> getPageDtoWithParameters(Integer currentPage, Integer itemsOnPage, Map<String, Object> parameters) {
         return new PageDto<>(paginationDtoDao.getResultTotal(parameters),paginationDtoDao.getItemsDto(currentPage, itemsOnPage, parameters));
     }
+
 }
