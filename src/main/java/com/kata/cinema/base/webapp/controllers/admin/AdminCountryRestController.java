@@ -1,4 +1,4 @@
-package com.kata.cinema.base.webapp.controllers.unauthorized;
+package com.kata.cinema.base.webapp.controllers.admin;
 
 
 import com.kata.cinema.base.models.Country;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
-public class CountryRestController {
+public class AdminCountryRestController {
 
     private final CountryService countryService;
 
-    public CountryRestController(CountryService countryService) {
+    public AdminCountryRestController(CountryService countryService) {
         this.countryService = countryService;
     }
 
