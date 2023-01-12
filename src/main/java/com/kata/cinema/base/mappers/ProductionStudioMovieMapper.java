@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 public interface ProductionStudioMovieMapper {
     ProductionStudioMovie productionMovieStudioResponseDtoToProductionStudioMovie(ProductionMovieStudioResponseDto productionMovieStudioResponseDto);
 
+    @Mapping(source = "studio.id", target = "id")
     @Mapping(source = "studio.name", target = "name")
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "studio.performance.id", target = "performanceId")
+    @Mapping(source = "studio.performance.name", target = "performanceName")
     ProductionMovieStudioResponseDto productionStudioMovieToProductionMovieStudioResponseDto(ProductionStudioMovie productionStudioMovie);
 
 }

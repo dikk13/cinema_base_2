@@ -1,6 +1,7 @@
 package com.kata.cinema.base.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_award_id")

@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class ProductionMovieStudioResponseDto implements Serializable {
     private Long id;
     private String name;
+    private Long performanceId;
+    private String performanceName;
 
-    //TODO заменить на dto
-    private StudioPerformance performance;
 }
