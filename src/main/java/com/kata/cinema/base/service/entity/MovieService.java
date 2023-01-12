@@ -11,4 +11,7 @@ public interface MovieService extends AbstractService<Long, Movie> {
     List<SearchMovieDto> titleMovie(String name);
     void updateById(Long id, MovieRequestDto movieRequestDto);
 
+    Movie getMovieById(Long movieId);
+
+    void addCountriesToMovie(Long movieId, List<Long> countryId);
 }

@@ -2,27 +2,32 @@ package com.kata.cinema.base.webapp.controllers.unauthorized;
 
 
 import com.kata.cinema.base.dto.PageDto;
-import com.kata.cinema.base.dto.response.CommentNewsResponseDto;
-import com.kata.cinema.base.dto.response.CommentsResponseDto;
-import com.kata.cinema.base.dto.response.NewsBodyResponseDto;
-import com.kata.cinema.base.dto.response.NewsResponseDto;
+import com.kata.cinema.base.dto.request.QuestionAnswerRequestDto;
+import com.kata.cinema.base.dto.response.*;
+import com.kata.cinema.base.exception.AnswerNotFoundException;
+import com.kata.cinema.base.exception.QuestionNotFoundException;
 import com.kata.cinema.base.mappers.CommentsMapper;
+import com.kata.cinema.base.mappers.QuestionMapper;
+import com.kata.cinema.base.mappers.ResultMapper;
+import com.kata.cinema.base.models.Answer;
 import com.kata.cinema.base.models.enums.Rubric;
 import com.kata.cinema.base.service.dto.CommentNewsResponseDtoService;
 import com.kata.cinema.base.service.dto.NewsBodyResponseDtoService;
 import com.kata.cinema.base.service.dto.NewsResponseDtoService;
+import com.kata.cinema.base.service.dto.QuestionAnswerResponseDtoService;
+import com.kata.cinema.base.service.entity.AnswerService;
 import com.kata.cinema.base.service.entity.CommentsService;
+import com.kata.cinema.base.service.entity.QuestionService;
+import com.kata.cinema.base.service.entity.ResultService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/news")
@@ -33,15 +38,31 @@ public class NewsRestController {
     private final NewsBodyResponseDtoService newsBodyResponseDtoService;
     private final CommentNewsResponseDtoService commentNewsResponseDtoService;
     private final NewsResponseDtoService newsResponseDtoService;
+    private final QuestionService questionService;
+    private final QuestionMapper questionMapper;
+    private final ResultMapper resultMapper;
+    private final ResultService resultService;
+    private final QuestionAnswerResponseDtoService questionAnswerResponseDtoService;
+    private final AnswerService answerService;
 
     public NewsRestController(CommentsService commentsService, CommentsMapper commentsMapper,
                               NewsBodyResponseDtoService newsBodyResponseDtoService,
-                              CommentNewsResponseDtoService commentNewsResponseDtoService, NewsResponseDtoService newsResponseDtoService) {
+                              CommentNewsResponseDtoService commentNewsResponseDtoService,
+                              NewsResponseDtoService newsResponseDtoService, QuestionService questionService,
+                              QuestionMapper questionMapper, ResultMapper resultMapper, ResultService resultService,
+                              QuestionAnswerResponseDtoService questionAnswerResponseDtoService,
+                              AnswerService answerService) {
         this.commentsService = commentsService;
         this.commentsMapper = commentsMapper;
         this.newsBodyResponseDtoService = newsBodyResponseDtoService;
         this.commentNewsResponseDtoService = commentNewsResponseDtoService;
         this.newsResponseDtoService = newsResponseDtoService;
+        this.questionService = questionService;
+        this.questionMapper = questionMapper;
+        this.resultMapper = resultMapper;
+        this.resultService = resultService;
+        this.questionAnswerResponseDtoService = questionAnswerResponseDtoService;
+        this.answerService = answerService;
     }
 
     @GetMapping("/{id}/comments")
@@ -56,8 +77,8 @@ public class NewsRestController {
     }
 
     @GetMapping("/{id}/comments/body")
-    public List<CommentNewsResponseDto> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
-        return commentNewsResponseDtoService.getCommentNewsResponseDtoListByNewsId(id);
+    public ResponseEntity<List<CommentNewsResponseDto>> getCommentNewsResponseDtoList(@PathVariable("id") long id) {
+        return ResponseEntity.ok(commentNewsResponseDtoService.getCommentNewsResponseDtoListByNewsId(id));
     }
 
     @GetMapping("/page/{pageNumber}")
@@ -69,9 +90,50 @@ public class NewsRestController {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("rubric", rubric);
         return newsResponseDtoService.getPageDtoWithParameters(pageNumber, itemsOnPage, parameters);
-
-
     }
 
+    @GetMapping("/{id}/tests")
+    public ResponseEntity<List<QuestionResponseDto>> getQuestionResponseDtoList(
+            @PathVariable Long id) {
+        return new ResponseEntity<>(questionMapper.toDTOList(
+                questionService.getAllQuestionsByNewsId(id)), HttpStatus.FOUND);
+    }
+
+    @PostMapping("/{id}/questions/tests")
+    public ResponseEntity<List<ResultResponseDto>> getResultByRightAnswers(
+            List<QuestionAnswerRequestDto> questionAnswerRequestDtos) {
+        return new ResponseEntity<>(resultMapper.toDtosList(
+                resultService.getResultByQuestionAnswerList(questionAnswerRequestDtos)), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/question/{qid}/answers")
+    public ResponseEntity<List<AnswerResponseDto>> getAnswerResponseDtoList(@PathVariable("qid") Long id) {
+        if (questionService.getById(id).isEmpty()) {
+            throw new QuestionNotFoundException("Question with id is not found");
+        }
+        return ResponseEntity.ok(questionAnswerResponseDtoService.getAnswerResponseDtoListById(id));
+    }
+    @GetMapping("/question/{qid}/answers/{aid}")
+    public ResponseEntity<Boolean> isRightAnswer(
+            @PathVariable("qid") Long questionId, @PathVariable("aid") Long answerId) {
+        if (questionService.getById(questionId).isEmpty()) {
+            throw new QuestionNotFoundException("Question with id is not found");
+        }
+        Optional<Answer> answerOptional = answerService.getById(answerId);
+        if (answerOptional.isEmpty()) {
+            throw new AnswerNotFoundException("Answer with id is not found");
+        }
+        if (answerOptional.get().getQuestion().getId().longValue() != questionId.longValue()) {
+            throw new RuntimeException("This answer is not for this question");
+        }
+        return ResponseEntity.ok(questionAnswerResponseDtoService.isRightAnswer(questionId, answerId));
+    }
+    @GetMapping("/question/{qid}")
+    public ResponseEntity<QuestionAnswerResponseDto> getQuestionAnswerResponseDto(@PathVariable("qid") Long id) {
+        if (questionService.getById(id).isEmpty()) {
+            throw new QuestionNotFoundException("Question with id is not found");
+        }
+        return ResponseEntity.ok(questionAnswerResponseDtoService.getQuestionAnswerResponseDtoById(id));
+    }
 
 }

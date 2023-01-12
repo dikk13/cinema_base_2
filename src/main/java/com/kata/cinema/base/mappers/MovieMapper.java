@@ -12,7 +12,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MovieMapper {
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "countries", target = "countries")
     @Mapping(source = "dateRelease", target = "dateRelease")
     @Mapping(source = "rars", target = "rars")
     @Mapping(source = "mpaa", target = "mpaa")

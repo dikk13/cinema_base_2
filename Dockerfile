@@ -4,7 +4,7 @@ COPY ./ ./
 
 RUN mvn clean package
 
-FROM adoptopenjdk/openjdk16
+FROM openjdk:17-oracle
 
 COPY --from=MAVEN-BUILD /target/cinema_base2.jar /cinema.jar
 

@@ -25,9 +25,10 @@ public class CommentsServiceImpl extends AbstractServiceImpl<Long, Comment> impl
         return commentsDao.getCommentsListByNewsId(id);
     }
 
+
     @Override
     @Transactional
-    public void create(Comment comment) {
-        commentsDao.create(comment);
+    public void create(Comment comments) {
+        commentsDao.create(comments);
     }
 }

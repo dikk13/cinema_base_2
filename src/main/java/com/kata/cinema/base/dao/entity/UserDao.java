@@ -7,4 +7,8 @@ import java.util.Optional;
 public interface UserDao extends AbstractDao<Long, User> {
 
     Optional<User> getByEmail(String email);
+    User getByRole (String roleUser);
+
+
+
 }

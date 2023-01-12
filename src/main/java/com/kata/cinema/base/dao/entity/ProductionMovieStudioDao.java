@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface ProductionMovieStudioDao extends AbstractDao<Long, ProductionStudioMovie>{
     Optional<ProductionStudioMovie> getStudioByMovieId(Long id);
+    Optional<ProductionStudioMovie> getByMovieIdStudioId(Long movieId, Long studioId);
 }
