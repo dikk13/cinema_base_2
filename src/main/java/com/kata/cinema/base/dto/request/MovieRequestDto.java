@@ -1,13 +1,16 @@
 package com.kata.cinema.base.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kata.cinema.base.models.Country;
 import com.kata.cinema.base.models.enums.MPAA;
 import com.kata.cinema.base.models.enums.RARS;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
