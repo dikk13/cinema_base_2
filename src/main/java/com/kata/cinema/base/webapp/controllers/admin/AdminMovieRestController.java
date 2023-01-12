@@ -9,6 +9,7 @@ import com.kata.cinema.base.mappers.AvailableOnlineMovieMapper;
 import com.kata.cinema.base.models.AvailableOnlineMovie;
 import com.kata.cinema.base.service.entity.AvailableOnlineMovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 
 @RestController
@@ -112,6 +114,12 @@ public class AdminMovieRestController {
     public ResponseEntity<Void> updateMovie(@PathVariable Long id, @RequestBody MovieRequestDto movieRequestDto) {
         movieService.updateById(id, movieRequestDto);
         return ResponseEntity.ok(null);
+    }
+
+    @PutMapping(value = "/{id}/countries")
+    public ResponseEntity<Void> addCountriesToMovie(@PathVariable("id") Long movieId, @RequestBody List<Long> countryId) {
+        movieService.addCountriesToMovie(movieId, countryId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
