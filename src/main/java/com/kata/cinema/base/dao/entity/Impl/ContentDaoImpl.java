@@ -3,12 +3,10 @@ package com.kata.cinema.base.dao.entity.Impl;
 import com.kata.cinema.base.dao.entity.ContentDao;
 import com.kata.cinema.base.models.Content;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-
 public class ContentDaoImpl extends AbstractDaoImpl<Long, Content> implements ContentDao {
     @PersistenceContext
     private EntityManager entityManager;

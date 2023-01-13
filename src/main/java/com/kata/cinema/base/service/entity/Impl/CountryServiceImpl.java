@@ -22,7 +22,5 @@ public class CountryServiceImpl extends AbstractServiceImpl<Long, Country> imple
         super(countryDao);
         this.countryDao = countryDao;
     }
-
-
 }
 

@@ -1,7 +1,5 @@
 package com.kata.cinema.base.webapp.controllers.admin;
 
-
-import com.kata.cinema.base.dao.entity.ContentDao;
 import com.kata.cinema.base.service.entity.ContentService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
