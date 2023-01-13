@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/collections")
-
 public class CollectionController {
 
     private final CollectionService collectionService;
@@ -41,9 +40,11 @@ public class CollectionController {
     }
 
     @PostMapping("/{id}/movies")
-    public ResponseEntity<Void> addMovies(@PathVariable("id")Long id, List<Movie> movieIds) {
+    public ResponseEntity<Void> addMovies(@PathVariable("id")Long id, List<Long> movieIds) {
         Collection collection = collectionService.getById(id).orElseThrow();
-        collection.setMovies(movieIds);
+        List<Movie> list = null;
+        movieIds.forEach(x->list.add(movieService.getMovieById(x)));
+        collection.setMovies(list);
         collectionService.update(collection);
         return new ResponseEntity<>(HttpStatus.OK);
     }
