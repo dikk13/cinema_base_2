@@ -42,9 +42,7 @@ public class CollectionController {
     @PostMapping("/{id}/movies")
     public ResponseEntity<Void> addMovies(@PathVariable("id")Long id, List<Long> movieIds) {
         Collection collection = collectionService.getById(id).orElseThrow();
-        List<Movie> list = null;
-        movieIds.forEach(x->list.add(movieService.getMovieById(x)));
-        collection.setMovies(list);
+        collection.setMovies(collectionService.searchByIds(movieIds));
         collectionService.update(collection);
         return new ResponseEntity<>(HttpStatus.OK);
     }
