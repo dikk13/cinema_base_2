@@ -2,6 +2,7 @@ package com.kata.cinema.base.webapp.controllers.admin;
 
 
 import com.kata.cinema.base.dao.entity.ContentDao;
+import com.kata.cinema.base.service.entity.ContentService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class AdminContentRestController {
 
-    private final ContentDao contentDao;
+    private final ContentService contentService;
 
-    public AdminContentRestController(ContentDao contentDao) {
-        this.contentDao = contentDao;
+    public AdminContentRestController(ContentService contentService) {
+        this.contentService = contentService;
     }
 
     @DeleteMapping("content/{id}")
     public void deleteContent(@PathVariable("id") long id) {
-        contentDao.deleteById(id);
+        contentService.deleteById(id);
     }
 }
