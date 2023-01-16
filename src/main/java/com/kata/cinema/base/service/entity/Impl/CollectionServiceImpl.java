@@ -3,6 +3,7 @@ package com.kata.cinema.base.service.entity.Impl;
 import com.kata.cinema.base.dao.entity.CollectionDao;
 import com.kata.cinema.base.dto.SearchCollectionDto;
 import com.kata.cinema.base.models.Collection;
+import com.kata.cinema.base.models.Movie;
 import com.kata.cinema.base.service.entity.AbstractServiceImpl;
 import com.kata.cinema.base.service.entity.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class CollectionServiceImpl extends AbstractServiceImpl<Long, Collection>
     @Override
     public List<SearchCollectionDto> titleCollection(String name) {
         return collectionDao.titleCollection(name);
+    }
+
+    @Override
+    public List<Movie> searchByIds(List<Long> list) {
+        return collectionDao.searchByIds(list);
     }
 }
