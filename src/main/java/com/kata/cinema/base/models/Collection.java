@@ -1,20 +1,11 @@
 package com.kata.cinema.base.models;
 
+import com.kata.cinema.base.models.enums.CollectionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +24,10 @@ public class Collection {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "collection_type")
+    @Enumerated
+    private CollectionType collectionType;
 
     @Column(name = "enable")
     private boolean enable;

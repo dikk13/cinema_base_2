@@ -49,6 +49,9 @@ public class Movie {
     @Column(name = "original_name")
     private String originalName;
 
+    @Column(name = "position")
+    private Integer position;
+
     @OneToMany(mappedBy = "movie")
     @ToString.Exclude
     private List<Content> contents;
@@ -94,6 +97,10 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @ToString.Exclude
     private List<Genre> genres;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private MediaFranchise franchise;
 
     @Override
     public boolean equals(Object o) {
