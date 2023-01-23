@@ -28,4 +28,10 @@ public class MovieResponseDto {
         this.dateRelease = dateRelease;
         this.countries = countries;
     }
+
+    public MovieResponseDto(Long id, LocalDate dateRelease, Integer time){
+        this.id = id;
+        this.dateRelease = dateRelease;
+        this.time = time;
+    }
 }

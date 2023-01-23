@@ -3,6 +3,7 @@ package com.kata.cinema.base.service.entity.Impl;
 
 import com.kata.cinema.base.dao.entity.CountryDao;
 import com.kata.cinema.base.dao.entity.MovieDao;
+import com.kata.cinema.base.dto.MovieReleaseAndTimeDto;
 import com.kata.cinema.base.dto.SearchMovieDto;
 import com.kata.cinema.base.dto.request.MovieRequestDto;
 import com.kata.cinema.base.exception.CountryNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -44,6 +46,11 @@ public class MovieServiceImpl extends AbstractServiceImpl<Long, Movie> implement
     @Override
     public List<SearchMovieDto> titleMovie(String name) {
         return movieDao.titleMovie(name);
+    }
+
+    @Override
+    public List<MovieReleaseAndTimeDto> movieRelease(LocalDate date) {
+        return movieDao.movieRelease(date);
     }
 
     @Override
