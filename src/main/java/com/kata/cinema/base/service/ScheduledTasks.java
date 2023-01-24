@@ -1,8 +1,9 @@
 package com.kata.cinema.base.service;
 
 import com.kata.cinema.base.dto.MovieReleaseAndTimeDto;
-import com.kata.cinema.base.models.Movie;
-import com.kata.cinema.base.models.MovieTicket;
+import com.kata.cinema.base.dto.request.MovieTicketRequestDto;
+import com.kata.cinema.base.dto.response.MovieTicketResponseDto;
+import com.kata.cinema.base.mappers.MovieTicketMapper;
 import com.kata.cinema.base.service.entity.MovieService;
 import com.kata.cinema.base.service.entity.MovieTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,22 @@ public class ScheduledTasks {
     private final MovieService movieService;
     private final MovieTicketService movieTicketService;
 
+    private final MovieTicketMapper movieTicketMapper;
+
     @Autowired
-    public ScheduledTasks(MovieService movieService, MovieTicketService movieTicketService){
+    public ScheduledTasks(MovieService movieService, MovieTicketService movieTicketService, MovieTicketMapper movieTicketMapper){
         this.movieService = movieService;
         this.movieTicketService = movieTicketService;
+        this.movieTicketMapper = movieTicketMapper;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 0 6 * * *")
     public void createMovieTicket(){
-        List<Movie> movies = movieService.getAll();
-        LocalDate date0 = movies.get(0).getDateRelease();
-        System.out.println(date0);
-        List<MovieReleaseAndTimeDto> moviesRelease = movieService.movieRelease(date0);
-        List<MovieTicket> movieTickets = movieTicketService.getAll();
-//        moviesRelease.stream().forEach();
+        List<MovieReleaseAndTimeDto> moviesRelease = movieService.movieRelease(LocalDate.now());
+        List<MovieTicketResponseDto> movieTickets = movieTicketMapper.toDTOList(movieTicketService.movieTicketEndShowDate(LocalDate.now()));
+        moviesRelease.forEach(x -> movieTicketService.create(movieTicketMapper
+                                        .toMovieTicket(new MovieTicketRequestDto(x.getId(),
+                                            x.getDateRelease().plusDays(x.getTime())))));
+        movieTickets.forEach(x -> movieService.deleteById(x.getMovieId()));
     }
 }
